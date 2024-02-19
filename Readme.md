@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Андрей Абрамов](https://up.htmlacademy.ru/react/15/user/1564865).
-* Наставник: `Неизвестно`.
+* Наставник: [Юлия Волкова](https://htmlacademy.ru/profile/julie_volkova).
 
 ---
 
