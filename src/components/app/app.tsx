@@ -1,8 +1,12 @@
 import MainPage from '../../pages/main-page/main-page';
 
-function App(): JSX.Element {
+type NumberOfRentals = {
+  offersCount: number;
+}
+
+function App({offersCount}: NumberOfRentals): JSX.Element {
   return (
-    <MainPage />
+    <MainPage offersCount={offersCount} />
   );
 }
 
