@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-function Offer() {
+function Offer(): JSX.Element {
   return (
     <main className="page__main page__main--offer">
       <Helmet>

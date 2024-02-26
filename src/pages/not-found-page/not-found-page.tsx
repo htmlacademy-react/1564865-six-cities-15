@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import styles from './not-found-page.module.css';
 
-function NotFoundPage() {
+function NotFoundPage(): JSX.Element {
   return (
     <div className={`page ${styles.notFoundPage}`}>
       <Helmet>

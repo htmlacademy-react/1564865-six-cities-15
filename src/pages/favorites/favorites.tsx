@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import Footer from '../../components/footer/footer';
 
-function Favorites() {
+function Favorites(): JSX.Element {
   return (
     <>
       <main className="page__main page__main--favorites">
