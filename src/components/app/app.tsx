@@ -27,7 +27,7 @@ function App({offersCount}: NumberOfRentals): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <ProtectedRoute
-                restrictedFor={AuthorizationStatus.NoAuth}
+                restrictedFor={AuthorizationStatus.Auth}
                 redirectTo={AppRoute.Login}
               >
                 <Favorites />
