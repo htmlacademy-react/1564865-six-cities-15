@@ -10,3 +10,10 @@ export const cities: string[] = [
   'Hamburg',
   'Dusseldorf',
 ];
+
+export const placesOptions: string[] = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first',
+];
