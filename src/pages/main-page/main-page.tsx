@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import OfferCard from '../../components/offer-card/offer-card';
 
-import { cities } from '../../const';
-import { placesOptions } from '../../const';
+import { CITIES } from '../../const';
+import { PLACE_OPTIONS } from '../../const';
 
 type MainPageProps = {
   offersCount: number;
@@ -23,7 +23,7 @@ function MainPage({ offersCount }: MainPageProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {cities.map((city) => (
+              {CITIES.map((city) => (
                 <li className="locations__item" key={city}>
                   <a className="locations__item-link tabs__item" href="#">
                     <span>{city}</span>
@@ -47,7 +47,7 @@ function MainPage({ offersCount }: MainPageProps): JSX.Element {
                   </svg>
                 </span>
                 <ul className="places__options places__options--custom places__options--opened">
-                  {placesOptions.map((place) => (
+                  {PLACE_OPTIONS.map((place) => (
                     <li
                       key={place}
                       className="places__option"
