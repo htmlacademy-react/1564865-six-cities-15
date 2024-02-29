@@ -1,3 +1,7 @@
+:root {
+  --link-color: var(#4481c3);
+}
+
 .notFoundPage {
   min-height: 100vh;
 }
@@ -14,5 +18,5 @@
 }
 
 .link {
-  color: #4481c3;
+  color: var(--link-color);
 }
