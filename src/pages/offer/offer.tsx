@@ -1,5 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
+import { offerInsideItems } from './offer-data';
+
 function Offer(): JSX.Element {
   return (
     <main className="page__main page__main--offer">
@@ -70,36 +72,14 @@ function Offer(): JSX.Element {
             <div className="offer__inside">
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
-                <li className="offer__inside-item">
-                  Wi-Fi
-                </li>
-                <li className="offer__inside-item">
-                  Washing machine
-                </li>
-                <li className="offer__inside-item">
-                  Towels
-                </li>
-                <li className="offer__inside-item">
-                  Heating
-                </li>
-                <li className="offer__inside-item">
-                  Coffee machine
-                </li>
-                <li className="offer__inside-item">
-                  Baby seat
-                </li>
-                <li className="offer__inside-item">
-                  Kitchen
-                </li>
-                <li className="offer__inside-item">
-                  Dishwasher
-                </li>
-                <li className="offer__inside-item">
-                  Cabel TV
-                </li>
-                <li className="offer__inside-item">
-                  Fridge
-                </li>
+                {offerInsideItems.map((offerInsideItem) => (
+                  <li
+                    className="offer__inside-item"
+                    key={offerInsideItem}
+                  >
+                    {offerInsideItem}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="offer__host">
