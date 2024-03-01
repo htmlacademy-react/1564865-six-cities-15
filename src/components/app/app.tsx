@@ -9,15 +9,17 @@ import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
+import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
 
 type NumberOfRentals = {
   offersCount: number;
 }
 
-function App({offersCount}: NumberOfRentals): JSX.Element {
+function App({ offersCount }: NumberOfRentals): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route
             path={AppRoute.Root}
