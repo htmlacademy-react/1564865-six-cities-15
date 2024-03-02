@@ -48,3 +48,6 @@ export const CityMap: string[] = [
   'Hamburg',
   'Dusseldorf',
 ];
+
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
