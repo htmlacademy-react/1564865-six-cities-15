@@ -1,14 +1,14 @@
-import { LocationType } from './location';
-import { User } from './user';
+import { TLocationType } from './location';
+import { TUser } from './user';
 import { City } from './city';
 
-export type Offer = {
+export type TOffer = {
   city: City;
   images: string[];
   title: string;
   isFavorite?: boolean;
   isPremium: boolean;
-  location?: LocationType;
+  location?: TLocationType;
   rating: number;
   type: string;
   bedrooms: number;
@@ -16,7 +16,7 @@ export type Offer = {
   previewImage: string;
   price: number;
   goods: string[];
-  host: User;
+  host: TUser;
   description?: string;
   id: string;
 };

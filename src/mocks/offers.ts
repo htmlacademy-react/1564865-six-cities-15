@@ -1,11 +1,11 @@
-import { Offer } from '../types/offer';
+import { TOffer } from '../types/offer';
 import { CityName } from '../const';
 
 function generateUniqueId() {
   return Date.now().toString() + Math.random().toString(36).substring(2, 15);
 }
 
-export const offerData: Offer = {
+export const offerData: TOffer = {
   city: {
     name: CityName.Dusseldorf
   },
@@ -48,7 +48,7 @@ export const offerData: Offer = {
   id: generateUniqueId(),
 };
 
-export const offersData: Offer[] = [
+export const offersData: TOffer[] = [
   {
     city: {
       'name': CityName.Dusseldorf,
