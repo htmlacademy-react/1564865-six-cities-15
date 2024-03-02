@@ -1,7 +1,7 @@
 import { TUser } from './user';
 
 export type TReviewType = {
-  'id': number;
+  'id': string;
   'user': TUser;
   'rating': number;
   'comment': string;

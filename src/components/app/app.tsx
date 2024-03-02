@@ -19,7 +19,7 @@ type AppPageProps = {
   reviews: TReviewType[];
 }
 
-function App({ offers,reviews }: AppPageProps): JSX.Element {
+function App({ offers, reviews }: AppPageProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>

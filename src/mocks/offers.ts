@@ -1,52 +1,77 @@
 import { TOffer } from '../types/offer';
 import { CityName } from '../const';
+// import { TOfferPreview } from '../types/offer-preview';
 
 function generateUniqueId() {
   return Date.now().toString() + Math.random().toString(36).substring(2, 15);
 }
 
-export const offerData: TOffer = {
-  city: {
-    name: CityName.Dusseldorf
-  },
-  previewImage: 'https://14.react.pages.academy/static/offer/3.jpg',
-  images: [
-    'https://14.react.pages.academy/static/offer/16.jpg',
-    'https://14.react.pages.academy/static/offer/13.jpg',
-    'https://14.react.pages.academy/static/offer/6.jpg',
-    'https://14.react.pages.academy/static/offer/11.jpg',
-    'https://14.react.pages.academy/static/offer/14.jpg',
-    'https://14.react.pages.academy/static/offer/9.jpg',
-    'https://14.react.pages.academy/static/offer/2.jpg',
-    'https://14.react.pages.academy/static/offer/15.jpg',
-    'https://14.react.pages.academy/static/offer/7.jpg',
-    'https://14.react.pages.academy/static/offer/17.jpg',
-    'https://14.react.pages.academy/static/offer/4.jpg',
-    'https://14.react.pages.academy/static/offer/8.jpg',
-    'https://14.react.pages.academy/static/offer/10.jpg',
-    'https://14.react.pages.academy/static/offer/5.jpg'
-  ],
-  title: 'Waterfront with extraordinary view',
-  isFavorite: false,
-  isPremium: true,
-  rating: 4.8,
-  type: 'room',
-  bedrooms: 1,
-  maxAdults: 2,
-  price: 142,
-  goods: [
-    'Laptop friendly workspace',
-    'Breakfast'
-  ],
-  host: {
-    id: 25,
-    name: 'Angelina',
-    isPro: true,
-    avatarUrl: 'img/avatar-angelina.jpg'
-  },
-  description: 'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
-  id: generateUniqueId(),
-};
+// export const offers: TOfferPreview = {
+//   'id': 'f523f3e1-df8c-49b2-9f8a-0fd2b8d4cb6e',
+//   'title': 'Tile House',
+//   'type': 'apartment',
+//   'price': 498,
+//   'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/1.jpg',
+//   'city': {
+//     'name': CityName.Paris,
+//     'location': {
+//       'latitude': 48.85661,
+//       'longitude': 2.351499,
+//       'zoom': 13
+//     }
+//   },
+//   'location': {
+//     'latitude': 48.868610000000004,
+//     'longitude': 2.342499,
+//     'zoom': 16
+//   },
+//   'isFavorite': false,
+//   'isPremium': false,
+//   'rating': 3.4
+// };
+
+// export const offerData: TOffer = {
+//   city: {
+//     name: CityName.Dusseldorf
+//   },
+//   previewImage: 'https://15.design.htmlacademy.pro/static/hotel/1.jpg',
+//   images: [
+//     'https://14.react.pages.academy/static/offer/16.jpg',
+//     'https://14.react.pages.academy/static/offer/13.jpg',
+//     'https://14.react.pages.academy/static/offer/6.jpg',
+//     'https://14.react.pages.academy/static/offer/11.jpg',
+//     'https://14.react.pages.academy/static/offer/14.jpg',
+//     'https://14.react.pages.academy/static/offer/9.jpg',
+//     'https://14.react.pages.academy/static/offer/2.jpg',
+//     'https://14.react.pages.academy/static/offer/15.jpg',
+//     'https://14.react.pages.academy/static/offer/7.jpg',
+//     'https://14.react.pages.academy/static/offer/17.jpg',
+//     'https://14.react.pages.academy/static/offer/4.jpg',
+//     'https://14.react.pages.academy/static/offer/8.jpg',
+//     'https://14.react.pages.academy/static/offer/10.jpg',
+//     'https://14.react.pages.academy/static/offer/5.jpg'
+//   ],
+//   title: 'Waterfront with extraordinary view',
+//   isFavorite: false,
+//   isPremium: true,
+//   rating: 4.8,
+//   type: 'room',
+//   bedrooms: 1,
+//   maxAdults: 2,
+//   price: 142,
+//   goods: [
+//     'Laptop friendly workspace',
+//     'Breakfast'
+//   ],
+//   host: {
+//     id: 25,
+//     name: 'Angelina',
+//     isPro: true,
+//     avatarUrl: 'img/avatar-angelina.jpg'
+//   },
+//   description: 'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
+//   id: generateUniqueId(),
+// };
 
 export const offers: TOffer[] = [
   {
@@ -58,23 +83,7 @@ export const offers: TOffer[] = [
         'zoom': 13
       }
     },
-    'previewImage': 'https://14.react.pages.academy/static/offer/3.jpg',
-    'images': [
-      'https://14.react.pages.academy/static/offer/16.jpg',
-      'https://14.react.pages.academy/static/offer/13.jpg',
-      'https://14.react.pages.academy/static/offer/6.jpg',
-      'https://14.react.pages.academy/static/offer/11.jpg',
-      'https://14.react.pages.academy/static/offer/14.jpg',
-      'https://14.react.pages.academy/static/offer/9.jpg',
-      'https://14.react.pages.academy/static/offer/2.jpg',
-      'https://14.react.pages.academy/static/offer/15.jpg',
-      'https://14.react.pages.academy/static/offer/7.jpg',
-      'https://14.react.pages.academy/static/offer/17.jpg',
-      'https://14.react.pages.academy/static/offer/4.jpg',
-      'https://14.react.pages.academy/static/offer/8.jpg',
-      'https://14.react.pages.academy/static/offer/10.jpg',
-      'https://14.react.pages.academy/static/offer/5.jpg'
-    ],
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/1.jpg',
     'title': 'Waterfront with extraordinary view',
     'isFavorite': false,
     'isPremium': false,
@@ -110,23 +119,7 @@ export const offers: TOffer[] = [
         'zoom': 13
       }
     },
-    'previewImage': 'https://14.react.pages.academy/static/offer/14.jpg',
-    'images': [
-      'https://14.react.pages.academy/static/offer/8.jpg',
-      'https://14.react.pages.academy/static/offer/7.jpg',
-      'https://14.react.pages.academy/static/offer/17.jpg',
-      'https://14.react.pages.academy/static/offer/16.jpg',
-      'https://14.react.pages.academy/static/offer/1.jpg',
-      'https://14.react.pages.academy/static/offer/14.jpg',
-      'https://14.react.pages.academy/static/offer/12.jpg',
-      'https://14.react.pages.academy/static/offer/2.jpg',
-      'https://14.react.pages.academy/static/offer/10.jpg',
-      'https://14.react.pages.academy/static/offer/6.jpg',
-      'https://14.react.pages.academy/static/offer/20.jpg',
-      'https://14.react.pages.academy/static/offer/4.jpg',
-      'https://14.react.pages.academy/static/offer/5.jpg',
-      'https://14.react.pages.academy/static/offer/13.jpg'
-    ],
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/5.jpg',
     'title': 'House in countryside',
     'isFavorite': false,
     'isPremium': false,
@@ -163,23 +156,7 @@ export const offers: TOffer[] = [
         'zoom': 13
       }
     },
-    'previewImage': 'https://14.react.pages.academy/static/offer/3.jpg',
-    'images': [
-      'https://14.react.pages.academy/static/offer/9.jpg',
-      'https://14.react.pages.academy/static/offer/3.jpg',
-      'https://14.react.pages.academy/static/offer/5.jpg',
-      'https://14.react.pages.academy/static/offer/18.jpg',
-      'https://14.react.pages.academy/static/offer/8.jpg',
-      'https://14.react.pages.academy/static/offer/10.jpg',
-      'https://14.react.pages.academy/static/offer/1.jpg',
-      'https://14.react.pages.academy/static/offer/19.jpg',
-      'https://14.react.pages.academy/static/offer/16.jpg',
-      'https://14.react.pages.academy/static/offer/7.jpg',
-      'https://14.react.pages.academy/static/offer/6.jpg',
-      'https://14.react.pages.academy/static/offer/14.jpg',
-      'https://14.react.pages.academy/static/offer/4.jpg',
-      'https://14.react.pages.academy/static/offer/12.jpg'
-    ],
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/17.jpg',
     'title': 'Loft Studio in the Central Area',
     'isFavorite': false,
     'isPremium': false,
@@ -223,23 +200,7 @@ export const offers: TOffer[] = [
         'zoom': 13
       }
     },
-    'previewImage': 'https://14.react.pages.academy/static/offer/6.jpg',
-    'images': [
-      'https://14.react.pages.academy/static/offer/15.jpg',
-      'https://14.react.pages.academy/static/offer/18.jpg',
-      'https://14.react.pages.academy/static/offer/3.jpg',
-      'https://14.react.pages.academy/static/offer/6.jpg',
-      'https://14.react.pages.academy/static/offer/19.jpg',
-      'https://14.react.pages.academy/static/offer/2.jpg',
-      'https://14.react.pages.academy/static/offer/17.jpg',
-      'https://14.react.pages.academy/static/offer/10.jpg',
-      'https://14.react.pages.academy/static/offer/1.jpg',
-      'https://14.react.pages.academy/static/offer/4.jpg',
-      'https://14.react.pages.academy/static/offer/16.jpg',
-      'https://14.react.pages.academy/static/offer/20.jpg',
-      'https://14.react.pages.academy/static/offer/13.jpg',
-      'https://14.react.pages.academy/static/offer/5.jpg'
-    ],
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/6.jpg',
     'title': 'Nice, cozy, warm big bed apartment',
     'isFavorite': false,
     'isPremium': false,

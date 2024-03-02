@@ -1,14 +1,13 @@
-export const reviewsData = [
+export const reviews = [
   {
-    'id': 1,
+    'id': 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
+    'date': '2019-05-08T14:13:56.569Z',
     'user': {
-      'id': 15,
-      'isPro': false,
-      'name': 'Kendall',
-      'avatarUrl': 'https://14.react.pages.academy/static/avatar/6.jpg'
+      'name': 'Oliver Conner',
+      'avatarUrl': 'https://url-to-image/image.png',
+      'isPro': false
     },
-    'rating': 4,
-    'comment': 'Home is amazing. It\'s like staying in a museum. The rooms, furnishings and artworks are incredible. The views of My Vesuvius',
-    'date': '2023-10-02T09:23:20.316Z'
+    'comment': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    'rating': 4
   }
 ];

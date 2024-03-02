@@ -2,15 +2,15 @@ import { TCity } from './city';
 import { TLocation } from './location';
 
 export type TOfferPreview = {
-  city: TCity;
-  goods: string[];
-  isFavorite?: boolean;
-  isPremium: boolean;
-  location?: TLocation;
-  previewImage: string;
-  price: number;
-  rating: number;
+  id: string;
   title: string;
   type: string;
-  id: string;
+  price: number;
+  previewImage: string;
+  city: TCity;
+  location?: TLocation;
+  goods?: string[];
+  isFavorite?: boolean;
+  isPremium: boolean;
+  rating: number;
  }
