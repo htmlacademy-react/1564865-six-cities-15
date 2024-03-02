@@ -1,6 +1,9 @@
-export const offerData = {
+import { Offer } from '../types/offer';
+import { CityName } from '../const';
+
+export const offerData: Offer = {
   city: {
-    name: 'Dusseldorf'
+    name: CityName.Dusseldorf
   },
   previewImage: 'https://14.react.pages.academy/static/offer/3.jpg',
   images: [
@@ -41,10 +44,10 @@ export const offerData = {
   id: 1
 };
 
-export const offersData = [
+export const offersData: Offer[] = [
   {
     city: {
-      'name': 'Dusseldorf',
+      'name': CityName.Dusseldorf,
       'location': {
         'latitude': 51.225402,
         'longitude': 6.776314,
@@ -96,7 +99,7 @@ export const offersData = [
   },
   {
     city: {
-      'name': 'Amsterdam',
+      'name': CityName.Amsterdam,
       'location': {
         'latitude': 52.37454,
         'longitude': 4.897976,
@@ -149,7 +152,7 @@ export const offersData = [
   },
   {
     city: {
-      'name': 'Brussels',
+      'name': CityName.Brussels,
       'location': {
         'latitude': 50.846557,
         'longitude': 4.351697,
@@ -209,7 +212,7 @@ export const offersData = [
   },
   {
     city: {
-      'name': 'Amsterdam',
+      'name': CityName.Amsterdam,
       'location': {
         'latitude': 52.37454,
         'longitude': 4.897976,
