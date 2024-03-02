@@ -11,11 +11,15 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
 
-type NumberOfRentals = {
-  offersCount: number;
+import { TOfferPreview } from '../../types/offer-preview';
+import { TReviewType } from '../../types/review';
+
+type AppPageProps = {
+  offers: TOfferPreview[];
+  reviews: TReviewType[];
 }
 
-function App({ offersCount }: NumberOfRentals): JSX.Element {
+function App({ offers,reviews }: AppPageProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -23,7 +27,7 @@ function App({ offersCount }: NumberOfRentals): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offersCount={offersCount} />}
+            element={<MainPage offers={offers} />}
           />
           <Route
             path={AppRoute.Favorites}
@@ -32,7 +36,7 @@ function App({ offersCount }: NumberOfRentals): JSX.Element {
                 restrictedFor={AuthorizationStatus.Auth}
                 redirectTo={AppRoute.Login}
               >
-                <Favorites />
+                <Favorites offers={offers} />
               </ProtectedRoute>
             }
           />
@@ -49,7 +53,7 @@ function App({ offersCount }: NumberOfRentals): JSX.Element {
           />
           <Route
             path={`${AppRoute.Offer}/:offerId`}
-            element={<Offer />}
+            element={<Offer offers={offers} reviews={reviews} />}
           />
           <Route
             path='*'
