@@ -1,6 +1,10 @@
 import { Offer } from '../types/offer';
 import { CityName } from '../const';
 
+function generateUniqueId() {
+  return Date.now().toString() + Math.random().toString(36).substring(2, 15);
+}
+
 export const offerData: Offer = {
   city: {
     name: CityName.Dusseldorf
@@ -41,7 +45,7 @@ export const offerData: Offer = {
     avatarUrl: 'img/avatar-angelina.jpg'
   },
   description: 'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
-  id: 1
+  id: generateUniqueId(),
 };
 
 export const offersData: Offer[] = [
@@ -95,7 +99,7 @@ export const offersData: Offer[] = [
       'longitude': 6.779314,
       'zoom': 16
     },
-    'id': 1
+    'id': generateUniqueId(),
   },
   {
     city: {
@@ -148,7 +152,7 @@ export const offersData: Offer[] = [
       'longitude': 4.902976,
       'zoom': 16
     },
-    'id': 2
+    'id': generateUniqueId(),
   },
   {
     city: {
@@ -208,7 +212,7 @@ export const offersData: Offer[] = [
       'longitude': 4.3376969999999995,
       'zoom': 16
     },
-    'id': 3
+    'id': generateUniqueId(),
   },
   {
     city: {
@@ -262,6 +266,6 @@ export const offersData: Offer[] = [
       'longitude': 4.883976,
       'zoom': 16
     },
-    'id': 4
+    'id': generateUniqueId(),
   },
 ];

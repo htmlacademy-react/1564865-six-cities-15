@@ -18,5 +18,5 @@ export type Offer = {
   goods: string[];
   host: User;
   description?: string;
-  id: number;
+  id: string;
 };
