@@ -1,7 +1,7 @@
 import { CityName } from '../const';
-import { TLocationType } from './location';
+import { TLocation } from './location';
 
-export type City = {
-  location?: TLocationType;
+export type TCity = {
+  location?: TLocation;
   name: CityName;
 }

@@ -1,4 +1,4 @@
-export type TLocationType = {
+export type TLocation = {
   latitude: number;
   longitude: number;
   zoom: number;

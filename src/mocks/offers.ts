@@ -48,7 +48,7 @@ export const offerData: TOffer = {
   id: generateUniqueId(),
 };
 
-export const offersData: TOffer[] = [
+export const offers: TOffer[] = [
   {
     city: {
       'name': CityName.Dusseldorf,
