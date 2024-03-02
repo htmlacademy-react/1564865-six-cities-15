@@ -1,9 +1,16 @@
-import Footer from '../../components/footer/footer';
+import { Helmet } from 'react-helmet-async';
 
-function Favorites() {
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+
+function Favorites(): JSX.Element {
   return (
-    <>
+    <div className="page">
+      <Header />
       <main className="page__main page__main--favorites">
+        <Helmet>
+          <title>6 cities - Favorites Page</title>
+        </Helmet>
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
@@ -145,7 +152,7 @@ function Favorites() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
