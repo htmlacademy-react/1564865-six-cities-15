@@ -6,80 +6,13 @@ function generateUniqueId() {
   return Date.now().toString() + Math.random().toString(36).substring(2, 15);
 }
 
-// export const offers: TOfferPreview = {
-//   'id': 'f523f3e1-df8c-49b2-9f8a-0fd2b8d4cb6e',
-//   'title': 'Tile House',
-//   'type': 'apartment',
-//   'price': 498,
-//   'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/1.jpg',
-//   'city': {
-//     'name': CityName.Paris,
-//     'location': {
-//       'latitude': 48.85661,
-//       'longitude': 2.351499,
-//       'zoom': 13
-//     }
-//   },
-//   'location': {
-//     'latitude': 48.868610000000004,
-//     'longitude': 2.342499,
-//     'zoom': 16
-//   },
-//   'isFavorite': false,
-//   'isPremium': false,
-//   'rating': 3.4
-// };
-
-// export const offerData: TOffer = {
-//   city: {
-//     name: CityName.Dusseldorf
-//   },
-//   previewImage: 'https://15.design.htmlacademy.pro/static/hotel/1.jpg',
-//   images: [
-//     'https://14.react.pages.academy/static/offer/16.jpg',
-//     'https://14.react.pages.academy/static/offer/13.jpg',
-//     'https://14.react.pages.academy/static/offer/6.jpg',
-//     'https://14.react.pages.academy/static/offer/11.jpg',
-//     'https://14.react.pages.academy/static/offer/14.jpg',
-//     'https://14.react.pages.academy/static/offer/9.jpg',
-//     'https://14.react.pages.academy/static/offer/2.jpg',
-//     'https://14.react.pages.academy/static/offer/15.jpg',
-//     'https://14.react.pages.academy/static/offer/7.jpg',
-//     'https://14.react.pages.academy/static/offer/17.jpg',
-//     'https://14.react.pages.academy/static/offer/4.jpg',
-//     'https://14.react.pages.academy/static/offer/8.jpg',
-//     'https://14.react.pages.academy/static/offer/10.jpg',
-//     'https://14.react.pages.academy/static/offer/5.jpg'
-//   ],
-//   title: 'Waterfront with extraordinary view',
-//   isFavorite: false,
-//   isPremium: true,
-//   rating: 4.8,
-//   type: 'room',
-//   bedrooms: 1,
-//   maxAdults: 2,
-//   price: 142,
-//   goods: [
-//     'Laptop friendly workspace',
-//     'Breakfast'
-//   ],
-//   host: {
-//     id: 25,
-//     name: 'Angelina',
-//     isPro: true,
-//     avatarUrl: 'img/avatar-angelina.jpg'
-//   },
-//   description: 'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
-//   id: generateUniqueId(),
-// };
-
 export const offers: TOffer[] = [
   {
     city: {
       'name': CityName.Dusseldorf,
       'location': {
-        'latitude': 51.225402,
-        'longitude': 6.776314,
+        'latitude': 52.3909553943508,
+        'longitude': 4.85309666406198,
         'zoom': 13
       }
     },
@@ -104,8 +37,8 @@ export const offers: TOffer[] = [
     },
     'description': 'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
     'location': {
-      'latitude': 51.237402,
-      'longitude': 6.779314,
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
       'zoom': 16
     },
     'id': generateUniqueId(),
@@ -114,8 +47,8 @@ export const offers: TOffer[] = [
     city: {
       'name': CityName.Amsterdam,
       'location': {
-        'latitude': 52.37454,
-        'longitude': 4.897976,
+        'latitude': 52.3609553943508,
+        'longitude': 4.85309666406198,
         'zoom': 13
       }
     },
@@ -141,8 +74,8 @@ export const offers: TOffer[] = [
     },
     'description': 'This is a place for dreamers to reset, reflect, and create. Designed with a \'slow\' pace in mind, our hope is that you enjoy every part of your stay; from making local coffee by drip in the morning, choosing the perfect record to put on as the sun sets.',
     'location': {
-      'latitude': 52.385540000000006,
-      'longitude': 4.902976,
+      'latitude': 52.3609553943508,
+      'longitude': 4.85309666406198,
       'zoom': 16
     },
     'id': generateUniqueId(),
@@ -151,8 +84,8 @@ export const offers: TOffer[] = [
     city: {
       'name': CityName.Brussels,
       'location': {
-        'latitude': 50.846557,
-        'longitude': 4.351697,
+        'latitude': 52.3909553943508,
+        'longitude': 4.929309666406198,
         'zoom': 13
       }
     },
@@ -185,8 +118,8 @@ export const offers: TOffer[] = [
     },
     'description': 'I am happy to welcome you to my apartment in the city center! Three words: location, cosy and chic!',
     'location': {
-      'latitude': 50.852557,
-      'longitude': 4.3376969999999995,
+      'latitude': 52.3909553943508,
+      'longitude': 4.929309666406198,
       'zoom': 16
     },
     'id': generateUniqueId(),
@@ -195,8 +128,8 @@ export const offers: TOffer[] = [
     city: {
       'name': CityName.Amsterdam,
       'location': {
-        'latitude': 52.37454,
-        'longitude': 4.897976,
+        'latitude': 52.3809553943508,
+        'longitude': 4.939309666406198,
         'zoom': 13
       }
     },
@@ -223,8 +156,8 @@ export const offers: TOffer[] = [
     },
     'description': 'Design interior in most sympathetic area! Complitely renovated, well-equipped, cosy studio in idyllic, over 100 years old wooden house. Calm street, fast connection to center and airport.',
     'location': {
-      'latitude': 52.361540000000005,
-      'longitude': 4.883976,
+      'latitude': 52.3809553943508,
+      'longitude': 4.939309666406198,
       'zoom': 16
     },
     'id': generateUniqueId(),
