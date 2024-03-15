@@ -1,9 +1,14 @@
-import {Icon, layerGroup, Marker} from 'leaflet';
+import { useEffect, useRef } from 'react';
+
+import { Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {useEffect, useRef} from 'react';
-import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
+
+import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+
 import useMap from '../../hooks/useMap';
-import { TMapPoint } from '../../types/map-points';
+
+import { TLocation } from '../../types/location';
+import { TOfferPreview } from '../../types/offer-preview';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -18,29 +23,36 @@ const currentCustomIcon = new Icon({
 });
 
 type TMapProps = {
-  city: TMapPoint;
-  points: TMapPoint[];
-  selectedPoint: TMapPoint | undefined;
+  offers: TOfferPreview[];
+  location: TLocation;
+  specialOfferId: TOfferPreview['id'] | null;
+  block: string;
 };
 
-function Map(props: Readonly<TMapProps>) {
-  const {city, points, selectedPoint} = props;
+function Map({ offers, location, block, specialOfferId }: TMapProps) {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, location);
+
+  useEffect(() => {
+    if (map) {
+      map.setView([location.latitude, location.longitude], location.zoom);
+    }
+  }, [map, location]);
 
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
-      points.forEach((point) => {
+      offers.forEach((offer) => {
         const marker = new Marker({
-          lat: point.lat,
-          lng: point.lng
+          lat: offer.city.location.latitude,
+          lng: offer.city.location.longitude,
         });
-        marker.setIcon(
-          selectedPoint !== undefined && point.title === selectedPoint.title
-            ? currentCustomIcon
-            : defaultCustomIcon
-        )
+        marker
+          .setIcon(
+            offer.id === specialOfferId
+              ? currentCustomIcon
+              : defaultCustomIcon
+          )
           .addTo(markerLayer);
       });
 
@@ -48,10 +60,10 @@ function Map(props: Readonly<TMapProps>) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint]);
+  }, [map, offers, specialOfferId]);
 
   return (
-    <section className="cities__map map" style={{'height': '500px'}} ref={mapRef}></section>
+    <section className={`${block}__map map`} style={{ 'height': '500px' }} ref={mapRef}></section>
   );
 }
 

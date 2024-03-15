@@ -8,7 +8,7 @@ export type TOfferPreview = {
   price: number;
   previewImage: string;
   city: TCity;
-  location?: TLocation;
+  location: TLocation;
   goods?: string[];
   isFavorite?: boolean;
   isPremium: boolean;

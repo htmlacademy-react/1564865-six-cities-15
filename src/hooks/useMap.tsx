@@ -1,8 +1,14 @@
 import {MutableRefObject, useEffect, useRef, useState} from 'react';
 import {Map, TileLayer} from 'leaflet';
-import {TMapPoint} from '../types/map-points';
+// import {TMapPoint} from '../types/map-points';
+import { TLocation } from '../types/location';
 
-function useMap(mapRef: MutableRefObject<HTMLElement | null>, mapPoint: TMapPoint): Map | null {
+import { TILE_LAYER, COPYRIGHT } from '../const';
+
+function useMap(
+  mapRef: MutableRefObject<HTMLElement | null>,
+  location: TLocation
+): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
@@ -10,23 +16,21 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, mapPoint: TMapPoin
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: mapPoint.lat,
-          lng: mapPoint.lng
+          lat: location.latitude,
+          lng: location.longitude
         },
-        zoom: mapPoint.zoom
+        zoom: location.zoom
       });
-      const layer = new TileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+      const layer = new TileLayer(TILE_LAYER,
         {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          attribution: COPYRIGHT
         }
       );
       instance.addLayer(layer);
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, mapPoint]);
+  }, [mapRef, location]);
 
   return map;
 }
