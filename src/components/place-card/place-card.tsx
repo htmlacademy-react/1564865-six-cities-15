@@ -1,29 +1,14 @@
-import { useState } from 'react';
-
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-
-import { TOffer } from '../../types/offer';
-
-type TCardOffer = Pick<
-  TOffer, 'id' | 'title' | 'isFavorite' | 'isPremium' | 'rating' | 'type' | 'price' | 'previewImage'>
-  ;
+import { TOfferPreview } from '../../types/offer-preview';
 
 type TCardProps = {
-  offer: TCardOffer;
+  offers: TOfferPreview;
+  block: string;
+  onCardHover?: (offerId: TOfferPreview['id'] | null) => void;
 }
 
-function OfferCard({ offer }: TCardProps): JSX.Element {
-
-  const [isActive, setIsActive] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsActive(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsActive(false);
-  };
+function PlaceCard({offers, block, onCardHover}: TCardProps): JSX.Element {
 
   const {
     id,
@@ -34,14 +19,21 @@ function OfferCard({ offer }: TCardProps): JSX.Element {
     type,
     price,
     previewImage
-  } = offer;
+  } = offers;
 
   const offerLink = `${AppRoute.Offer}/${id}`;
 
+  const handleMouseEnter = () => {
+    onCardHover?.(id);
+  };
+
+  const handleMouseLeave = () => {
+    onCardHover?.(null);
+  };
 
   return (
     <article
-      className={`cities__card place-card ${isActive ? 'place-card--active' : ''}`}
+      className={`${block}__card place-card`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -67,26 +59,23 @@ function OfferCard({ offer }: TCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${isFavorite
-            ? 'place-card__bookmark-button--active'
-            : ''}`}
-          type="button"
+          <button className={`place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`}
+            type="button"
           >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
+            <svg
+              className="place-card__bookmark-icon"
+              width="18"
+              height="19"
+            >
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span
-              className="visually-hidden"
-            >
-              {isFavorite ? 'In bookmarks' : 'To bookmarks'}
-            </span>
+            <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{
-              width: `${rating * 100 / 5}%`
-            }}
+            <span
+              style={{width: `${rating * 100 / 5}%`}}
             >
             </span>
             <span className="visually-hidden">Rating</span>
@@ -101,4 +90,4 @@ function OfferCard({ offer }: TCardProps): JSX.Element {
   );
 }
 
-export default OfferCard;
+export default PlaceCard;

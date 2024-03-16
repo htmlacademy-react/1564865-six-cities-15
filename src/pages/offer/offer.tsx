@@ -4,13 +4,18 @@ import { Helmet } from 'react-helmet-async';
 
 import { offerInsideItems } from './offer-data';
 
+import useHover from '../../hooks/useHover';
+
 import Header from '../../components/header/header';
-import OfferCard from '../../components/offer-card/offer-card';
+import OfferList from '../../components/offer-list/offer-list';
+// import OfferCard from '../../components/offer-card/offer-card';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewForm from '../../components/review-form/review-form';
+import Map from '../../components/map/map';
 
 import { TOfferPreview } from '../../types/offer-preview';
 import { TReviewType } from '../../types/review';
+import { CityMapData } from '../../const';
 
 type TOfferPageProps = {
   offers: TOfferPreview[];
@@ -18,6 +23,11 @@ type TOfferPageProps = {
 }
 
 function Offer({ offers, reviews }: TOfferPageProps): JSX.Element {
+
+  const activeCity = CityMapData.Amsterdam;
+
+  const { hoveredOfferId, handleCardHover } = useHover({ initialOfferId: null });
+
   return (
     <>
       <Header />
@@ -128,15 +138,18 @@ function Offer({ offers, reviews }: TOfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <Map
+            block='cities'
+            offers={offers}
+            location={activeCity.location}
+            specialOfferId={hoveredOfferId}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {offers.map((offer) => (
-                <OfferCard key={offer.id} offer={offer} />
-              ))}
+              <OfferList offers={offers} onCardHover={handleCardHover}/>
             </div>
           </section>
         </div>
