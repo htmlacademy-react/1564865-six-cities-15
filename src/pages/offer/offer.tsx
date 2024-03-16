@@ -1,6 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-// import { Link } from 'react-router-dom';
-// import { AppRoute } from '../../const';
 
 import { offerInsideItems } from './offer-data';
 
@@ -8,7 +6,6 @@ import useHover from '../../hooks/useHover';
 
 import Header from '../../components/header/header';
 import OfferList from '../../components/offer-list/offer-list';
-// import OfferCard from '../../components/offer-card/offer-card';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';

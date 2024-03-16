@@ -3,13 +3,11 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/header/header';
-// import OfferCard from '../../components/offer-card/offer-card';
 import Cities from '../../components/cities/cities';
 
 import { TOfferPreview } from '../../types/offer-preview';
 
 import { CITIES } from '../../const';
-// import { PLACE_OPTIONS } from '../../const';
 
 type MainPageProps = {
   offers: TOfferPreview[];
