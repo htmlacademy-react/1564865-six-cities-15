@@ -1,6 +1,10 @@
-import PlaceCard from '../../components/offer-card/offer-card';
+import Map from '../map/map';
+import OfferList from '../offer-list/offer-list';
 
 import { TOfferPreview } from '../../types/offer-preview';
+import { CityMapData } from '../../const';
+
+import useHover from '../../hooks/useHover';
 
 const placesOptions: string[] = [
   'Popular',
@@ -14,12 +18,18 @@ type TCitiesProps = {
 }
 
 function Cities({ offers }: TCitiesProps) {
+  const activeCity = CityMapData.Amsterdam;
+
+  const { hoveredOfferId, handleCardHover } = useHover({ initialOfferId: null });
+
   return (
     <div className="cities">
       <div className="cities__places-container container">
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+          <b className="places__found">
+            {offers.length} places to stay in {activeCity.name}
+          </b>
           <form className="places__sorting" action="#" method="get">
             <span className="places__sorting-caption">Sort by</span>
             <span className="places__sorting-type" tabIndex={0}>
@@ -42,14 +52,22 @@ function Cities({ offers }: TCitiesProps) {
           </form>
           <div className="cities__places-list places__list tabs__content">
 
-            {offers.map((offer) => (
-              <PlaceCard key={offer.id} offer={offer} />
-            ))}
+            <OfferList
+              offers={offers}
+              onCardHover={handleCardHover}
+            />
 
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"></section>
+
+          <Map
+            block='cities'
+            offers={offers}
+            location={activeCity.location}
+            specialOfferId={hoveredOfferId}
+          />
+
         </div>
       </div>
     </div>

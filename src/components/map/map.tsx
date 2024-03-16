@@ -25,7 +25,7 @@ const currentCustomIcon = new Icon({
 type TMapProps = {
   offers: TOfferPreview[];
   location: TLocation;
-  specialOfferId: TOfferPreview['id'] | null;
+  specialOfferId: TOfferPreview['id'] | number | null;
   block: string;
 };
 
