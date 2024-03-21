@@ -1,6 +1,5 @@
 import { TOffer } from '../types/offer';
 import { CityName } from '../const';
-// import { TOfferPreview } from '../types/offer-preview';
 
 function generateUniqueId() {
   return Date.now().toString() + Math.random().toString(36).substring(2, 15);

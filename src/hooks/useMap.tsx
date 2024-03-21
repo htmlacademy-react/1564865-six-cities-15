@@ -1,6 +1,5 @@
 import {MutableRefObject, useEffect, useRef, useState} from 'react';
 import {Map, TileLayer} from 'leaflet';
-// import {TMapPoint} from '../types/map-points';
 import { TLocation } from '../types/location';
 
 import { TILE_LAYER, COPYRIGHT } from '../const';
