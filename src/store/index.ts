@@ -1,4 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, Reducer, AnyAction } from '@reduxjs/toolkit';
 import { reducer } from './reducer';
+import { TAppState } from '../types/state';
 
-export const store = configureStore({ reducer });
+const rootReducer: Reducer<TAppState, AnyAction> = reducer;
+
+export const store = configureStore({
+  reducer: rootReducer
+});
