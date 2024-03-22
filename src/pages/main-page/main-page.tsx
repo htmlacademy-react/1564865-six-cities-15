@@ -1,27 +1,36 @@
+import { useDispatch } from 'react-redux';
+import { setActiveCity } from '../../store/action';
+
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
+import { AppRoute } from '../../const';
+
 import Header from '../../components/header/header';
 import Cities from '../../components/cities/cities';
 
-import { TOfferPreview } from '../../types/offer-preview';
+import { CityMapData } from '../../const';
 
-import { CITIES } from '../../const';
+function MainPage(): JSX.Element {
 
-type MainPageProps = {
-  offers: TOfferPreview[];
-}
-
-function MainPage({ offers }: MainPageProps): JSX.Element {
-
-  const [activeCity, setActiveCity] = useState<string | null>(null);
+  const [activeCityName, setActiveCityName] = useState<string | null>(null);
+  const dispatch = useDispatch();
 
   const handleMouseEnter = (city: string) => {
-    setActiveCity(city);
+    setActiveCityName(city);
   };
   const handleMouseLeave = () => {
-    setActiveCity(null);
+    setActiveCityName(null);
+  };
+
+  const handleCityClick = (cityName: keyof typeof CityMapData) => {
+    const cityData = CityMapData[cityName];
+    if (cityData) {
+      const { name, location } = cityData;
+      const city = { name, location };
+      dispatch(setActiveCity(city));
+    }
   };
 
   return (
@@ -36,22 +45,23 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {CITIES.map((city) => (
-                <li className="locations__item" key={city}>
+              {Object.keys(CityMapData).map((cityName) => (
+                <li className="locations__item" key={cityName}>
                   <Link
-                    to={`/${city}`}
-                    className={`locations__item-link tabs__item ${activeCity === city ? 'tabs__item--active' : ''}`}
-                    onMouseEnter={() => handleMouseEnter(city)}
+                    to={AppRoute.Root}
+                    className={`locations__item-link tabs__item ${activeCityName === cityName ? 'tabs__item--active' : ''}`}
+                    onMouseEnter={() => handleMouseEnter(cityName)}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleCityClick(cityName)}
                   >
-                    <span>{city}</span>
+                    <span>{cityName}</span>
                   </Link>
                 </li>
               ))}
             </ul>
           </section>
         </div>
-        <Cities offers={offers} />
+        <Cities />
       </main>
     </div>
   );

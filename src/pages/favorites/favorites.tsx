@@ -4,13 +4,18 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import OfferList from '../../components/offer-list/offer-list';
 
-import { TOfferPreview } from '../../types/offer-preview';
+import { useAppSelector } from '../../hooks';
 
-type TFavoritesPageProps = {
-  offers: TOfferPreview[];
-}
+// import { TOfferPreview } from '../../types/offer-preview';
 
-function Favorites({ offers }: TFavoritesPageProps): JSX.Element {
+// type TFavoritesPageProps = {
+//   offers: TOfferPreview[];
+// }
+
+function Favorites(/*{ offers }: TFavoritesPageProps*/): JSX.Element {
+
+  const offers = useAppSelector((state) => state.offers);
+
   return (
     <div className="page">
       <Header />

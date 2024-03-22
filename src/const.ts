@@ -40,6 +40,15 @@ export enum CityName {
   Dusseldorf = 'Dusseldorf',
 }
 
+export enum NameSpace {
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  NearPlaces = 'NEAR_PLACES',
+  Favorites = 'FAVORITES',
+  Reviews = 'REVIEWS',
+  User = 'USER',
+}
+
 export const CityMap: string[] = [
   'Paris',
   'Cologne',
