@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { offerInsideItems } from './offer-data';
 
 import useHover from '../../hooks/useHover';
+import { useAppSelector } from '../../hooks';
+import { reviews } from '../../mocks/reviews';
 
 import Header from '../../components/header/header';
 import OfferList from '../../components/offer-list/offer-list';
@@ -10,17 +12,19 @@ import ReviewList from '../../components/review-list/review-list';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 
-import { TOfferPreview } from '../../types/offer-preview';
-import { TReviewType } from '../../types/review';
 import { CityMapData } from '../../const';
 
-type TOfferPageProps = {
-  offers: TOfferPreview[];
-  reviews: TReviewType[];
-}
+// import { TOfferPreview } from '../../types/offer-preview';
+// import { TReviewType } from '../../types/review';
 
-function Offer({ offers, reviews }: TOfferPageProps): JSX.Element {
+// type TOfferPageProps = {
+//   offers: TOfferPreview[];
+//   reviews: TReviewType[];
+// }
 
+function Offer(/*{ offers, reviews }: TOfferPageProps*/): JSX.Element {
+
+  const offers = useAppSelector((state) => state.offers);
   const activeCity = CityMapData.Amsterdam;
 
   const { hoveredOfferId, handleCardHover } = useHover({ initialOfferId: null });
