@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { CityMapData } from '../const';
+import { CityMapDefault } from '../const';
 
 import { TReviewType } from '../types/review';
 import { TCity } from '../types/city';
@@ -15,7 +15,7 @@ import {
   fetchReviews,
   setActiveCity,
   dropOffer,
-  fetchFavorites,
+  fetchFavoriteOffers,
   fetchNearPlaces,
   fetchOffer
 }
@@ -27,14 +27,14 @@ const initialState: {
     reviews: TReviewType[];
     offer: TOffer | null;
     favorites: TOfferPreview[];
-    activeCity: TCity | undefined;
+    activeCity: TCity;
   } = {
     offers: offers,
     nearPlaces: [],
     reviews: [],
     offer: null,
     favorites: [],
-    activeCity: CityMapData.Paris,
+    activeCity: CityMapDefault,
   };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -58,7 +58,7 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setActiveCity, (state, action) => {
       state.activeCity = action.payload;
     })
-    .addCase(fetchFavorites, (state) => {
+    .addCase(fetchFavoriteOffers, (state) => {
       state.favorites = state.offers.filter((offer) => offer.isFavorite);
     });
 });

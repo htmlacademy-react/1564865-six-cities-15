@@ -1,50 +1,34 @@
-import { useDispatch } from 'react-redux';
-import { setActiveCity } from '../../store/action';
-
-
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-
-import { CityMapData } from '../../const';
+import { CitiesMap } from '../../const';
+import { fetchOffers, setActiveCity } from '../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { TCity } from '../../types/city';
 
 function Location() {
 
-  const [activeCityName, setActiveCityName] = useState<string | null>(null);
-  const dispatch = useDispatch();
+  const activeCity = useAppSelector((state) => state.activeCity);
 
-  const handleMouseEnter = (city: string) => {
-    setActiveCityName(city);
-  };
-  const handleMouseLeave = () => {
-    setActiveCityName(null);
-  };
+  const dispatch = useAppDispatch();
 
-  const handleCityClick = (cityName: keyof typeof CityMapData) => {
-    const cityData = CityMapData[cityName];
-    if (cityData) {
-      const { name, location } = cityData;
-      const city = { name, location };
-      dispatch(setActiveCity(city));
-    }
-  };
+  function handleCitiesItemClick(city: TCity) {
+    dispatch(fetchOffers());
+    dispatch(setActiveCity(city));
+  }
 
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
-        {Object.keys(CityMapData).map((cityName) => (
-          <li className="locations__item" key={cityName}>
+        {CitiesMap.map((city) => (
+          <li key={city.name} className="locations__item">
             <Link
-              to={AppRoute.Root}
-              className={`locations__item-link tabs__item ${activeCityName === cityName ? 'tabs__item--active' : ''}`}
-              onMouseEnter={() => handleMouseEnter(cityName)}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => handleCityClick(cityName)}
+              className={`locations__item-link tabs__item ${city.name === activeCity.name && 'tabs__item--active'}`}
+              to="/"
+              onClick={() => handleCitiesItemClick(city)}
             >
-              <span>{cityName}</span>
+              <span>{city.name}</span>
             </Link>
-          </li>
-        ))}
+          </li>)
+        )}
       </ul>
     </section>
   );

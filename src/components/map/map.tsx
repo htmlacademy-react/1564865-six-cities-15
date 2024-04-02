@@ -1,14 +1,11 @@
-import { useEffect, useRef } from 'react';
-
-import { Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { Icon, layerGroup, Marker } from 'leaflet';
+import { TOffer } from '../../types/offer';
+import { useEffect, useRef } from 'react';
+import useMap from '../../hooks/useMap';
+import { useAppSelector } from '../../hooks';
 
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
-
-import useMap from '../../hooks/useMap';
-
-import { TLocation } from '../../types/location';
-import { TOfferPreview } from '../../types/offer-preview';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -23,47 +20,56 @@ const currentCustomIcon = new Icon({
 });
 
 type TMapProps = {
-  offers: TOfferPreview[];
-  location: TLocation;
-  specialOfferId: TOfferPreview['id'] | number | null;
   block: string;
+  offers: TOffer[];
+  selectedPointId?: TOffer['id'] | null;
 };
 
-function Map({ offers, location, block, specialOfferId }: TMapProps) {
+function Map({ offers, selectedPointId, block }: TMapProps) {
+  const city = useAppSelector((state) => state.activeCity);
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, location);
+
+  const map = useMap({ mapRef, city });
+
+  const selectedPoint = offers.find((offer) => offer.id === selectedPointId);
 
   useEffect(() => {
     if (map) {
-      map.setView([location.latitude, location.longitude], location.zoom);
-    }
-  }, [map, location]);
+      if (selectedPoint) {
+        const mapLating = {
+          lat: selectedPoint.location.latitude,
+          lng: selectedPoint.location.longitude
+        };
+        const mapZoom = selectedPoint.location.zoom;
+        map.setView(mapLating, mapZoom);
+      }
 
-  useEffect(() => {
-    if (map) {
       const markerLayer = layerGroup().addTo(map);
       offers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.city.location.latitude,
-          lng: offer.city.location.longitude,
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
         });
         marker
           .setIcon(
-            offer.id === specialOfferId
+            selectedPoint !== undefined && offer.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(markerLayer);
       });
-
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, specialOfferId]);
+  }, [map, offers, selectedPoint]);
 
   return (
-    <section className={`${block}__map map`} style={{ 'height': '500px' }} ref={mapRef}></section>
+    <section className={`${block}__map map`}
+      ref={mapRef}
+    >
+    </section>
   );
 }
 

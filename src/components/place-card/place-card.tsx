@@ -37,11 +37,7 @@ function PlaceCard({offers, block, onCardHover}: TCardProps): JSX.Element {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {isPremium && (
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-      )}
+      {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={offerLink}>
           <img

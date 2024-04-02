@@ -17,4 +17,6 @@ export const dropOffer = createAction(`${NameSpace.Offer}/dropOffer`);
 
 export const setActiveCity = createAction<TCity>(`${NameSpace.Offers}/setActiveCity`);
 
-export const fetchFavorites = createAction(`${NameSpace.Favorites}/fetchFavorites`);
+// export const fetchFavorites = createAction(`${NameSpace.Favorites}/fetchFavorites`);
+
+export const fetchFavoriteOffers = createAction('favorites/fetch');

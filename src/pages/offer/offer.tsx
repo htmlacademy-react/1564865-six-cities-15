@@ -12,20 +12,9 @@ import ReviewList from '../../components/review-list/review-list';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 
-import { CityMapData } from '../../const';
-
-// import { TOfferPreview } from '../../types/offer-preview';
-// import { TReviewType } from '../../types/review';
-
-// type TOfferPageProps = {
-//   offers: TOfferPreview[];
-//   reviews: TReviewType[];
-// }
-
-function Offer(/*{ offers, reviews }: TOfferPageProps*/): JSX.Element {
+function Offer(): JSX.Element {
 
   const offers = useAppSelector((state) => state.offers);
-  const activeCity = CityMapData.Amsterdam;
 
   const { hoveredOfferId, handleCardHover } = useHover({ initialOfferId: null });
 
@@ -140,17 +129,19 @@ function Offer(/*{ offers, reviews }: TOfferPageProps*/): JSX.Element {
             </div>
           </div>
           <Map
-            block='cities'
             offers={offers}
-            location={activeCity.location}
             specialOfferId={hoveredOfferId}
+            block={'cities'}
           />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferList offers={offers} onCardHover={handleCardHover}/>
+              <OfferList
+                offers={offers}
+                onCardHover={handleCardHover}
+              />
             </div>
           </section>
         </div>

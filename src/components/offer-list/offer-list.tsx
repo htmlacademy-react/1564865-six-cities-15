@@ -10,7 +10,12 @@ function OfferList({ offers, onCardHover }: TOfferListProps) {
   return (
     <>
       {offers.map((offer) => (
-        <PlaceCard key={offer.id} offers={offer} block='cities' onCardHover={onCardHover}/>
+        <PlaceCard
+          key={offer.id}
+          offers={offer}
+          block='cities'
+          onCardHover={onCardHover}
+        />
       ))}
     </>
   );
