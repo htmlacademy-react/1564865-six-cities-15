@@ -1,25 +1,22 @@
 import { Helmet } from 'react-helmet-async';
-import { useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchFavoriteOffers } from '../../store/action';
 
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import OfferList from '../../components/offer-list/offer-list';
+import FavoritesCard from '../../components/favorites-card/favorites-card';
+import { useEffect } from 'react';
 
 function Favorites(): JSX.Element {
 
   const dispatch = useAppDispatch();
-  dispatch(fetchFavoriteOffers());
+
+  const favoritesOffers = useAppSelector((state) => state.favorites);
 
   useEffect(() => {
     dispatch(fetchFavoriteOffers());
   }, [dispatch]);
-
-  const favoritesOffers = useAppSelector((state) => state.favorites);
-
-  const offers = useAppSelector((state) => state.offers);
 
   const CitiesList = [...new Set(favoritesOffers.map((offer) => offer.city.name))].sort();
 
@@ -47,7 +44,10 @@ function Favorites(): JSX.Element {
                     {favoritesOffers
                       .filter((offer) => offer.city.name === city)
                       .map((offer) => (
-                        <OfferList offers={offers} key={offer.id} />
+                        <FavoritesCard
+                          offer={offer}
+                          key={offer.id}
+                        />
                       ))}
                   </div>
                 </li>

@@ -53,20 +53,20 @@ function Cities() {
               ))}
             </ul>
           </form>
-          <div className="cities__places-list places__list tabs__content">
 
-            <OfferList
-              offers={currentOffers}
-              handleListItemHover={handleListItemHover}
-            />
+          <OfferList
+            offers={currentOffers}
+            block={'cities'}
+            handleListItemHover={handleListItemHover}
+          />
 
-          </div>
         </section>
         <div className="cities__right-section">
 
           <Map
             block={'cities'}
             offers={currentOffers}
+            location={activeCity.location}
             selectedPointId={selectedPointId}
           />
 

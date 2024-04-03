@@ -1,17 +1,15 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { TOfferPreview } from '../../types/offer-preview';
-// import { TOffer } from '../../types/offer';
+import { TOffer } from '../../types/offer';
 
 type TCardProps = {
   offers: TOfferPreview;
   block: string;
-  onCardHover?: (offerId: TOfferPreview['id'] | null) => void;
-  // eslint-disable-next-line react/no-unused-prop-types
-  // handleListItemHover: (itemId: TOffer['id'] | null) => void;
+  handleListItemHover?: (itemId: TOffer['id'] | null) => void;
 }
 
-function PlaceCard({offers, block, onCardHover}: TCardProps): JSX.Element {
+function PlaceCard({offers, block, handleListItemHover}: TCardProps): JSX.Element {
 
   const {
     id,
@@ -27,11 +25,11 @@ function PlaceCard({offers, block, onCardHover}: TCardProps): JSX.Element {
   const offerLink = `${AppRoute.Offer}/${id}`;
 
   const handleMouseEnter = () => {
-    onCardHover?.(id);
+    handleListItemHover?.(id);
   };
 
   const handleMouseLeave = () => {
-    onCardHover?.(null);
+    handleListItemHover?.(null);
   };
 
   return (

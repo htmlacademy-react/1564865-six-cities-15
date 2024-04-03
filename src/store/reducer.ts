@@ -4,7 +4,6 @@ import { CityMapDefault } from '../const';
 
 import { TReviewType } from '../types/review';
 import { TCity } from '../types/city';
-import { TOfferPreview } from '../types/offer-preview';
 import { TOffer } from '../types/offer';
 
 import { offers } from '../mocks/offers';
@@ -22,12 +21,11 @@ import {
   from './action';
 
 const initialState: {
-    // aroundOffers: any;
     offers: TOffer[];
     nearPlaces: TOffer[];
     reviews: TReviewType[];
     offer: TOffer | null;
-    favorites: TOfferPreview[];
+    favorites: TOffer[];
     activeCity: TCity;
     loaded: boolean;
   } = {

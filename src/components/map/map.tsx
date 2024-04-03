@@ -3,7 +3,7 @@ import { Icon, layerGroup, Marker } from 'leaflet';
 import { TOffer } from '../../types/offer';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/useMap';
-import { useAppSelector } from '../../hooks';
+import { TLocation } from '../../types/location';
 
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 
@@ -22,17 +22,24 @@ const currentCustomIcon = new Icon({
 type TMapProps = {
   block: string;
   offers: TOffer[];
+  location: TLocation;
+  offer?: TOffer | null;
   selectedPointId?: TOffer['id'] | null;
 };
 
-function Map({ offers, selectedPointId, block }: TMapProps) {
-  const city = useAppSelector((state) => state.activeCity);
+function Map({ offers, location, offer, selectedPointId, block }: TMapProps) {
 
   const mapRef = useRef(null);
 
-  const map = useMap({ mapRef, city });
+  const map = useMap({ mapRef, location });
 
-  const selectedPoint = offers.find((offer) => offer.id === selectedPointId);
+  const selectedPoint = offers.find((item) => item.id === selectedPointId);
+
+  useEffect(() => {
+    if (map && offers.length !== 0) {
+      map.setView([offers[0].location.latitude, offers[0].location.longitude], offers[0].location.zoom);
+    }
+  }, [map, offers]);
 
   useEffect(() => {
     if (map) {
@@ -46,24 +53,36 @@ function Map({ offers, selectedPointId, block }: TMapProps) {
       }
 
       const markerLayer = layerGroup().addTo(map);
-      offers.forEach((offer) => {
+      offers.forEach((item) => {
         const marker = new Marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude
+          lat: item.location.latitude,
+          lng: item.location.longitude
         });
         marker
           .setIcon(
-            selectedPoint !== undefined && offer.id === selectedPoint.id
+            selectedPoint !== undefined && item.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(markerLayer);
       });
+
+      if (offer) {
+        const markerCurrent = new Marker({
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
+        });
+
+        markerCurrent
+          .setIcon(currentCustomIcon)
+          .addTo(markerLayer);
+      }
+
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedPoint]);
+  }, [map, offers, selectedPoint, offer]);
 
   return (
     <section className={`${block}__map map`}

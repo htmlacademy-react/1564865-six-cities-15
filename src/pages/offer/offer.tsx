@@ -2,21 +2,47 @@ import { Helmet } from 'react-helmet-async';
 
 import { offerInsideItems } from './offer-data';
 
-import useHover from '../../hooks/useHover';
 import { useAppSelector } from '../../hooks';
-import { reviews } from '../../mocks/reviews';
 
 import Header from '../../components/header/header';
 import OfferList from '../../components/offer-list/offer-list';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
+import { useAppDispatch } from '../../hooks';
+import { fetchOffer, fetchNearPlaces, fetchReviews, dropOffer } from '../../store/action';
+import { AppRoute, MAX_AROUND_OFFERS_COUNT } from '../../const';
+import { useEffect } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 
-function Offer(): JSX.Element {
+function Offer(): JSX.Element | null {
 
-  const offers = useAppSelector((state) => state.offers);
-
-  const { hoveredOfferId, handleCardHover } = useHover({ initialOfferId: null });
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const offer = useAppSelector((state) => state.offer);
+  const loaded = useAppSelector((state) => state.loaded);
+  const offersAround = useAppSelector((state) => state.nearPlaces);
+  const offersAroundRender = offersAround.slice(0, MAX_AROUND_OFFERS_COUNT);
+  const reviews = useAppSelector((state) => state.reviews);
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOffer(id));
+      dispatch(fetchNearPlaces(id));
+      dispatch(fetchReviews(id));
+    }
+    return () => {
+      dispatch(dropOffer());
+    };
+  }, [dispatch, id]);
+  if (loaded && offer === null) {
+    return <Navigate to={AppRoute.NotFound} />;
+  }
+  if (!loaded) {
+    return null;
+  }
+  if (!offer) {
+    return null;
+  }
 
   return (
     <>
@@ -129,9 +155,10 @@ function Offer(): JSX.Element {
             </div>
           </div>
           <Map
-            offers={offers}
-            specialOfferId={hoveredOfferId}
-            block={'cities'}
+            offers={offersAroundRender}
+            block={'offer'}
+            location={offer.location}
+            offer={offer}
           />
         </section>
         <div className="container">
@@ -139,8 +166,11 @@ function Offer(): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               <OfferList
-                offers={offers}
-                onCardHover={handleCardHover}
+                offers={offersAroundRender}
+                block={'near-places'}
+                isOtherPlaces handleListItemHover={function (): void {
+                  throw new Error('Function not implemented.');
+                } }
               />
             </div>
           </section>
