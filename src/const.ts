@@ -81,6 +81,8 @@ export const CityNames = [
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 300;
 
+export const MAX_AROUND_OFFERS_COUNT = 3;
+
 export const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
 export const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
 

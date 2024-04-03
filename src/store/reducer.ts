@@ -22,18 +22,21 @@ import {
   from './action';
 
 const initialState: {
+    // aroundOffers: any;
     offers: TOffer[];
     nearPlaces: TOffer[];
     reviews: TReviewType[];
     offer: TOffer | null;
     favorites: TOfferPreview[];
     activeCity: TCity;
+    loaded: boolean;
   } = {
     offers: offers,
     nearPlaces: [],
     reviews: [],
     offer: null,
     favorites: [],
+    loaded: false,
     activeCity: CityMapDefault,
   };
 
@@ -44,6 +47,7 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOffer, (state, action) => {
       state.offer = offers.find((offer) => offer.id === action.payload) ?? null;
+      state.loaded = true;
     })
     .addCase(fetchNearPlaces, (state, action) => {
       state.nearPlaces = offers.filter((offer) => offer.id !== action.payload);
@@ -54,6 +58,7 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(dropOffer, (state) => {
       state.offer = null;
       state.nearPlaces = [];
+      state.loaded = false;
     })
     .addCase(setActiveCity, (state, action) => {
       state.activeCity = action.payload;

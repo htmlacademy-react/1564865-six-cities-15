@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { fetchFavoriteOffers } from '../../store/action';
@@ -10,8 +11,11 @@ import OfferList from '../../components/offer-list/offer-list';
 function Favorites(): JSX.Element {
 
   const dispatch = useAppDispatch();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   dispatch(fetchFavoriteOffers());
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffers());
+  }, [dispatch]);
 
   const favoritesOffers = useAppSelector((state) => state.favorites);
 

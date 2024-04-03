@@ -58,7 +58,6 @@ function Cities() {
             <OfferList
               offers={currentOffers}
               handleListItemHover={handleListItemHover}
-              block={'cities'}
             />
 
           </div>

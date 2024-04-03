@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { TOfferPreview } from '../../types/offer-preview';
+// import { TOffer } from '../../types/offer';
 
 type TCardProps = {
   offers: TOfferPreview;
   block: string;
   onCardHover?: (offerId: TOfferPreview['id'] | null) => void;
+  // eslint-disable-next-line react/no-unused-prop-types
+  // handleListItemHover: (itemId: TOffer['id'] | null) => void;
 }
 
 function PlaceCard({offers, block, onCardHover}: TCardProps): JSX.Element {
