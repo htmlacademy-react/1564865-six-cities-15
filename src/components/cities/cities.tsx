@@ -57,7 +57,7 @@ function Cities() {
           <OfferList
             offers={currentOffers}
             block={'cities'}
-            handleListItemHover={handleListItemHover}
+            onListItemHover={handleListItemHover}
           />
 
         </section>

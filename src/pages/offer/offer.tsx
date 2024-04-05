@@ -168,9 +168,7 @@ function Offer(): JSX.Element | null {
               <OfferList
                 offers={offersAroundRender}
                 block={'near-places'}
-                isOtherPlaces handleListItemHover={function (): void {
-                  throw new Error('Function not implemented.');
-                } }
+                isOtherPlaces
               />
             </div>
           </section>
