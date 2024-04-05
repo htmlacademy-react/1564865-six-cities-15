@@ -29,4 +29,3 @@ export type TOffers = {
   title: string;
   type: string;
 }
-

@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { CityMapDefault } from '../const';
+import { AuthorizationStatus, CityMapDefault } from '../const';
 
 import { TReviewType } from '../types/review';
 import { TCity } from '../types/city';
@@ -16,26 +16,33 @@ import {
   dropOffer,
   fetchFavoriteOffers,
   fetchNearPlaces,
-  fetchOffer
+  fetchOffer,
+  setOffersDataLoadingStatus,
+  requireAuthorization
 }
   from './action';
+import { TOfferPreview } from '../types/offer-preview';
 
 const initialState: {
     offers: TOffer[];
-    nearPlaces: TOffer[];
+    nearPlaces: TOfferPreview[];
     reviews: TReviewType[];
     offer: TOffer | null;
     favorites: TOffer[];
     activeCity: TCity;
     loaded: boolean;
+    authorizationStatus: AuthorizationStatus;
+    isOffersDataLoading: boolean;
   } = {
-    offers: offers,
+    offers: [],
     nearPlaces: [],
     reviews: [],
     offer: null,
     favorites: [],
     loaded: false,
     activeCity: CityMapDefault,
+    authorizationStatus: AuthorizationStatus.Unknown,
+    isOffersDataLoading: false
   };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -44,11 +51,11 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offers = offers;
     })
     .addCase(fetchOffer, (state, action) => {
-      state.offer = offers.find((offer) => offer.id === action.payload) ?? null;
+      state.offer = action.payload;
       state.loaded = true;
     })
     .addCase(fetchNearPlaces, (state, action) => {
-      state.nearPlaces = offers.filter((offer) => offer.id !== action.payload);
+      state.nearPlaces = action.payload;
     })
     .addCase(fetchReviews, (state) => {
       state.reviews = reviews;
@@ -63,5 +70,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFavoriteOffers, (state) => {
       state.favorites = state.offers.filter((offer) => offer.isFavorite);
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });

@@ -10,7 +10,7 @@ import ReviewList from '../../components/review-list/review-list';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import { useAppDispatch } from '../../hooks';
-import { fetchOffer, fetchNearPlaces, fetchReviews, dropOffer } from '../../store/action';
+import { /*fetchOffer, fetchNearPlaces, fetchReviews,*/ dropOffer } from '../../store/action';
 import { AppRoute, MAX_AROUND_OFFERS_COUNT } from '../../const';
 import { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
@@ -26,9 +26,9 @@ function Offer(): JSX.Element | null {
   const reviews = useAppSelector((state) => state.reviews);
   useEffect(() => {
     if (id) {
-      dispatch(fetchOffer(id));
-      dispatch(fetchNearPlaces(id));
-      dispatch(fetchReviews(id));
+      // dispatch(fetchOffer(id));
+      // dispatch(fetchNearPlaces(id));
+      // dispatch(fetchReviews(id));
     }
     return () => {
       dispatch(dropOffer());

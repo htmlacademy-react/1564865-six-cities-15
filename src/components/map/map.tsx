@@ -6,6 +6,7 @@ import useMap from '../../hooks/useMap';
 import { TLocation } from '../../types/location';
 
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+import { TOfferPreview } from '../../types/offer-preview';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -21,7 +22,7 @@ const currentCustomIcon = new Icon({
 
 type TMapProps = {
   block: string;
-  offers: TOffer[];
+  offers: TOfferPreview[];
   location: TLocation;
   offer?: TOffer | null;
   selectedPointId?: TOffer['id'] | null;
