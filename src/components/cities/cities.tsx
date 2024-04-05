@@ -1,10 +1,11 @@
+import { useState } from 'react';
+
 import Map from '../map/map';
 import OfferList from '../offer-list/offer-list';
 
-import { TOfferPreview } from '../../types/offer-preview';
-import { CityMapData } from '../../const';
-
-import useHover from '../../hooks/useHover';
+import { TOffer } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
+import { addPluralEnding } from '../../utils/utils';
 
 const placesOptions: string[] = [
   'Popular',
@@ -13,23 +14,25 @@ const placesOptions: string[] = [
   'Top rated first',
 ];
 
-type TCitiesProps = {
-  offers: TOfferPreview[];
-}
+function Cities() {
 
-function Cities({ offers }: TCitiesProps) {
-  const activeCity = CityMapData.Amsterdam;
+  const [selectedPointId, setSelectedPointId] = useState<TOffer['id'] | null>(null);
 
-  const { hoveredOfferId, handleCardHover } = useHover({ initialOfferId: null });
+  const activeCity = useAppSelector((state) => state.activeCity);
+  const offers = useAppSelector((state) => state.offers);
+
+  function handleListItemHover(itemId: TOffer['id'] | null) {
+    setSelectedPointId(itemId);
+  }
+
+  const currentOffers = offers.filter((offer) => offer.city.name === activeCity.name);
 
   return (
     <div className="cities">
       <div className="cities__places-container container">
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">
-            {offers.length} places to stay in {activeCity.name}
-          </b>
+          <b className="places__found">{currentOffers.length} place{addPluralEnding(currentOffers.length)} to stay in {activeCity.name}</b>
           <form className="places__sorting" action="#" method="get">
             <span className="places__sorting-caption">Sort by</span>
             <span className="places__sorting-type" tabIndex={0}>
@@ -50,22 +53,21 @@ function Cities({ offers }: TCitiesProps) {
               ))}
             </ul>
           </form>
-          <div className="cities__places-list places__list tabs__content">
 
-            <OfferList
-              offers={offers}
-              onCardHover={handleCardHover}
-            />
+          <OfferList
+            offers={currentOffers}
+            block={'cities'}
+            onListItemHover={handleListItemHover}
+          />
 
-          </div>
         </section>
         <div className="cities__right-section">
 
           <Map
-            block='cities'
-            offers={offers}
+            block={'cities'}
+            offers={currentOffers}
             location={activeCity.location}
-            specialOfferId={hoveredOfferId}
+            selectedPointId={selectedPointId}
           />
 
         </div>

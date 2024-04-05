@@ -4,9 +4,12 @@ import { TLocation } from '../types/location';
 
 import { TILE_LAYER, COPYRIGHT } from '../const';
 
-function useMap(
-  mapRef: MutableRefObject<HTMLElement | null>,
-  location: TLocation
+type TUseMapProps = {
+  mapRef: MutableRefObject<HTMLElement | null>;
+  location: TLocation;
+}
+
+function useMap({ mapRef, location }: TUseMapProps
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
