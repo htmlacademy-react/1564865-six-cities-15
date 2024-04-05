@@ -2,21 +2,19 @@ import { useState } from 'react';
 
 import Map from '../map/map';
 import OfferList from '../offer-list/offer-list';
+import SortList from '../../components/sort-list/sort-list';
 
+import { SortMap } from '../../const';
 import { TOffer } from '../../types/offer';
 import { useAppSelector } from '../../hooks';
 import { addPluralEnding } from '../../utils/utils';
-
-const placesOptions: string[] = [
-  'Popular',
-  'Price: low to high',
-  'Price: high to low',
-  'Top rated first',
-];
+import { sorting } from '../../utils/utils';
 
 function Cities() {
 
   const [selectedPointId, setSelectedPointId] = useState<TOffer['id'] | null>(null);
+
+  const [activeSortItem, setActiveSortItem] = useState<string>(SortMap.Popular);
 
   const activeCity = useAppSelector((state) => state.activeCity);
   const offers = useAppSelector((state) => state.offers);
@@ -27,35 +25,41 @@ function Cities() {
 
   const currentOffers = offers.filter((offer) => offer.city.name === activeCity.name);
 
+  function sortingItems(label: string) {
+    switch (label) {
+      case SortMap.Popular:
+        return sorting.Popular(currentOffers);
+      case SortMap.HightToLow:
+        return sorting.HighToLow(currentOffers);
+      case SortMap.LowToHigh:
+        return sorting.LowToHigh(currentOffers);
+      case SortMap.TopRated:
+        return sorting.TopRated(currentOffers);
+    }
+    return sorting.Popular(currentOffers);
+  }
+
+  let sortedOffers: TOffer[] = sortingItems(activeSortItem);
+
+  function handleSortItems(label: string) {
+    sortedOffers = sortingItems(label);
+    setActiveSortItem(label);
+    return sortedOffers;
+  }
+
   return (
     <div className="cities">
       <div className="cities__places-container container">
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{currentOffers.length} place{addPluralEnding(currentOffers.length)} to stay in {activeCity.name}</b>
-          <form className="places__sorting" action="#" method="get">
-            <span className="places__sorting-caption">Sort by</span>
-            <span className="places__sorting-type" tabIndex={0}>
-            Popular
-              <svg className="places__sorting-arrow" width="7" height="4">
-                <use xlinkHref="#icon-arrow-select"></use>
-              </svg>
-            </span>
-            <ul className="places__options places__options--custom places__options--opened">
-              {placesOptions.map((place) => (
-                <li
-                  key={place}
-                  className="places__option"
-                  tabIndex={0}
-                >
-                  {place}
-                </li>
-              ))}
-            </ul>
-          </form>
+          <SortList
+            activeSortItem={activeSortItem}
+            onSortItems={handleSortItems}
+          />
 
           <OfferList
-            offers={currentOffers}
+            offers={sortedOffers}
             block={'cities'}
             onListItemHover={handleListItemHover}
           />
