@@ -4,42 +4,33 @@ import { TOfferPreview } from '../../types/offer-preview';
 import { TOffer } from '../../types/offer';
 
 type TCardProps = {
-  offers: TOfferPreview;
+  offer: TOfferPreview;
   block: string;
-  handleListItemHover?: (itemId: TOffer['id'] | null) => void;
+  onListItemHover?: (itemId: TOffer['id'] | null) => void;
 }
 
-function PlaceCard({offers, block, handleListItemHover}: TCardProps): JSX.Element {
+function PlaceCard({ offer, block, onListItemHover }: TCardProps): JSX.Element {
 
-  const {
-    id,
-    title,
-    isFavorite,
-    isPremium,
-    rating,
-    type,
-    price,
-    previewImage
-  } = offers;
+  const { price, title, rating, previewImage, isPremium, isFavorite, type, id } = offer;
 
   const offerLink = `${AppRoute.Offer}/${id}`;
 
-  const handleMouseEnter = () => {
-    handleListItemHover?.(id);
+  const handleOfferMouseEnter = () => {
+    onListItemHover?.(id);
   };
 
-  const handleMouseLeave = () => {
-    handleListItemHover?.(null);
+  const handleOfferMouseLeave = () => {
+    onListItemHover?.(null);
   };
 
   return (
     <article
       className={`${block}__card place-card`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleOfferMouseEnter}
+      onMouseLeave={handleOfferMouseLeave}
     >
       {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : ''}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${block}__image-wrapper place-card__image-wrapper`}>
         <Link to={offerLink}>
           <img
             className="place-card__image"

@@ -6,18 +6,18 @@ type TOfferListProps = {
   offers: TOfferPreview[];
   isOtherPlaces?: boolean;
   block: string;
-  handleListItemHover: (itemId: TOffer['id'] | null) => void;
+  onListItemHover?: (itemId: TOffer['id'] | null) => void;
 }
 
-function OfferList({ offers, isOtherPlaces, block, handleListItemHover }: TOfferListProps) {
+function OfferList({ offers, isOtherPlaces, block, onListItemHover }: TOfferListProps) {
   return (
     <div className={isOtherPlaces ? 'near-places__list places__list' : 'cities__places-list places__list tabs__content'}>
       {offers.map((offer) => (
         <PlaceCard
           key={offer.id}
-          offers={offer}
+          offer={offer}
           block={block}
-          handleListItemHover={handleListItemHover}
+          onListItemHover={onListItemHover}
         />
       ))}
     </div>
