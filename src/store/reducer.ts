@@ -5,9 +5,11 @@ import { AuthorizationStatus, CityMapDefault } from '../const';
 import { TReviewType } from '../types/review';
 import { TCity } from '../types/city';
 import { TOffer } from '../types/offer';
+import { TOfferPreview } from '../types/offer-preview';
 
-import { offers } from '../mocks/offers';
-import { reviews } from '../mocks/reviews';
+
+// import { offers } from '../mocks/offers';
+// import { reviews } from '../mocks/reviews';
 
 import {
   fetchOffers,
@@ -21,14 +23,13 @@ import {
   requireAuthorization
 }
   from './action';
-import { TOfferPreview } from '../types/offer-preview';
 
 const initialState: {
-    offers: TOffer[];
+    offers: TOfferPreview[];
     nearPlaces: TOfferPreview[];
     reviews: TReviewType[];
     offer: TOffer | null;
-    favorites: TOffer[];
+    favorites: TOfferPreview[];
     activeCity: TCity;
     loaded: boolean;
     authorizationStatus: AuthorizationStatus;
@@ -47,8 +48,8 @@ const initialState: {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(fetchOffers, (state) => {
-      state.offers = offers;
+    .addCase(fetchOffers, (state, action) => {
+      state.offers = action.payload;
     })
     .addCase(fetchOffer, (state, action) => {
       state.offer = action.payload;
@@ -57,8 +58,8 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(fetchNearPlaces, (state, action) => {
       state.nearPlaces = action.payload;
     })
-    .addCase(fetchReviews, (state) => {
-      state.reviews = reviews;
+    .addCase(fetchReviews, (state, action) => {
+      state.reviews = action.payload;
     })
     .addCase(dropOffer, (state) => {
       state.offer = null;
@@ -68,8 +69,8 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setActiveCity, (state, action) => {
       state.activeCity = action.payload;
     })
-    .addCase(fetchFavoriteOffers, (state) => {
-      state.favorites = state.offers.filter((offer) => offer.isFavorite);
+    .addCase(fetchFavoriteOffers, (state, action) => {
+      state.favorites = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
