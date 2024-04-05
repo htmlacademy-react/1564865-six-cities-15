@@ -79,6 +79,13 @@ export const CityNames = [
   'Dusseldorf'
 ] as const;
 
+export const SortMap = {
+  Popular: 'Popular',
+  LowToHigh: 'Price: low to high',
+  HightToLow: 'Price: high to low',
+  TopRated: 'Top rated first'
+} as const;
+
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 300;
 
