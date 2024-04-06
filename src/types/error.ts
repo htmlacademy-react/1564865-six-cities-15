@@ -1,1 +1,1 @@
-export type Error = string | null;
+export type CustomError = string | null;

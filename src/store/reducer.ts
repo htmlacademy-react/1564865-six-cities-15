@@ -7,6 +7,7 @@ import { TCity } from '../types/city';
 import { TOffer, TOffers } from '../types/offer';
 import { TOfferPreview } from '../types/offer-preview';
 import { TSortItem } from '../types/sort';
+import { CustomError } from '../types/error';
 
 import {
   fetchOffers,
@@ -34,7 +35,7 @@ const initialState: {
   authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
   activeSortItem: TSortItem;
-  error: Error;
+  error: CustomError | null;
   } = {
     offers: [],
     nearPlaces: [],
