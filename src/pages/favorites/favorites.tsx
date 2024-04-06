@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { fetchFavoriteOffers } from '../../store/action';
+// import { fetchFavoriteOffers } from '../../store/action';
 
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -15,7 +15,7 @@ function Favorites(): JSX.Element {
   const favoritesOffers = useAppSelector((state) => state.favorites);
 
   useEffect(() => {
-    dispatch(fetchFavoriteOffers());
+    // dispatch(fetchFavoriteOffers());
   }, [dispatch]);
 
   const CitiesList = [...new Set(favoritesOffers.map((offer) => offer.city.name))].sort();
