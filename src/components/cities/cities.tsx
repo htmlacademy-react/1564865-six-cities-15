@@ -11,7 +11,8 @@ import { TSortItem } from '../../types/sort';
 
 import { setActiveSortItem } from '../../store/action';
 import { useAppDispatch } from '../../hooks';
-import { sortOffers } from '../../store/selectors';
+import { sortOffers, getOffers, getSortItem, getActiveCity } from '../../store/selectors';
+import NoCards from '../../components/no-cards/no-cards';
 
 function Cities() {
 
@@ -19,11 +20,11 @@ function Cities() {
 
   const [selectedPointId, setSelectedPointId] = useState<TOffer['id'] | null>(null);
 
-  const activeSortItem = useAppSelector((state) => state.activeSortItem);
+  const activeSortItem = useAppSelector(getSortItem);
 
-  const activeCity = useAppSelector((state) => state.activeCity);
+  const activeCity = useAppSelector(getActiveCity);
 
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getOffers);
 
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity.name);
 
@@ -40,33 +41,34 @@ function Cities() {
 
   return (
     <div className="cities">
-      <div className="cities__places-container container">
-        <section className="cities__places places">
-          <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">{currentOffers.length} place{addPluralEnding(currentOffers.length)} to stay in {activeCity.name}</b>
-          <SortList
-            activeSortItem={activeSortItem}
-            onSortItems={handleSortItems}
-          />
+      {currentOffers.length === 0 ? <NoCards /> :
+        <div className="cities__places-container container">
+          <section className="cities__places places">
+            <h2 className="visually-hidden">Places</h2>
+            <b className="places__found">{currentOffers.length} place{addPluralEnding(currentOffers.length)} to stay in {activeCity.name}</b>
+            <SortList
+              activeSortItem={activeSortItem}
+              onSortItems={handleSortItems}
+            />
 
-          <OfferList
-            offers={currentOffers}
-            block={'cities'}
-            onListItemHover={handleListItemHover}
-          />
+            <OfferList
+              offers={currentOffers}
+              block={'cities'}
+              onListItemHover={handleListItemHover}
+            />
 
-        </section>
-        <div className="cities__right-section">
+          </section>
+          <div className="cities__right-section">
 
-          <Map
-            block={'cities'}
-            offers={currentOffers}
-            location={activeCity.location}
-            selectedPointId={selectedPointId}
-          />
+            <Map
+              block={'cities'}
+              offers={currentOffers}
+              location={activeCity.location}
+              selectedPointId={selectedPointId}
+            />
 
-        </div>
-      </div>
+          </div>
+        </div>}
     </div>
   );
 }
