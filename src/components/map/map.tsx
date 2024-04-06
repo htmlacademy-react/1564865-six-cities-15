@@ -37,10 +37,10 @@ function Map({ offers, location, offer, selectedPointId, block }: TMapProps) {
   const selectedPoint = offers.find((item) => item.id === selectedPointId);
 
   useEffect(() => {
-    if (map && offers.length !== 0) {
-      map.setView([offers[0].location.latitude, offers[0].location.longitude], offers[0].location.zoom);
+    if (map) {
+      map.setView([location.latitude, location.longitude], location.zoom);
     }
-  }, [map, offers]);
+  }, [map, location]);
 
   useEffect(() => {
     if (map) {

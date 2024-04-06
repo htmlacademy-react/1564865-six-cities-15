@@ -2,14 +2,11 @@ import { createReducer } from '@reduxjs/toolkit';
 
 import { AuthorizationStatus, CityMapDefault } from '../const';
 
-import { TReviewType } from '../types/review';
+import { TReview } from '../types/review';
 import { TCity } from '../types/city';
-import { TOffer } from '../types/offer';
+import { TOffer, TOffers } from '../types/offer';
 import { TOfferPreview } from '../types/offer-preview';
-
-
-// import { offers } from '../mocks/offers';
-// import { reviews } from '../mocks/reviews';
+import { TSortItem } from '../types/sort';
 
 import {
   fetchOffers,
@@ -20,20 +17,22 @@ import {
   fetchNearPlaces,
   fetchOffer,
   setOffersDataLoadingStatus,
-  requireAuthorization
+  requireAuthorization,
+  setActiveSortItem
 }
   from './action';
 
 const initialState: {
-    offers: TOfferPreview[];
-    nearPlaces: TOfferPreview[];
-    reviews: TReviewType[];
-    offer: TOffer | null;
-    favorites: TOfferPreview[];
-    activeCity: TCity;
-    loaded: boolean;
-    authorizationStatus: AuthorizationStatus;
-    isOffersDataLoading: boolean;
+  offers: TOffers;
+  nearPlaces: TOfferPreview[];
+  reviews: TReview[];
+  offer: TOffer | null;
+  favorites: TOfferPreview[];
+  activeCity: TCity;
+  loaded: boolean;
+  authorizationStatus: AuthorizationStatus;
+  isOffersDataLoading: boolean;
+  activeSortItem: TSortItem;
   } = {
     offers: [],
     nearPlaces: [],
@@ -42,6 +41,7 @@ const initialState: {
     favorites: [],
     loaded: false,
     activeCity: CityMapDefault,
+    activeSortItem: 'Popular',
     authorizationStatus: AuthorizationStatus.Unknown,
     isOffersDataLoading: false
   };
@@ -71,6 +71,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFavoriteOffers, (state, action) => {
       state.favorites = action.payload;
+    })
+    .addCase(setActiveSortItem, (state, action) => {
+      state.activeSortItem = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { getToken } from './token';
 
-const BASE_URL = 'https://14.design.pages.academy/six-cities';
+const BASE_URL = 'https://15.design.htmlacademy.pro/six-cities';
 
 const TIMEOUT_DURATION = 5000;
 

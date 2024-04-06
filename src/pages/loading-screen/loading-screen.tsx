@@ -1,6 +1,8 @@
+import './loading-message.css';
+
 function LoadingScreen(): JSX.Element {
   return (
-    <p>Loading ...</p>
+    <p className='loading-message'>Loading ...</p>
   );
 }
 

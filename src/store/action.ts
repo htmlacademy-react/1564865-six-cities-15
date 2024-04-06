@@ -6,12 +6,13 @@ import { TOffer } from '../types/offer';
 import { TCity } from '../types/city';
 import { TOfferPreview } from '../types/offer-preview';
 import { TReviews } from '../types/review';
+import { TSortItem } from '../types/sort';
 
-export const fetchOffers = createAction<TOfferPreview[]>('offers/fetch');
+export const fetchOffers = createAction<TOffer[]>('offers/fetch');
 
 export const fetchOffer = createAction<TOffer>('offer/fetch');
 
-export const fetchNearPlaces = createAction<TOfferPreview[]>('nearOffers/fetch');
+export const fetchNearPlaces = createAction<TOffer[]>('nearOffers/fetch');
 
 export const fetchReviews = createAction<TReviews>('reviews/fetch');
 
@@ -24,3 +25,5 @@ export const fetchFavoriteOffers = createAction<TOfferPreview[]>('favorites/fetc
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const setOffersDataLoadingStatus = createAction<boolean>('offers/setOffersDataLoadingStatus');
+
+export const setActiveSortItem = createAction<TSortItem>('offers/setActiveSortItem');

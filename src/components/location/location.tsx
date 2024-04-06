@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CitiesMap } from '../../const';
-import { /*fetchOffers,*/ setActiveCity } from '../../store/action';
+import { setActiveCity } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { TCity } from '../../types/city';
 import classNames from 'classnames';
@@ -12,7 +12,6 @@ function Location() {
   const dispatch = useAppDispatch();
 
   function handleCitiesItemClick(city: TCity) {
-    // dispatch(fetchOffers());
     dispatch(setActiveCity(city));
   }
 
