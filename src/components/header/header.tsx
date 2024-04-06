@@ -3,10 +3,18 @@ import Logo from '../logo/logo';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
+import { logoutAction } from '../../store/api-action';
+import { useAppDispatch } from '../../hooks';
 
 function Header() {
 
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const dispatch = useAppDispatch();
+
+  function handleLogoutClick() {
+    dispatch(logoutAction());
+  }
 
   return (
     <header className="header">
@@ -37,7 +45,11 @@ function Header() {
               {authorizationStatus === AuthorizationStatus.Auth
                 &&
               <li className="header__nav-item">
-                <Link to={AppRoute.Login} className="header__nav-link">
+                <Link
+                  to={'/'}
+                  className="header__nav-link"
+                  onClick={handleLogoutClick}
+                >
                   <span className="header__signout">Sign out</span>
                 </Link>
               </li>}

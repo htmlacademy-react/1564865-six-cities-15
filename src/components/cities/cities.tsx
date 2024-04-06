@@ -28,7 +28,9 @@ function Cities() {
 
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity.name);
 
-  const currentOffers = useAppSelector(() => sortOffers({ offers: filteredOffers, activeSortItem }));
+  // const currentOffers = useAppSelector(() => sortOffers({ offers: filteredOffers, activeSortItem }));
+
+  const currentOffers = sortOffers({offers: filteredOffers, activeSortItem});
 
   function handleListItemHover(itemId: TOffer['id'] | null) {
     setSelectedPointId(itemId);
