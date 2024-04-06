@@ -1,13 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { CityMapDefault } from '../const';
+import { AuthorizationStatus, CityMapDefault } from '../const';
 
-import { TReviewType } from '../types/review';
+import { TReview } from '../types/review';
 import { TCity } from '../types/city';
-import { TOffer } from '../types/offer';
-
-import { offers } from '../mocks/offers';
-import { reviews } from '../mocks/reviews';
+import { TOffer, TOffers } from '../types/offer';
+import { TOfferPreview } from '../types/offer-preview';
+import { TSortItem } from '../types/sort';
 
 import {
   fetchOffers,
@@ -16,42 +15,51 @@ import {
   dropOffer,
   fetchFavoriteOffers,
   fetchNearPlaces,
-  fetchOffer
+  fetchOffer,
+  setOffersDataLoadingStatus,
+  requireAuthorization,
+  setActiveSortItem
 }
   from './action';
 
 const initialState: {
-    offers: TOffer[];
-    nearPlaces: TOffer[];
-    reviews: TReviewType[];
-    offer: TOffer | null;
-    favorites: TOffer[];
-    activeCity: TCity;
-    loaded: boolean;
+  offers: TOffers;
+  nearPlaces: TOfferPreview[];
+  reviews: TReview[];
+  offer: TOffer | null;
+  favorites: TOfferPreview[];
+  activeCity: TCity;
+  loaded: boolean;
+  authorizationStatus: AuthorizationStatus;
+  isOffersDataLoading: boolean;
+  activeSortItem: TSortItem;
   } = {
-    offers: offers,
+    offers: [],
     nearPlaces: [],
     reviews: [],
     offer: null,
     favorites: [],
     loaded: false,
     activeCity: CityMapDefault,
+    activeSortItem: 'Popular',
+    authorizationStatus: AuthorizationStatus.Unknown,
+    isOffersDataLoading: false
   };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(fetchOffers, (state) => {
-      state.offers = offers;
+    .addCase(fetchOffers, (state, action) => {
+      state.offers = action.payload;
     })
     .addCase(fetchOffer, (state, action) => {
-      state.offer = offers.find((offer) => offer.id === action.payload) ?? null;
+      state.offer = action.payload;
       state.loaded = true;
     })
     .addCase(fetchNearPlaces, (state, action) => {
-      state.nearPlaces = offers.filter((offer) => offer.id !== action.payload);
+      state.nearPlaces = action.payload;
     })
-    .addCase(fetchReviews, (state) => {
-      state.reviews = reviews;
+    .addCase(fetchReviews, (state, action) => {
+      state.reviews = action.payload;
     })
     .addCase(dropOffer, (state) => {
       state.offer = null;
@@ -61,7 +69,16 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setActiveCity, (state, action) => {
       state.activeCity = action.payload;
     })
-    .addCase(fetchFavoriteOffers, (state) => {
-      state.favorites = state.offers.filter((offer) => offer.isFavorite);
+    .addCase(fetchFavoriteOffers, (state, action) => {
+      state.favorites = action.payload;
+    })
+    .addCase(setActiveSortItem, (state, action) => {
+      state.activeSortItem = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });

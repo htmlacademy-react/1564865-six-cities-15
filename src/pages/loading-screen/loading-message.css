@@ -1,0 +1,10 @@
+.loading-message {
+  width: 500px;
+  position: fixed;
+  top: 30px;
+  right: 150px;
+  padding: 10px;
+  background-color: #d96666;
+  color: white;
+  border-radius: 5px;
+}

@@ -7,19 +7,22 @@ import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
 import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
 
-// import { TOfferPreview } from '../../types/offer-preview';
-// import { TReviewType } from '../../types/review';
+function App(): JSX.Element {
 
-// type AppPageProps = {
-//   offers: TOfferPreview[];
-//   reviews: TReviewType[];
-// }
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-function App(/*{ offers, reviews }: AppPageProps*/): JSX.Element {
+  if (isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>

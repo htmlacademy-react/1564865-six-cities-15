@@ -6,6 +6,7 @@ import useMap from '../../hooks/useMap';
 import { TLocation } from '../../types/location';
 
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+import { TOfferPreview } from '../../types/offer-preview';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -21,7 +22,7 @@ const currentCustomIcon = new Icon({
 
 type TMapProps = {
   block: string;
-  offers: TOffer[];
+  offers: TOfferPreview[];
   location: TLocation;
   offer?: TOffer | null;
   selectedPointId?: TOffer['id'] | null;
@@ -36,10 +37,10 @@ function Map({ offers, location, offer, selectedPointId, block }: TMapProps) {
   const selectedPoint = offers.find((item) => item.id === selectedPointId);
 
   useEffect(() => {
-    if (map && offers.length !== 0) {
-      map.setView([offers[0].location.latitude, offers[0].location.longitude], offers[0].location.zoom);
+    if (map) {
+      map.setView([location.latitude, location.longitude], location.zoom);
     }
-  }, [map, offers]);
+  }, [map, location]);
 
   useEffect(() => {
     if (map) {

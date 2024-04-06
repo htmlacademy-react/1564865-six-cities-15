@@ -4,47 +4,38 @@ import Map from '../map/map';
 import OfferList from '../offer-list/offer-list';
 import SortList from '../../components/sort-list/sort-list';
 
-import { SortMap } from '../../const';
 import { TOffer } from '../../types/offer';
 import { useAppSelector } from '../../hooks';
 import { addPluralEnding } from '../../utils/utils';
-import { sorting } from '../../utils/utils';
+import { TSortItem } from '../../types/sort';
+
+import { setActiveSortItem } from '../../store/action';
+import { useAppDispatch } from '../../hooks';
+import { sortOffers } from '../../store/selectors';
 
 function Cities() {
 
+  const dispatch = useAppDispatch();
+
   const [selectedPointId, setSelectedPointId] = useState<TOffer['id'] | null>(null);
 
-  const [activeSortItem, setActiveSortItem] = useState<string>(SortMap.Popular);
+  const activeSortItem = useAppSelector((state) => state.activeSortItem);
 
   const activeCity = useAppSelector((state) => state.activeCity);
+
   const offers = useAppSelector((state) => state.offers);
+
+  const filteredOffers = offers.filter((offer) => offer.city.name === activeCity.name);
+
+  const currentOffers = useAppSelector(() => sortOffers({ offers: filteredOffers, activeSortItem }));
 
   function handleListItemHover(itemId: TOffer['id'] | null) {
     setSelectedPointId(itemId);
   }
 
-  const currentOffers = offers.filter((offer) => offer.city.name === activeCity.name);
-
-  function sortingItems(label: string) {
-    switch (label) {
-      case SortMap.Popular:
-        return sorting.Popular(currentOffers);
-      case SortMap.HightToLow:
-        return sorting.HighToLow(currentOffers);
-      case SortMap.LowToHigh:
-        return sorting.LowToHigh(currentOffers);
-      case SortMap.TopRated:
-        return sorting.TopRated(currentOffers);
-    }
-    return sorting.Popular(currentOffers);
-  }
-
-  let sortedOffers: TOffer[] = sortingItems(activeSortItem);
-
-  function handleSortItems(label: string) {
-    sortedOffers = sortingItems(label);
-    setActiveSortItem(label);
-    return sortedOffers;
+  function handleSortItems(type: TSortItem) {
+    dispatch(setActiveSortItem(type));
+    return currentOffers;
   }
 
   return (
@@ -59,7 +50,7 @@ function Cities() {
           />
 
           <OfferList
-            offers={sortedOffers}
+            offers={currentOffers}
             block={'cities'}
             onListItemHover={handleListItemHover}
           />

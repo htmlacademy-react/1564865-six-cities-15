@@ -1,10 +1,10 @@
 import { AppRoute, RATING_MAX } from '../../const';
 import { Link } from 'react-router-dom';
 import { capitalize } from '../../utils/utils';
-import { TOffer } from '../../types/offer';
+import { TOfferPreview } from '../../types/offer-preview';
 
 type FavoritesCardProps = {
-  offer: TOffer;
+  offer: TOfferPreview;
 }
 
 function FavoritesCard({ offer }: FavoritesCardProps): JSX.Element {
