@@ -99,6 +99,7 @@ export const MAX_COMMENT_LENGTH = 300;
 
 export const MAX_AROUND_OFFERS_COUNT = 3;
 export const RATING_MAX = 5;
+export const TIMEOUT_SHOW_ERROR = 2000;
 
 export const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
 export const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';

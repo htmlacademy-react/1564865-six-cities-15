@@ -7,6 +7,7 @@ import { TCity } from '../types/city';
 import { TOfferPreview } from '../types/offer-preview';
 import { TReviews } from '../types/review';
 import { TSortItem } from '../types/sort';
+import { Error } from '../types/error';
 
 export const fetchOffers = createAction<TOffer[]>('offers/fetch');
 
@@ -27,3 +28,5 @@ export const requireAuthorization = createAction<AuthorizationStatus>('user/requ
 export const setOffersDataLoadingStatus = createAction<boolean>('offers/setOffersDataLoadingStatus');
 
 export const setActiveSortItem = createAction<TSortItem>('offers/setActiveSortItem');
+
+export const setError = createAction<Error>('app/setError');
