@@ -3,22 +3,24 @@ import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 type TProtectedRouteProps = {
-  restrictedFor: AuthorizationStatus;
+  authorizationStatus: AuthorizationStatus;
   redirectTo: AppRoute;
   children: JSX.Element;
+  component?: boolean;
 };
 
-function ProtectedRoute({
-  restrictedFor,
-  redirectTo,
-  children
-}: TProtectedRouteProps) {
-  const authorizationStatus = AuthorizationStatus.NoAuth;
+function ProtectedRoute(props: TProtectedRouteProps): JSX.Element {
+  const { authorizationStatus, children, redirectTo, component } = props;
 
-  return restrictedFor === authorizationStatus ? (
-    <Navigate to={redirectTo} />
-  ) : (
-    children
+  if (component) {
+    return (authorizationStatus === AuthorizationStatus.NoAuth)
+      ? <Navigate to={redirectTo} /> : children;
+  }
+
+  return (
+    authorizationStatus === AuthorizationStatus.NoAuth
+      ? children
+      : <Navigate to={redirectTo}/>
   );
 }
 

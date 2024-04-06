@@ -38,8 +38,9 @@ function App(): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <ProtectedRoute
-                restrictedFor={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
                 redirectTo={AppRoute.Login}
+                component
               >
                 <Favorites />
               </ProtectedRoute>
@@ -49,7 +50,7 @@ function App(): JSX.Element {
             path={AppRoute.Login}
             element={
               <ProtectedRoute
-                restrictedFor={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
                 redirectTo={AppRoute.Root}
               >
                 <Login />
