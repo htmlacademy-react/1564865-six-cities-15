@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TAppDispatch, TState, UserData, AuthData } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { fetchOffers, requireAuthorization, fetchReviews, setOffersDataLoadingStatus } from './action';
-// import { TOfferPreview } from '../types/offer-preview';
 
 import { TReviews } from '../types/review';
 import { TOffer } from '../types/offer';
@@ -30,6 +29,18 @@ export const fetchReviewsAction = createAsyncThunk<void, undefined, apiActionCon
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<TReviews>(APIRoute.Comments);
     dispatch(fetchReviews(data));
+  },
+);
+
+export const checkAuthAction = createAsyncThunk<void, undefined, apiActionConfig>(
+  'user/checkAuth',
+  async (_arg, { dispatch, extra: api }) => {
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch {
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
   },
 );
 

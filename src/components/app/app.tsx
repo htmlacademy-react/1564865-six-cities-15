@@ -15,9 +15,11 @@ import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
 
 function App(): JSX.Element {
 
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-  if (isOffersDataLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
