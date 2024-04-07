@@ -5,7 +5,7 @@ export type TOffer = TOfferPreview & {
   bedrooms: number;
   description?: string;
   host: TUser;
-  images?: string[];
+  images: string[];
   maxAdults: number;
   id?: string;
 };

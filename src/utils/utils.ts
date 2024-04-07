@@ -1,4 +1,9 @@
+import { RATING_MAX } from '../const';
 import { TOffer } from '../types/offer';
+
+export function getRatingValue(rating: number): number {
+  return (rating * 100) / RATING_MAX;
+}
 
 export function addPluralEnding(count: number) {
   return count !== 1 ? 's' : '';

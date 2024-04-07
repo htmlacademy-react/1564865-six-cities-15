@@ -16,3 +16,5 @@ export type TOfferPreview = {
   onCardHover?: void;
   block?: string;
  }
+
+export type TOfferPreviews = TOfferPreview[];

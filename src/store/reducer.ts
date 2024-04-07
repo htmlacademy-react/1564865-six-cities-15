@@ -5,18 +5,18 @@ import { AuthorizationStatus, CityMapDefault } from '../const';
 import { TReview } from '../types/review';
 import { TCity } from '../types/city';
 import { TOffer, TOffers } from '../types/offer';
-import { TOfferPreview } from '../types/offer-preview';
+import { TOfferPreview, TOfferPreviews } from '../types/offer-preview';
 import { TSortItem } from '../types/sort';
 import { CustomError } from '../types/error';
 
 import {
-  fetchOffers,
-  fetchReviews,
+  gethOffers,
+  gethReviews,
   setActiveCity,
   dropOffer,
-  fetchFavoriteOffers,
-  fetchNearPlaces,
-  fetchOffer,
+  getFavoriteOffers,
+  getNearPlaces,
+  gethOffer,
   setOffersDataLoadingStatus,
   requireAuthorization,
   setActiveSortItem,
@@ -26,7 +26,7 @@ import {
 
 const initialState: {
   offers: TOffers;
-  nearPlaces: TOfferPreview[];
+  nearPlaces: TOfferPreviews;
   reviews: TReview[];
   offer: TOffer | null;
   favorites: TOfferPreview[];
@@ -52,17 +52,17 @@ const initialState: {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(fetchOffers, (state, action) => {
+    .addCase(gethOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(fetchOffer, (state, action) => {
+    .addCase(gethOffer, (state, action) => {
       state.offer = action.payload;
       state.loaded = true;
     })
-    .addCase(fetchNearPlaces, (state, action) => {
+    .addCase(getNearPlaces, (state, action) => {
       state.nearPlaces = action.payload;
     })
-    .addCase(fetchReviews, (state, action) => {
+    .addCase(gethReviews, (state, action) => {
       state.reviews = action.payload;
     })
     .addCase(dropOffer, (state) => {
@@ -73,7 +73,7 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setActiveCity, (state, action) => {
       state.activeCity = action.payload;
     })
-    .addCase(fetchFavoriteOffers, (state, action) => {
+    .addCase(getFavoriteOffers, (state, action) => {
       state.favorites = action.payload;
     })
     .addCase(setActiveSortItem, (state, action) => {

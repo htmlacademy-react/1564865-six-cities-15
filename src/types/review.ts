@@ -12,7 +12,7 @@ export type TReview = {
   comment: string;
   date: string;
   id: string;
-  rating: number;
+  rating: string;
   user: {
     avatarUrl: string;
     isPro: boolean;
@@ -21,3 +21,8 @@ export type TReview = {
 }
 
 export type TReviews = TReview[];
+
+export type TReviewData = {
+  comment: string;
+  rating: number;
+}
