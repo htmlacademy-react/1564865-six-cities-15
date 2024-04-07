@@ -2,10 +2,13 @@ import { createSelector } from '@reduxjs/toolkit';
 import { sorting } from '../utils/utils';
 import { TSortItem } from '../types/sort';
 import { TOffers } from '../types/offer';
+import { TState } from '../types/state';
 
-const getOffers = (state: { offers: TOffers; activeSortItem: TSortItem }) => state.offers;
+export const getActiveCity = (state: TState) => state.activeCity;
 
-const getSortItem = (state: { offers: TOffers; activeSortItem: TSortItem }) => state.activeSortItem;
+export const getOffers = (state: { offers: TOffers; activeSortItem: TSortItem }) => state.offers;
+
+export const getSortItem = (state: { offers: TOffers; activeSortItem: TSortItem }) => state.activeSortItem;
 
 export const sortOffers = createSelector(
   [getOffers, getSortItem],

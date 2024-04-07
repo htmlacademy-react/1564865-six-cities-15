@@ -7,6 +7,7 @@ import { TCity } from '../types/city';
 import { TOffer, TOffers } from '../types/offer';
 import { TOfferPreview } from '../types/offer-preview';
 import { TSortItem } from '../types/sort';
+import { CustomError } from '../types/error';
 
 import {
   fetchOffers,
@@ -18,7 +19,8 @@ import {
   fetchOffer,
   setOffersDataLoadingStatus,
   requireAuthorization,
-  setActiveSortItem
+  setActiveSortItem,
+  setError
 }
   from './action';
 
@@ -33,6 +35,7 @@ const initialState: {
   authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
   activeSortItem: TSortItem;
+  error: CustomError | null;
   } = {
     offers: [],
     nearPlaces: [],
@@ -43,7 +46,8 @@ const initialState: {
     activeCity: CityMapDefault,
     activeSortItem: 'Popular',
     authorizationStatus: AuthorizationStatus.Unknown,
-    isOffersDataLoading: false
+    isOffersDataLoading: false,
+    error: null
   };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -80,5 +84,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
