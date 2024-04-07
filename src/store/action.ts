@@ -4,6 +4,7 @@ import { AuthorizationStatus } from '../const';
 
 import { TOffer } from '../types/offer';
 import { TCity } from '../types/city';
+import { TReview } from '../types/review';
 import { TOfferPreview } from '../types/offer-preview';
 import { TReviews } from '../types/review';
 import { TSortItem } from '../types/sort';
@@ -30,3 +31,5 @@ export const setOffersDataLoadingStatus = createAction<boolean>('offers/setOffer
 export const setActiveSortItem = createAction<TSortItem>('offers/setActiveSortItem');
 
 export const setError = createAction<CustomError>('app/setError');
+
+export const addReview = createAction<TReview>('offer/addReview');

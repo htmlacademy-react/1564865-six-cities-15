@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TAppDispatch, TState, UserData, AuthData } from '../types/state';
 import { AxiosInstance } from 'axios';
-import { TReviews } from '../types/review';
+import { TReview, TReviewData, TReviews } from '../types/review';
 import { TOffer, TOffers } from '../types/offer';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { saveToken, dropToken } from '../components/services/token';
@@ -13,7 +13,8 @@ import {
   gethReviews,
   setOffersDataLoadingStatus,
   setError,
-  getNearPlaces
+  getNearPlaces,
+  addReview
 }
   from './action';
 
@@ -109,6 +110,22 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+  },
+);
+
+export const fetchAddReviewAction = createAsyncThunk<void, TReviewData, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}
+>(
+  'offer/addReview',
+  async ({ comment, rating }, { dispatch, getState, extra: api }) => {
+    const state = getState();
+    if (state.offer) {
+      const { data } = await api.post<TReview>(`${APIRoute.Comments}/${state.offer.id}`, { comment, rating });
+      dispatch(addReview(data));
+    }
   },
 );
 
