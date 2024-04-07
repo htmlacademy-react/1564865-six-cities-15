@@ -5,6 +5,7 @@ import Cities from '../../components/cities/cities';
 import Location from '../../components/location/location';
 import { useAppSelector } from '../../hooks';
 import { getActiveCity, getOffers, getSortItem, sortOffers } from '../../store/selectors';
+import classNames from 'classnames';
 
 function MainPage(): JSX.Element {
 
@@ -25,7 +26,10 @@ function MainPage(): JSX.Element {
       </Helmet>
       <Header />
 
-      <main className={`page__main page__main--index ${currentOffers.length === 0 && 'page__main--index-empty'}`}>
+      <main className={classNames(
+        'page__main page__main--index',
+        { 'page__main--index-empty': currentOffers.length === 0 })}
+      >
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <Location />
