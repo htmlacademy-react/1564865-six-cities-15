@@ -9,19 +9,19 @@ import { TReviews } from '../types/review';
 import { TSortItem } from '../types/sort';
 import { CustomError } from '../types/error';
 
-export const fetchOffers = createAction<TOffer[]>('offers/fetch');
+export const gethOffers = createAction<TOffer[]>('offers/get');
 
-export const fetchOffer = createAction<TOffer>('offer/fetch');
+export const gethOffer = createAction<TOffer>('offer/get');
 
-export const fetchNearPlaces = createAction<TOffer[]>('nearOffers/fetch');
+export const getNearPlaces = createAction<TOffer[]>('nearOffers/get');
 
-export const fetchReviews = createAction<TReviews>('reviews/fetch');
+export const gethReviews = createAction<TReviews>('reviews/get');
 
 export const dropOffer = createAction('offer/dropOffer');
 
 export const setActiveCity = createAction<TCity>('offers/setActiveCity');
 
-export const fetchFavoriteOffers = createAction<TOfferPreview[]>('favorites/fetch');
+export const getFavoriteOffers = createAction<TOfferPreview[]>('favorites/get');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
