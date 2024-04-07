@@ -4,6 +4,8 @@ export const Setting = {
   ErrorsCount: 10
 };
 
+export const REVIEW_DATE_FORMAT = 'MMMM YYYY';
+
 export const CITIES: string[] = [
   'Paris',
   'Cologne',
@@ -98,6 +100,7 @@ export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 300;
 
 export const MAX_AROUND_OFFERS_COUNT = 3;
+export const MAX_REVIEWS_COUNT = 10;
 export const RATING_MAX = 5;
 export const TIMEOUT_SHOW_ERROR = 2000;
 
