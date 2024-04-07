@@ -46,11 +46,8 @@ export enum CityName {
 }
 
 export enum NameSpace {
-  Offers = 'OFFERS',
-  Offer = 'OFFER',
-  NearPlaces = 'NEAR_PLACES',
-  Favorites = 'FAVORITES',
-  Reviews = 'REVIEWS',
+  Data = 'DATA',
+  App = 'APP',
   User = 'USER',
 }
 
