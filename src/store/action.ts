@@ -1,14 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
 
-// import { AuthorizationStatus } from '../const';
-
 import { TOffer } from '../types/offer';
 import { TCity } from '../types/city';
 // import { TReview } from '../types/review';
 import { TOfferPreview } from '../types/offer-preview';
-import { TReviews } from '../types/review';
+import { TReview, TReviews } from '../types/review';
 import { TSortItem } from '../types/sort';
 import { CustomError } from '../types/error';
+import { AuthorizationStatus } from '../const';
 
 export const gethOffers = createAction<TOffer[]>('offers/get');
 
@@ -24,7 +23,7 @@ export const setActiveCity = createAction<TCity>('offers/setActiveCity');
 
 export const getFavoriteOffers = createAction<TOfferPreview[]>('favorites/get');
 
-// export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const setOffersDataLoadingStatus = createAction<boolean>('offers/setOffersDataLoadingStatus');
 
@@ -32,4 +31,4 @@ export const setActiveSortItem = createAction<TSortItem>('offers/setActiveSortIt
 
 export const setError = createAction<CustomError>('app/setError');
 
-export const addReview = createAction<TOffer['id']>('offer/get');
+export const addReview = createAction<TReview>('offer/get');

@@ -3,8 +3,7 @@ import { TLocation } from './location';
 
 export type TOfferPreview = {
   city: TCity;
-  goods: string[];
-  isFavorite?: boolean;
+  isFavorite: boolean;
   isPremium: boolean;
   location: TLocation;
   previewImage: string;
@@ -13,8 +12,8 @@ export type TOfferPreview = {
   title: string;
   type: string;
   id: string;
-  onCardHover?: void;
-  block?: string;
+  // onCardHover?: void;
+  // block?: string;
  }
 
 export type TOfferPreviews = TOfferPreview[];

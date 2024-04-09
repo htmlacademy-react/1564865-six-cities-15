@@ -6,6 +6,8 @@ import { TState } from '../types/state';
 
 export const getActiveCity = (state: TState) => state.activeCity;
 
+export const getAutorisationStatus = (state: TState) => state.authorizationStatus;
+
 export const getOffers = (state: { offers: TOffers; activeSortItem: TSortItem }) => state.offers;
 
 export const getSortItem = (state: { offers: TOffers; activeSortItem: TSortItem }) => state.activeSortItem;

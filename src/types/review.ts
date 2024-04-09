@@ -12,7 +12,7 @@ export type TReview = {
   comment: string;
   date: string;
   id: string;
-  rating: string;
+  rating: number;
   user: {
     avatarUrl: string;
     isPro: boolean;

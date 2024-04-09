@@ -40,7 +40,6 @@ function App(): JSX.Element {
               <ProtectedRoute
                 authorizationStatus={authorizationStatus}
                 redirectTo={AppRoute.Login}
-                component
               >
                 <Favorites />
               </ProtectedRoute>
@@ -48,14 +47,7 @@ function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Login}
-            element={
-              <ProtectedRoute
-                authorizationStatus={authorizationStatus}
-                redirectTo={AppRoute.Root}
-              >
-                <Login />
-              </ProtectedRoute>
-            }
+            element={<Login />}
           />
           <Route
             path={`${AppRoute.Offer}/:Id`}

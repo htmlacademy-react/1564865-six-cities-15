@@ -2,13 +2,15 @@ import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { AuthorizationStatus } from '../../const';
+import { checkAuthorizationStatus } from '../../utils/utils';
 import { logoutAction } from '../../store/api-action';
 import { useAppDispatch } from '../../hooks';
 
 function Header() {
 
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const isLogged = checkAuthorizationStatus(authorizationStatus);
 
   const dispatch = useAppDispatch();
 
@@ -27,7 +29,7 @@ function Header() {
             <ul className="header__nav-list">
               <li className="header__nav-item user">
 
-                {authorizationStatus === AuthorizationStatus.Auth
+                {isLogged
                   ?
                   <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
@@ -42,7 +44,7 @@ function Header() {
                     <span className="header__login">Sign in</span>
                   </Link>}
               </li>
-              {authorizationStatus === AuthorizationStatus.Auth
+              {isLogged
                 &&
               <li className="header__nav-item">
                 <Link

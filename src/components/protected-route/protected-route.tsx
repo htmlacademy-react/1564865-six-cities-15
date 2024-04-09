@@ -1,26 +1,21 @@
 import { Navigate } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { checkAuthorizationStatus } from '../../utils/utils';
 
 type TProtectedRouteProps = {
   authorizationStatus: AuthorizationStatus;
   redirectTo: AppRoute;
   children: JSX.Element;
-  component?: boolean;
 };
 
 function ProtectedRoute(props: TProtectedRouteProps): JSX.Element {
-  const { authorizationStatus, children, redirectTo, component } = props;
+  const { authorizationStatus, children, redirectTo } = props;
 
-  if (component) {
-    return (authorizationStatus === AuthorizationStatus.NoAuth)
-      ? <Navigate to={redirectTo} /> : children;
-  }
+  const isLogged = checkAuthorizationStatus(authorizationStatus);
 
   return (
-    authorizationStatus === AuthorizationStatus.NoAuth
-      ? children
-      : <Navigate to={redirectTo}/>
+    isLogged ? children : <Navigate to={redirectTo} />
   );
 }
 

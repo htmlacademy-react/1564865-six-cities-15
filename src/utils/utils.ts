@@ -1,4 +1,4 @@
-import { RATING_MAX } from '../const';
+import { AuthorizationStatus, RATING_MAX } from '../const';
 import { TOffer } from '../types/offer';
 
 export function getRatingValue(rating: number): number {
@@ -31,3 +31,7 @@ export const sorting: Record<string, (offers: TOffer[]) => TOffer[]> = {
   LowToHigh: (offers: TOffer[]) => offers.slice().sort(sortLowToHigh),
   TopRated: (offers: TOffer[]) => offers.slice().sort(sortByRating)
 };
+
+export function checkAuthorizationStatus(status: AuthorizationStatus) {
+  return status === AuthorizationStatus.Auth;
+}
