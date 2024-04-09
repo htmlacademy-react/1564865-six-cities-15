@@ -30,7 +30,7 @@ function Login(): JSX.Element {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       dispatch(loginAction({
-        login: loginRef.current.value,
+        email: loginRef.current.value,
         password: passwordRef.current.value
       }));
       navigate(AppRoute.Root);

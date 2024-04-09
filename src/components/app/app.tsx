@@ -50,7 +50,7 @@ function App(): JSX.Element {
             element={<Login />}
           />
           <Route
-            path={`${AppRoute.Offer}/:Id`}
+            path={`${AppRoute.Offer}:id`}
             element={<Offer />}
           />
           <Route

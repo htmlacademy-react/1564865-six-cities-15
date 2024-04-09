@@ -15,13 +15,13 @@ function PlaceCard({ offer, block, onListItemHover }: TCardProps): JSX.Element {
 
   const offerLink = `${AppRoute.Offer}/${id}`;
 
-  const handleOfferMouseEnter = () => {
+  function handleOfferMouseEnter() {
     onListItemHover?.(id);
-  };
+  }
 
-  const handleOfferMouseLeave = () => {
+  function handleOfferMouseLeave() {
     onListItemHover?.(null);
-  };
+  }
 
   return (
     <article
