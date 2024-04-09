@@ -10,13 +10,13 @@ import { TSortItem } from '../types/sort';
 import { CustomError } from '../types/error';
 
 import {
-  gethOffers,
+  getOffers,
   gethReviews,
   setActiveCity,
   dropOffer,
   getFavoriteOffers,
   getNearPlaces,
-  gethOffer,
+  getOffer,
   setOffersDataLoadingStatus,
   requireAuthorization,
   setActiveSortItem,
@@ -52,10 +52,10 @@ const initialState: {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(gethOffers, (state, action) => {
+    .addCase(getOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(gethOffer, (state, action) => {
+    .addCase(getOffer, (state, action) => {
       state.offer = action.payload;
       state.loaded = true;
     })

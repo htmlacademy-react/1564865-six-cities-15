@@ -8,13 +8,14 @@ import { saveToken, dropToken } from '../components/services/token';
 import { store } from '.';
 
 import {
-  gethOffers,
+  getOffers,
   requireAuthorization,
   gethReviews,
   setOffersDataLoadingStatus,
   setError,
   getNearPlaces,
-  addReview
+  addReview,
+  getOffer
 }
   from './action';
 
@@ -37,9 +38,9 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   'data/fetchOffers',
   async (_arg, { dispatch, extra: api }) => {
     dispatch(setOffersDataLoadingStatus(true));
-    const { data } = await api.get<TOffer[]>(APIRoute.Offers);
+    const { data } = await api.get<TOffers>(APIRoute.Offers);
     dispatch(setOffersDataLoadingStatus(false));
-    dispatch(gethOffers(data));
+    dispatch(getOffers(data));
   },
 );
 
@@ -77,8 +78,8 @@ export const fetchOfferAction = createAsyncThunk<void, string, {
 >(
   'data/fetchOffer',
   async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<TOffers>(`${APIRoute.Offers}/${id}`);
-    dispatch(gethOffers(data));
+    const { data } = await api.get<TOffer>(`${APIRoute.Offers}/${id}`);
+    dispatch(getOffer(data));
   },
 );
 
