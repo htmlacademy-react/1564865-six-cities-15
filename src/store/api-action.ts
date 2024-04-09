@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { TAppDispatch, TState, UserData, AuthData } from '../types/state';
+import { TAppDispatch, TState, TAuthData, TUserData } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { TReview, TReviewData, TReviews } from '../types/review';
 import { TOffer, TOffers } from '../types/offer';
@@ -99,7 +99,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<void, TAuthData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -107,7 +107,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 >(
   'user/login',
   async ({ login: email, password }, { dispatch,extra: api }) => {
-    const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
+    const { data: { token } } = await api.post<TUserData>(APIRoute.Login, { email, password });
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   },
