@@ -13,6 +13,7 @@ import ReviewFormMemo from '../../components/review-form/review-form';
 import MapMemo from '../../components/map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
 
 import { useAppDispatch } from '../../hooks';
 import { fetchOfferAction, fetchAroundOffersAction, fetchReviewsAction } from '../../store/api-action';
@@ -38,7 +39,7 @@ function Offer(): JSX.Element {
   const offersAroundRender = offersAround.slice(0, MAX_AROUND_OFFERS_COUNT);
 
   const reviews = useAppSelector(getReviews);
-  const reviewsRender = reviews.slice(0, MAX_REVIEWS_COUNT);
+  const reviewsRender = reviews.slice(1, MAX_REVIEWS_COUNT);
 
   useEffect(() => {
     if (!id) {
@@ -92,12 +93,12 @@ function Offer(): JSX.Element {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton
+                  id={offer?.id}
+                  isFavorite={offer?.isFavorite}
+                  nameBlock={'offer'}
+                  size={'offer'}
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
