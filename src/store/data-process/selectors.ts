@@ -10,3 +10,5 @@ export const getReviews = (state: TState) => state[NameSpace.Data].reviews;
 export const getIsOffersDataLoading = (state: TState) => state[NameSpace.Data].isOffersDataLoading;
 
 export const getOffers = (state: TState) => state[NameSpace.Data].offers;
+
+export const getErrorStatus = (state: TState): boolean => state[NameSpace.Data].hasError;
