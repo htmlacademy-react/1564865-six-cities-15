@@ -1,21 +1,25 @@
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import { Helmet } from 'react-helmet-async';
 
 import { useAppSelector } from '../../hooks';
+import { MAX_AROUND_OFFERS_COUNT, MAX_REVIEWS_COUNT } from '../../const';
 
-import Header from '../../components/header/header';
-import OfferList from '../../components/offer-list/offer-list';
-import ReviewList from '../../components/review-list/review-list';
-import ReviewForm from '../../components/review-form/review-form';
-import Map from '../../components/map/map';
+import HeaderMemo from '../../components/header/header';
+import OfferListMemo from '../../components/offer-list/offer-list';
+import ReviewListMemo from '../../components/review-list/review-list';
+import ReviewFormMemo from '../../components/review-form/review-form';
+import MapMemo from '../../components/map/map';
+import LoadingScreen from '../loading-screen/loading-screen';
+import NotFoundPage from '../not-found-page/not-found-page';
+
 import { useAppDispatch } from '../../hooks';
 import { fetchOfferAction, fetchAroundOffersAction, fetchReviewsAction } from '../../store/api-action';
-import { dropOffer } from '../../store/action';
-import { AuthorizationStatus, MAX_AROUND_OFFERS_COUNT, MAX_REVIEWS_COUNT } from '../../const';
-import { useEffect } from 'react';
-import { /*Navigate,*/ useParams } from 'react-router-dom';
-import NotFoundPage from '../not-found-page/not-found-page';
-import LoadingScreen from '../loading-screen/loading-screen';
-import { getRatingValue } from '../../utils/utils';
+import { dropOffer } from '../../store/data-process/data-process';
+import { getRatingValue, checkAuthorizationStatus } from '../../utils/utils';
+import { getAutorisationStatus } from '../../store/user-process/selectors';
+import { getOffer, getAroundOffers, getReviews, getIsOffersDataLoading } from '../../store/data-process/selectors';
 
 
 function Offer(): JSX.Element {
@@ -23,15 +27,17 @@ function Offer(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAutorisationStatus);
 
-  const offer = useAppSelector((state) => state.offer);
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isLogged = checkAuthorizationStatus(authorizationStatus);
 
-  const offersAround = useAppSelector((state) => state.nearPlaces);
+  const offer = useAppSelector(getOffer);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
+
+  const offersAround = useAppSelector(getAroundOffers);
   const offersAroundRender = offersAround.slice(0, MAX_AROUND_OFFERS_COUNT);
 
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
   const reviewsRender = reviews.slice(0, MAX_REVIEWS_COUNT);
 
   useEffect(() => {
@@ -61,7 +67,7 @@ function Offer(): JSX.Element {
 
   return (
     <>
-      <Header />
+      <HeaderMemo />
       <main className="page__main page__main--offer">
         <Helmet>
           <title>6 cities - Offer Page</title>
@@ -153,13 +159,13 @@ function Offer(): JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ReviewList reviews={reviewsRender}/>
-                {authorizationStatus === AuthorizationStatus.Auth &&
-                <ReviewForm />}
+                <ReviewListMemo reviews={reviewsRender}/>
+                {isLogged &&
+                <ReviewFormMemo />}
               </section>
             </div>
           </div>
-          <Map
+          <MapMemo
             offers={offersAroundRender}
             block={'offer'}
             location={offer.location}
@@ -170,7 +176,7 @@ function Offer(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferList
+              <OfferListMemo
                 offers={offersAroundRender}
                 block={'near-places'}
                 isOtherPlaces

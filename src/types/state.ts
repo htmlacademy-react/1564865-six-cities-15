@@ -4,13 +4,15 @@ export type TState = ReturnType<typeof store.getState>;
 
 export type TAppDispatch = typeof store.dispatch;
 
-export type AuthData = {
-  login: string;
+export type TAuthData = {
+  email: string;
   password: string;
 };
 
-export type UserData = {
-  id: number;
+export type TUserData = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
   email: string;
   token: string;
 };

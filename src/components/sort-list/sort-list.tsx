@@ -1,4 +1,5 @@
 import { useState, KeyboardEvent } from 'react';
+import { memo } from 'react';
 import classNames from 'classnames';
 import { SortMap } from '../../const';
 import { TSortItem } from '../../types/sort';
@@ -60,4 +61,6 @@ function SortList({ onSortItems, activeSortItem }: SortListProps): JSX.Element {
   );
 }
 
-export default SortList;
+const SortListMemo = memo(SortList);
+
+export default SortListMemo;

@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import Header from '../../components/header/header';
+import HeaderMemo from '../../components/header/header';
 import Location from '../../components/location/location';
 
 function NotFoundPage(): JSX.Element {
@@ -9,7 +9,7 @@ function NotFoundPage(): JSX.Element {
       <Helmet>
         <title>{'6 cities - Not found'}</title>
       </Helmet>
-      <Header />
+      <HeaderMemo />
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">Cities</h1>
         <Location />

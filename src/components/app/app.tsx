@@ -9,20 +9,30 @@ import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import Error from '../../pages/error/error';
+
+import { getErrorStatus,getIsOffersDataLoading } from '../../store/data-process/selectors';
+import { getAutorisationStatus } from '../../store/user-process/selectors';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
 
 function App(): JSX.Element {
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAutorisationStatus);
 
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
+  const hasError = useAppSelector(getErrorStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
+  }
+
+  if (hasError) {
+    return (
+      <Error />);
   }
 
   return (
@@ -40,7 +50,6 @@ function App(): JSX.Element {
               <ProtectedRoute
                 authorizationStatus={authorizationStatus}
                 redirectTo={AppRoute.Login}
-                component
               >
                 <Favorites />
               </ProtectedRoute>
@@ -48,17 +57,10 @@ function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Login}
-            element={
-              <ProtectedRoute
-                authorizationStatus={authorizationStatus}
-                redirectTo={AppRoute.Root}
-              >
-                <Login />
-              </ProtectedRoute>
-            }
+            element={<Login />}
           />
           <Route
-            path={`${AppRoute.Offer}/:Id`}
+            path={`${AppRoute.Offer}/:id`}
             element={<Offer />}
           />
           <Route

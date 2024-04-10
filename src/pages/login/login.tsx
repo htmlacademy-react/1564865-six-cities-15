@@ -1,25 +1,36 @@
 import Logo from '../../components/logo/logo';
 import { Helmet } from 'react-helmet-async';
 import { useRef, FormEvent } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-action';
 import { AppRoute } from '../../const';
+import { checkAuthorizationStatus } from '../../utils/utils';
+import { getAutorisationStatus } from '../../store/user-process/selectors';
+import { Navigate } from 'react-router-dom';
 
 function Login(): JSX.Element {
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
+  const authorizationStatus = useAppSelector(getAutorisationStatus);
+
+  const isLogged = checkAuthorizationStatus(authorizationStatus);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  if (isLogged) {
+    return <Navigate to={AppRoute.Root}></Navigate>;
+  }
 
   function handleFormSubmit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       dispatch(loginAction({
-        login: loginRef.current.value,
+        email: loginRef.current.value,
         password: passwordRef.current.value
       }));
       navigate(AppRoute.Root);

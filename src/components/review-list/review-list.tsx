@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { TReviews } from '../../types/review';
 import ReviewsItem from '../reviews-item/reviews-item';
 
@@ -18,4 +20,6 @@ function ReviewList({ reviews }: TReviewList): JSX.Element {
   );
 }
 
-export default ReviewList;
+const ReviewListMemo = memo(ReviewList);
+
+export default ReviewListMemo;

@@ -3,4 +3,6 @@ export type TUser = {
   isPro: boolean;
   name: string;
   id?: number;
+  email: string;
+  token: string;
 }

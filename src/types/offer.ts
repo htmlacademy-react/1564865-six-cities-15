@@ -3,11 +3,11 @@ import { TUser } from './user';
 
 export type TOffer = TOfferPreview & {
   bedrooms: number;
-  description?: string;
+  description: string;
+  goods: string[];
   host: TUser;
   images: string[];
   maxAdults: number;
-  id?: string;
 };
 
 export type TOffers = TOffer[];

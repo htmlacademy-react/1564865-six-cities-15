@@ -1,58 +1,75 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { TAppDispatch, TState, UserData, AuthData } from '../types/state';
+import { TAppDispatch, TState, TAuthData, TUserData } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { TReview, TReviewData, TReviews } from '../types/review';
-import { TOffer, TOffers } from '../types/offer';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { saveToken, dropToken } from '../components/services/token';
-import { store } from '.';
+import { TOffer } from '../types/offer';
+import { APIRoute } from '../const';
+import { saveToken, dropToken } from '../services/token';
+import { TOfferPreview } from '../types/offer-preview';
+import { NameSpace } from '../const';
 
-import {
-  gethOffers,
-  requireAuthorization,
-  gethReviews,
-  setOffersDataLoadingStatus,
-  setError,
-  getNearPlaces,
-  addReview
-}
-  from './action';
-
-export const clearErrorAction = createAsyncThunk(
-  'app/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
-
-export const fetchOffersAction = createAsyncThunk<void, undefined, {
+export const fetchOffersAction = createAsyncThunk<TOfferPreview[], undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-  }
+}
 >(
   'data/fetchOffers',
-  async (_arg, { dispatch, extra: api }) => {
-    dispatch(setOffersDataLoadingStatus(true));
-    const { data } = await api.get<TOffer[]>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
-    dispatch(gethOffers(data));
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<TOfferPreview[]>(APIRoute.Offers);
+    return data;
   },
 );
 
-export const fetchAroundOffersAction = createAsyncThunk<void, string, {
+export const fetchAroundOffersAction = createAsyncThunk<TOfferPreview[], string, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-  }
+}
 >(
   'data/fetchAroundOffers',
-  async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<TOffers>(`${APIRoute.Offers}/${id}/nearby`);
-    dispatch(getNearPlaces(data));
+  async (id, { extra: api }) => {
+    const { data } = await api.get<TOfferPreview[]>(`${APIRoute.Offers}/${id}/nearby`);
+    return data;
+  },
+);
+
+export const fetchReviewsAction = createAsyncThunk<TReviews, string, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}
+>(
+  'data/fetchReviews',
+  async (id, { extra: api }) => {
+    const { data } = await api.get<TReviews>(`${APIRoute.Comments}/${id}`);
+    return data;
+  },
+);
+
+export const fetchFavoritesAction = createAsyncThunk<TOfferPreview[], undefined, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}
+>(
+  'data/fetchFavorites',
+  async (_, { extra: api }) => {
+    const { data } = await api.get<TOfferPreview[]>(APIRoute.Favorite);
+    return data;
+  },
+);
+
+export const fetchOfferAction = createAsyncThunk<TOffer, string, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}
+>(
+  'data/fetchOffer',
+  async (id, { extra: api }) => {
+    const { data } = await api.get<TOffer>(`${APIRoute.Offers}/${id}`);
+    return data;
   },
 );
 
@@ -63,69 +80,36 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }
 >(
   'user/checkAuth',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
+  async (_arg, { extra: api }) => {
+    await api.get(APIRoute.Login);
   },
 );
 
-export const fetchReviewsAction = createAsyncThunk<void, string, {
-  dispatch: TAppDispatch;
-  state: TState;
-  extra: AxiosInstance;
-  }
->(
-  'data/fetchReviews',
-  async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<TReviews>(`${APIRoute.Comments}/${id}`);
-    dispatch(gethReviews(data));
-  },
-);
-
-export const fetchOfferAction = createAsyncThunk<void, string, {
+export const loginAction = createAsyncThunk<void, TAuthData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
 }
->(
-  'data/fetchOffer',
-  async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<TOffers>(`${APIRoute.Offers}/${id}`);
-    dispatch(gethOffers(data));
-  },
-);
-
-export const loginAction = createAsyncThunk<void, AuthData, {
-  dispatch: TAppDispatch;
-  state: TState;
-  extra: AxiosInstance;
-  }
 >(
   'user/login',
-  async ({ login: email, password }, { dispatch, extra: api }) => {
-    const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
+  async ({ email: email, password }, { extra: api }) => {
+    const { data: { token } } = await api.post<TUserData>(APIRoute.Login, { email, password });
     saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
   },
 );
 
-export const fetchAddReviewAction = createAsyncThunk<void, TReviewData, {
+export const fetchAddReviewAction = createAsyncThunk<TReview[], TReviewData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
 }
 >(
-  'offer/addReview',
-  async ({ comment, rating }, { dispatch, getState, extra: api }) => {
+  'data/addReview',
+  async ({ comment, rating }, { getState, extra: api }) => {
     const state = getState();
-    if (state.offer) {
-      const { data } = await api.post<TReview>(`${APIRoute.Comments}/${state.offer.id}`, { comment, rating });
-      dispatch(addReview(data));
-    }
+    const { data } = await api.post<TReview[]>
+    (`${APIRoute.Comments}/${state[NameSpace.Data].offer?.id}`, { comment, rating });
+    return data;
   },
 );
 
@@ -133,12 +117,11 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-  }
+}
 >(
   'user/logout',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
