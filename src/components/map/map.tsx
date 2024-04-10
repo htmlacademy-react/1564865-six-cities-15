@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import { TOffer } from '../../types/offer';
 import { useEffect, useRef } from 'react';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import { TLocation } from '../../types/location';
 
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';

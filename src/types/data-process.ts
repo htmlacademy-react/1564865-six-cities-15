@@ -9,5 +9,11 @@ export type DataProcess = {
   reviews: TReviews;
   offer: TOffer | null;
   favorites: TOfferPreview[];
-  hasError: boolean;
+  hasErrorOffers: boolean;
+  hasErrorOffer: boolean;
+  addReviewStatus: {
+    pending: boolean;
+    rejected: boolean;
+    success: boolean;
+  };
 };

@@ -1,26 +1,7 @@
 import { TCity } from './types/city';
-
-export const Setting = {
-  ErrorsCount: 10
-};
+import { TUserData } from './types/state';
 
 export const REVIEW_DATE_FORMAT = 'MMMM YYYY';
-
-export const CITIES: string[] = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-];
-
-export const PLACE_OPTIONS: string[] = [
-  'Popular',
-  'Price: low to high',
-  'Price: high to low',
-  'Top rated first',
-];
 
 export enum AppRoute {
   Favorites = '/favorites',
@@ -51,15 +32,6 @@ export enum NameSpace {
   User = 'USER',
 }
 
-export const CityMap: string[] = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-];
-
 export const CityMapDefault: TCity = {
   name: CityName.Paris,
   location: {
@@ -68,15 +40,6 @@ export const CityMapDefault: TCity = {
     zoom: 13
   }
 };
-
-export const CityNames = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf'
-] as const;
 
 export const SortMap = {
   Popular: 'Popular',
@@ -99,7 +62,7 @@ export const MAX_COMMENT_LENGTH = 300;
 export const MAX_AROUND_OFFERS_COUNT = 3;
 export const MAX_REVIEWS_COUNT = 10;
 export const RATING_MAX = 5;
-export const TIMEOUT_SHOW_ERROR = 2000;
+export const MAX_OFFER_IMAGE_COUNT = 6;
 
 export const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
 export const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
@@ -157,3 +120,11 @@ export const CitiesMap: TCity[] = [
     }
   }
 ];
+
+export const defaultUser: TUserData = {
+  name: '',
+  avatarUrl: '',
+  isPro: false,
+  email: '',
+  token: ''
+};

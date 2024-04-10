@@ -9,7 +9,7 @@ import Location from '../../components/location/location';
 import OfferListMemo from '../../components/offer-list/offer-list';
 import SortListMemo from '../../components/sort-list/sort-list';
 import MapMemo from '../../components/map/map';
-import NoCards from '../../components/no-cards/no-cards';
+import NoCardsMemo from '../../components/no-cards/no-cards';
 
 import { TOffer } from '../../types/offer';
 import { useAppSelector, useAppDispatch } from '../../hooks';
@@ -58,13 +58,12 @@ function MainPage(): JSX.Element {
       >
         <h1 className="visually-hidden">Cities</h1>
         <Location />
-        {/* <Cities /> */}
         <div className="cities">
-          {currentOffers.length === 0 ? <NoCards /> :
+          {currentOffers.length === 0 ? <NoCardsMemo city={activeCity} /> :
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{currentOffers.length} place{addPluralEnding(currentOffers.length)} to stay in {activeCity.name}</b>
+                <b className="places__found">{filteredOffers.length} place{addPluralEnding(filteredOffers.length)} to stay in {activeCity.name}</b>
                 <SortListMemo
                   activeSortItem={activeSortItem}
                   onSortItems={handleSortItems}
@@ -81,7 +80,7 @@ function MainPage(): JSX.Element {
 
                 <MapMemo
                   block={'cities'}
-                  offers={offers}
+                  offers={filteredOffers}
                   location={activeCity.location}
                   selectedPointId={selectedPointId}
                 />

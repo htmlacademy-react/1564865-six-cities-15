@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { useAppSelector } from '../../hooks';
-import { MAX_AROUND_OFFERS_COUNT, MAX_REVIEWS_COUNT } from '../../const';
+import { MAX_AROUND_OFFERS_COUNT, MAX_OFFER_IMAGE_COUNT, MAX_REVIEWS_COUNT } from '../../const';
 
 import HeaderMemo from '../../components/header/header';
 import OfferListMemo from '../../components/offer-list/offer-list';
@@ -13,6 +13,7 @@ import ReviewFormMemo from '../../components/review-form/review-form';
 import MapMemo from '../../components/map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
 
 import { useAppDispatch } from '../../hooks';
 import { fetchOfferAction, fetchAroundOffersAction, fetchReviewsAction } from '../../store/api-action';
@@ -27,17 +28,18 @@ function Offer(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
+  const offer = useAppSelector(getOffer);
+
   const authorizationStatus = useAppSelector(getAutorisationStatus);
+  const offersAround = useAppSelector(getAroundOffers);
+  const reviews = useAppSelector(getReviews);
 
   const isLogged = checkAuthorizationStatus(authorizationStatus);
 
-  const offer = useAppSelector(getOffer);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
-  const offersAround = useAppSelector(getAroundOffers);
   const offersAroundRender = offersAround.slice(0, MAX_AROUND_OFFERS_COUNT);
 
-  const reviews = useAppSelector(getReviews);
   const reviewsRender = reviews.slice(0, MAX_REVIEWS_COUNT);
 
   useEffect(() => {
@@ -54,9 +56,10 @@ function Offer(): JSX.Element {
     };
   }, [dispatch, id]);
 
-  if (!offer && !isOffersDataLoading) {
+  if (isOffersDataLoading && !offer) {
     return <LoadingScreen />;
   }
+
   if (!offer) {
     return <NotFoundPage />;
   }
@@ -64,6 +67,8 @@ function Offer(): JSX.Element {
   const { images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, description } = offer;
 
   const { avatarUrl, name, isPro } = offer.host;
+
+  const imagesRender = images.slice(0, MAX_OFFER_IMAGE_COUNT);
 
   return (
     <>
@@ -75,7 +80,7 @@ function Offer(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {images.map((image) => (
+              {imagesRender.map((image) => (
                 <div key={image} className="offer__image-wrapper">
                   <img className="offer__image" src={image} alt={title} />
                 </div>
@@ -92,12 +97,12 @@ function Offer(): JSX.Element {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton
+                  id={offer?.id}
+                  isFavorite={offer?.isFavorite}
+                  nameBlock={'offer'}
+                  size={'offer'}
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -158,7 +163,7 @@ function Offer(): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewListMemo reviews={reviewsRender}/>
                 {isLogged &&
                 <ReviewFormMemo />}

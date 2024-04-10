@@ -3,6 +3,7 @@ import { TAppDispatch, TState, TAuthData, TUserData } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { TReview, TReviewData, TReviews } from '../types/review';
 import { TOffer } from '../types/offer';
+import { AddToFavoritesData } from '../types/add-to-favorites';
 import { APIRoute } from '../const';
 import { saveToken, dropToken } from '../services/token';
 import { TOfferPreview } from '../types/offer-preview';
@@ -60,6 +61,19 @@ export const fetchFavoritesAction = createAsyncThunk<TOfferPreview[], undefined,
   },
 );
 
+export const fetchAddToFavoriteAction = createAsyncThunk<TOfferPreview, AddToFavoritesData, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}
+>(
+  'data/fetchAddToFavoriteAction',
+  async ({ id, status }, { extra: api }) => {
+    const { data } = await api.post<TOfferPreview>(`${APIRoute.Favorite}/${id}/${status}`);
+    return data;
+  },
+);
+
 export const fetchOfferAction = createAsyncThunk<TOffer, string, {
   dispatch: TAppDispatch;
   state: TState;
@@ -73,7 +87,7 @@ export const fetchOfferAction = createAsyncThunk<TOffer, string, {
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<TUserData, undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -81,11 +95,12 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 >(
   'user/checkAuth',
   async (_arg, { extra: api }) => {
-    await api.get(APIRoute.Login);
+    const { data } = await api.get<TUserData>(APIRoute.Login);
+    return data;
   },
 );
 
-export const loginAction = createAsyncThunk<void, TAuthData, {
+export const loginAction = createAsyncThunk<TUserData, TAuthData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -93,12 +108,13 @@ export const loginAction = createAsyncThunk<void, TAuthData, {
 >(
   'user/login',
   async ({ email: email, password }, { extra: api }) => {
-    const { data: { token } } = await api.post<TUserData>(APIRoute.Login, { email, password });
-    saveToken(token);
+    const { data } = await api.post<TUserData>(APIRoute.Login, { email, password });
+    saveToken(data.token);
+    return data;
   },
 );
 
-export const fetchAddReviewAction = createAsyncThunk<TReview[], TReviewData, {
+export const fetchAddReviewAction = createAsyncThunk<TReview, TReviewData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -107,7 +123,7 @@ export const fetchAddReviewAction = createAsyncThunk<TReview[], TReviewData, {
   'data/addReview',
   async ({ comment, rating }, { getState, extra: api }) => {
     const state = getState();
-    const { data } = await api.post<TReview[]>
+    const { data } = await api.post<TReview>
     (`${APIRoute.Comments}/${state[NameSpace.Data].offer?.id}`, { comment, rating });
     return data;
   },
