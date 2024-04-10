@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { DataProcess } from '../../types/data-process';
 import {
@@ -10,6 +10,7 @@ import {
   fetchFavoritesAction,
   fetchAddToFavoriteAction
 } from '../api-action';
+import { TOfferPreview } from '../../types/offer-preview';
 
 const initialState: DataProcess = {
   offers: [],
@@ -29,7 +30,11 @@ export const dataProcess = createSlice({
       state.offer = null;
       state.aroundOffers = [];
       state.reviews = [];
-    }
+    },
+    changeOfferFavoriteStatus: (state, action: PayloadAction<TOfferPreview['id']>) => {
+      const index = state.offers.findIndex((offer) => offer.id === action.payload);
+      state.offers[index].isFavorite = !state.offers[index].isFavorite;
+    },
   },
   extraReducers(builder) {
     builder
@@ -75,4 +80,4 @@ export const dataProcess = createSlice({
   }
 });
 
-export const { dropOffer } = dataProcess.actions;
+export const { dropOffer, changeOfferFavoriteStatus } = dataProcess.actions;

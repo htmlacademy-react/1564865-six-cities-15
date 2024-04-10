@@ -1,11 +1,10 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import { AppRoute } from '../../const';
 import { TOfferPreview } from '../../types/offer-preview';
 import { TOffer } from '../../types/offer';
-import classNames from 'classnames';
-import { fetchAddToFavoriteAction } from '../../store/api-action';
-import { useAppDispatch } from '../../hooks';
-import { useState } from 'react';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 type TCardProps = {
   offer: TOfferPreview;
@@ -17,10 +16,6 @@ function PlaceCard({ offer, block, onListItemHover }: TCardProps): JSX.Element {
 
   const { price, title, rating, previewImage, isPremium, isFavorite, type, id } = offer;
 
-  const [isBookmarkActive, setBookmarkActive] = useState(isFavorite);
-
-  const dispatch = useAppDispatch();
-
   const offerLink = `${AppRoute.Offer}/${id}`;
 
   function handleOfferMouseEnter() {
@@ -31,11 +26,8 @@ function PlaceCard({ offer, block, onListItemHover }: TCardProps): JSX.Element {
     onListItemHover?.(null);
   }
 
-  function handleFavoriteButtonClick() {
-    dispatch(fetchAddToFavoriteAction({ id, status: Number(!isBookmarkActive) }));
-
-    setBookmarkActive((prev) => !prev);
-  }
+  useEffect(() => {
+  }, [isFavorite]);
 
   return (
     <article
@@ -61,22 +53,11 @@ function PlaceCard({ offer, block, onListItemHover }: TCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            type="button"
-            onClick={handleFavoriteButtonClick}
-            className={classNames(
-              '`place-card__bookmark-button button',
-              { 'place-card__bookmark-button--active': isBookmarkActive })}
-          >
-            <svg
-              className="place-card__bookmark-icon"
-              width="18"
-              height="19"
-            >
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-          </button>
+          <FavoriteButton
+            id={id}
+            isFavorite={isFavorite}
+            nameBlock={'place-card'}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
