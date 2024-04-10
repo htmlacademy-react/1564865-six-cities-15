@@ -1,8 +1,10 @@
-import { AppRoute, RATING_MAX } from '../../const';
+import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 import { capitalize } from '../../utils/utils';
 import { TOfferPreview } from '../../types/offer-preview';
 import FavoriteButton from '../favorite-button/favorite-button';
+
+import { getRatingValue } from '../../utils/utils';
 
 type FavoritesCardProps = {
   offer: TOfferPreview;
@@ -11,8 +13,6 @@ type FavoritesCardProps = {
 function FavoritesCard({ offer }: FavoritesCardProps): JSX.Element {
 
   const { isPremium, price, title, rating, type, previewImage, id, isFavorite } = offer;
-
-  const ratingValue = (rating * 100) / RATING_MAX;
 
   return (
     <article className="favorites__card place-card">
@@ -36,7 +36,7 @@ function FavoritesCard({ offer }: FavoritesCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${ratingValue}%` }}></span>
+            <span style={{ width: `${getRatingValue(rating)}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -8,12 +8,18 @@ import { checkAuthorizationStatus } from '../../utils/utils';
 import { logoutAction } from '../../store/api-action';
 import { useAppDispatch } from '../../hooks';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
+import { getFavorites } from '../../store/data-process/selectors';
 
 function Header() {
+
+  const favorites = useAppSelector(getFavorites);
+
 
   const authorizationStatus = useAppSelector(getAutorisationStatus);
 
   const isLogged = checkAuthorizationStatus(authorizationStatus);
+
+  // const user = useAppSelector(getUserInfo);
 
   const dispatch = useAppDispatch();
 
@@ -38,7 +44,7 @@ function Header() {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{favorites.length}</span>
                   </Link>
                   :
                   <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
@@ -51,9 +57,9 @@ function Header() {
                 &&
               <li className="header__nav-item">
                 <Link
-                  to={'/'}
+                  to={''}
                   className="header__nav-link"
-                  onClick={handleLogoutClick}
+                  onClick={() => handleLogoutClick()}
                 >
                   <span className="header__signout">Sign out</span>
                 </Link>

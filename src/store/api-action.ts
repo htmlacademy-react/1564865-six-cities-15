@@ -99,7 +99,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const loginAction = createAsyncThunk<void, TAuthData, {
+export const loginAction = createAsyncThunk<TUserData, TAuthData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -107,8 +107,9 @@ export const loginAction = createAsyncThunk<void, TAuthData, {
 >(
   'user/login',
   async ({ email: email, password }, { extra: api }) => {
-    const { data: { token } } = await api.post<TUserData>(APIRoute.Login, { email, password });
-    saveToken(token);
+    const { data } = await api.post<TUserData>(APIRoute.Login, { email, password });
+    saveToken(data.token);
+    return data;
   },
 );
 

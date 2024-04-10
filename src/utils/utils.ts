@@ -2,7 +2,7 @@ import { AuthorizationStatus, RATING_MAX } from '../const';
 import { TOffer } from '../types/offer';
 
 export function getRatingValue(rating: number): number {
-  return (rating * 100) / RATING_MAX;
+  return (Math.round(rating) * 100) / RATING_MAX;
 }
 
 export function addPluralEnding(count: number) {
