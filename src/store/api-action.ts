@@ -87,7 +87,7 @@ export const fetchOfferAction = createAsyncThunk<TOffer, string, {
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<TUserData, undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -95,7 +95,8 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 >(
   'user/checkAuth',
   async (_arg, { extra: api }) => {
-    await api.get(APIRoute.Login);
+    const { data } = await api.get<TUserData>(APIRoute.Login);
+    return data;
   },
 );
 
@@ -113,7 +114,7 @@ export const loginAction = createAsyncThunk<TUserData, TAuthData, {
   },
 );
 
-export const fetchAddReviewAction = createAsyncThunk<TReview[], TReviewData, {
+export const fetchAddReviewAction = createAsyncThunk<TReview, TReviewData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -122,7 +123,7 @@ export const fetchAddReviewAction = createAsyncThunk<TReview[], TReviewData, {
   'data/addReview',
   async ({ comment, rating }, { getState, extra: api }) => {
     const state = getState();
-    const { data } = await api.post<TReview[]>
+    const { data } = await api.post<TReview>
     (`${APIRoute.Comments}/${state[NameSpace.Data].offer?.id}`, { comment, rating });
     return data;
   },

@@ -1,19 +1,19 @@
 import { useAppDispatch } from '../../hooks';
 import { fetchOffersAction } from '../../store/api-action';
-import './error.css';
+import './error-offers.css';
 
-function Error(): JSX.Element {
+function ErrorOffers(): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
     <div className="page page--gray page--main">
       <main className="page__main page__main--index page__main--index-empty">
-        <h1 className="visually-hidden">Не удалось загрузить офферы</h1>
+        <h1 className="visually-hidden">Не удалось загрузить данные</h1>
         <div className="cities">
           <div className="cities__places-container cities__places-container--empty container">
             <section className="cities__no-places">
               <div className="error__wrapper">
-                <p className='error__text'><b>Не удалось загрузить офферы</b></p>
+                <p className='error__text'><b>Не удалось загрузить данные</b></p>
                 <button
                   onClick={() => {
                     dispatch(fetchOffersAction());
@@ -33,4 +33,4 @@ function Error(): JSX.Element {
   );
 }
 
-export default Error;
+export default ErrorOffers;

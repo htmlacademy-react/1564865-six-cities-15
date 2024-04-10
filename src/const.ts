@@ -1,4 +1,5 @@
 import { TCity } from './types/city';
+import { TUserData } from './types/state';
 
 export const Setting = {
   ErrorsCount: 10
@@ -157,3 +158,11 @@ export const CitiesMap: TCity[] = [
     }
   }
 ];
+
+export const defaultUser: TUserData = {
+  name: '',
+  avatarUrl: '',
+  isPro: false,
+  email: '',
+  token: ''
+};

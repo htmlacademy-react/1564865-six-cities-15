@@ -7,7 +7,7 @@ import { useAppSelector } from '../../hooks';
 import { checkAuthorizationStatus } from '../../utils/utils';
 import { logoutAction } from '../../store/api-action';
 import { useAppDispatch } from '../../hooks';
-import { getAutorisationStatus } from '../../store/user-process/selectors';
+import { getAutorisationStatus, getUserInfo } from '../../store/user-process/selectors';
 import { getFavorites } from '../../store/data-process/selectors';
 
 function Header() {
@@ -19,7 +19,7 @@ function Header() {
 
   const isLogged = checkAuthorizationStatus(authorizationStatus);
 
-  // const user = useAppSelector(getUserInfo);
+  const user = useAppSelector(getUserInfo);
 
   const dispatch = useAppDispatch();
 
@@ -43,7 +43,7 @@ function Header() {
                   <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{user.email}</span>
                     <span className="header__favorite-count">{favorites.length}</span>
                   </Link>
                   :

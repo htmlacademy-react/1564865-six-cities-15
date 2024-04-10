@@ -20,7 +20,7 @@ import { fetchOfferAction, fetchAroundOffersAction, fetchReviewsAction } from '.
 import { dropOffer } from '../../store/data-process/data-process';
 import { getRatingValue, checkAuthorizationStatus } from '../../utils/utils';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
-import { getOffer, getAroundOffers, getReviews, getIsOffersDataLoading } from '../../store/data-process/selectors';
+import { getOffer, getAroundOffers, getReviews, getIsOffersDataLoading, getErrorOfferStatus } from '../../store/data-process/selectors';
 
 
 function Offer(): JSX.Element {
@@ -28,18 +28,20 @@ function Offer(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
+  const offer = useAppSelector(getOffer);
+
   const authorizationStatus = useAppSelector(getAutorisationStatus);
+  const hasErrorOffer = useAppSelector(getErrorOfferStatus);
+  const offersAround = useAppSelector(getAroundOffers);
+  const reviews = useAppSelector(getReviews);
 
   const isLogged = checkAuthorizationStatus(authorizationStatus);
 
-  const offer = useAppSelector(getOffer);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
-  const offersAround = useAppSelector(getAroundOffers);
   const offersAroundRender = offersAround.slice(0, MAX_AROUND_OFFERS_COUNT);
 
-  const reviews = useAppSelector(getReviews);
-  const reviewsRender = reviews.slice(1, MAX_REVIEWS_COUNT);
+  const reviewsRender = reviews.slice(0, MAX_REVIEWS_COUNT);
 
   useEffect(() => {
     if (!id) {
@@ -55,9 +57,14 @@ function Offer(): JSX.Element {
     };
   }, [dispatch, id]);
 
+  if (hasErrorOffer) {
+    return <LoadingScreen />;
+  }
+
   if (!offer && !isOffersDataLoading) {
     return <LoadingScreen />;
   }
+
   if (!offer) {
     return <NotFoundPage />;
   }
@@ -159,7 +166,7 @@ function Offer(): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewListMemo reviews={reviewsRender}/>
                 {isLogged &&
                 <ReviewFormMemo />}

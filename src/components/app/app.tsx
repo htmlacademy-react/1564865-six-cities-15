@@ -9,9 +9,9 @@ import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import Error from '../../pages/error/error';
+import ErrorOffers from '../../pages/error-offers/error-offers';
 
-import { getErrorStatus,getIsOffersDataLoading } from '../../store/data-process/selectors';
+import { getErrorOffersStatus,getIsOffersDataLoading } from '../../store/data-process/selectors';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
@@ -22,7 +22,7 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAutorisationStatus);
 
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
-  const hasError = useAppSelector(getErrorStatus);
+  const hasErrorOffers = useAppSelector(getErrorOffersStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
@@ -30,9 +30,9 @@ function App(): JSX.Element {
     );
   }
 
-  if (hasError) {
+  if (hasErrorOffers) {
     return (
-      <Error />);
+      <ErrorOffers />);
   }
 
   return (
