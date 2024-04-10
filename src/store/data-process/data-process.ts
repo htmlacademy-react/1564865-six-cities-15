@@ -5,15 +5,15 @@ import { fetchAddReviewAction, fetchAroundOffersAction, fetchOfferAction, fetchO
 
 const initialState: DataProcess = {
   offers: [],
+  isOffersDataLoading: false,
   aroundOffers: [],
   reviews: [],
   offer: null,
   favorites: [],
-  isOffersDataLoading: false,
   hasError: false
 };
 
-export const userProcess = createSlice({
+export const dataProcess = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
@@ -25,21 +25,8 @@ export const userProcess = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchOffersAction.fulfilled, (state, action) => {
-        state.offers = action.payload;
-        state.isOffersDataLoading = false;
-      })
-      .addCase(fetchOffersAction.pending, (state) => {
-        state.isOffersDataLoading = true;
-      })
-      .addCase(fetchOffersAction.rejected, (state) => {
-        state.isOffersDataLoading = false;
-      })
       .addCase(fetchAroundOffersAction.fulfilled, (state, action) => {
         state.aroundOffers = action.payload;
-      })
-      .addCase(fetchReviewsAction.fulfilled, (state, action) => {
-        state.reviews = action.payload;
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
@@ -49,6 +36,18 @@ export const userProcess = createSlice({
       })
       .addCase(fetchAddReviewAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
+      })
+      .addCase(fetchOffersAction.fulfilled, (state, action) => {
+        state.offers = action.payload;
+        state.isOffersDataLoading = false;
+      })
+      .addCase(fetchOffersAction.pending, (state) => {
+        state.isOffersDataLoading = true;
+      })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.isOffersDataLoading = false;
       });
   }
 });
+
+export const { dropOffer } = dataProcess.actions;

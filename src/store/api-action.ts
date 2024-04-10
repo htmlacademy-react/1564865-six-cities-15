@@ -6,6 +6,7 @@ import { TOffer } from '../types/offer';
 import { APIRoute } from '../const';
 import { saveToken, dropToken } from '../components/services/token';
 import { TOfferPreview } from '../types/offer-preview';
+import { NameSpace } from '../const';
 
 export const fetchOffersAction = createAsyncThunk<TOfferPreview[], undefined, {
   dispatch: TAppDispatch;
@@ -93,11 +94,9 @@ export const fetchAddReviewAction = createAsyncThunk<TReview[], TReviewData, {
   'data/addReview',
   async ({ comment, rating }, { getState, extra: api }) => {
     const state = getState();
-    if (state.offer) {
-      const { data } = await api.post<TReview[]>(`${APIRoute.Comments}/${state.offer.id}`, { comment, rating });
-      return data || [];
-    }
-    return [];
+    const { data } = await api.post<TReview[]>
+    (`${APIRoute.Comments}/${state[NameSpace.Data].offer?.id}`, { comment, rating });
+    return data;
   },
 );
 

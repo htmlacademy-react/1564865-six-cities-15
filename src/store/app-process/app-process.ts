@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { AppProcess } from '../../types/app-process';
+import { TAppProcess } from '../../types/app-process';
 import { CityMapDefault } from '../../const';
 import { TSortItem } from '../../types/sort';
 import { TCity } from '../../types/city';
 
-const initialState: AppProcess = {
+const initialState: TAppProcess = {
   activeCity: CityMapDefault,
   activeSortItem: 'Popular',
 };
 
-export const userProcess = createSlice({
-  name: NameSpace.Data,
+export const appProcess = createSlice({
+  name: NameSpace.App,
   initialState,
   reducers: {
     setActiveSortItem: (state, action: PayloadAction<TSortItem>) => {
@@ -21,5 +21,5 @@ export const userProcess = createSlice({
       state.activeCity = action.payload;
     },
   },
-  extraReducers() { }
+  extraReducers() {}
 });

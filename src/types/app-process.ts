@@ -1,7 +1,7 @@
 import { TCity } from './city';
 import { TSortItem } from './sort';
 
-export type AppProcess = {
+export type TAppProcess = {
   activeCity: TCity;
   activeSortItem: TSortItem;
 };
