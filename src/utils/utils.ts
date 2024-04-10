@@ -1,5 +1,5 @@
 import { AuthorizationStatus, RATING_MAX } from '../const';
-import { TOffer } from '../types/offer';
+import { TOfferPreview } from '../types/offer-preview';
 
 export function getRatingValue(rating: number): number {
   return (Math.round(rating) * 100) / RATING_MAX;
@@ -13,23 +13,23 @@ export function capitalize(str: string) {
   return str[0].toUpperCase() + str.slice(1);
 }
 
-function sortByRating(offerA: TOffer, offerB: TOffer) {
+function sortByRating(offerA: TOfferPreview, offerB: TOfferPreview) {
   return offerB.rating - offerA.rating;
 }
 
-function sortLowToHigh(offerA: TOffer, offerB: TOffer) {
+function sortLowToHigh(offerA: TOfferPreview, offerB: TOfferPreview) {
   return offerA.price - offerB.price;
 }
 
-function sortHighToLow(offerA: TOffer, offerB: TOffer) {
+function sortHighToLow(offerA: TOfferPreview, offerB: TOfferPreview) {
   return offerB.price - offerA.price;
 }
 
-export const sorting: Record<string, (offers: TOffer[]) => TOffer[]> = {
-  Popular: (offers: TOffer[]) => offers.slice(),
-  HighToLow: (offers: TOffer[]) => offers.slice().sort(sortHighToLow),
-  LowToHigh: (offers: TOffer[]) => offers.slice().sort(sortLowToHigh),
-  TopRated: (offers: TOffer[]) => offers.slice().sort(sortByRating)
+export const sorting: Record<string, (offers: TOfferPreview[]) => TOfferPreview[]> = {
+  Popular: (offers: TOfferPreview[]) => offers.slice(),
+  HighToLow: (offers: TOfferPreview[]) => offers.slice().sort(sortHighToLow),
+  LowToHigh: (offers: TOfferPreview[]) => offers.slice().sort(sortLowToHigh),
+  TopRated: (offers: TOfferPreview[]) => offers.slice().sort(sortByRating)
 };
 
 export function checkAuthorizationStatus(status: AuthorizationStatus) {

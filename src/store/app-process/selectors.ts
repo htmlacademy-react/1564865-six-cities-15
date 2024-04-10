@@ -2,7 +2,8 @@ import { createSelector } from '@reduxjs/toolkit';
 import { TState } from '../../types/state';
 import { NameSpace } from '../../const';
 import { sorting } from '../../utils/utils';
-import { TOffers } from '../../types/offer';
+// import { TOffer, TOffers } from '../../types/offer';
+import { TOfferPreview } from '../../types/offer-preview';
 
 export const getActiveCity = (state: TState) => state[NameSpace.App].activeCity;
 
@@ -11,7 +12,7 @@ export const getSortItem = (state: TState) => state[NameSpace.App].activeSortIte
 export const sortOffers = createSelector(
   [
     (state: TState) => state[NameSpace.App].activeSortItem,
-    (_: TState, offers: TOffers) => offers
+    (_: TState, offers: TOfferPreview[]) => offers
   ],
   (activeSortItem, offers) => {
 

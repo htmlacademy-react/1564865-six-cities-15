@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { useAppSelector } from '../../hooks';
-import { MAX_AROUND_OFFERS_COUNT, MAX_REVIEWS_COUNT } from '../../const';
+import { MAX_AROUND_OFFERS_COUNT, MAX_OFFER_IMAGE_COUNT, MAX_REVIEWS_COUNT } from '../../const';
 
 import HeaderMemo from '../../components/header/header';
 import OfferListMemo from '../../components/offer-list/offer-list';
@@ -73,6 +73,8 @@ function Offer(): JSX.Element {
 
   const { avatarUrl, name, isPro } = offer.host;
 
+  const imagesRender = images.slice(0, MAX_OFFER_IMAGE_COUNT);
+
   return (
     <>
       <HeaderMemo />
@@ -83,7 +85,7 @@ function Offer(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {images.map((image) => (
+              {imagesRender.map((image) => (
                 <div key={image} className="offer__image-wrapper">
                   <img className="offer__image" src={image} alt={title} />
                 </div>
