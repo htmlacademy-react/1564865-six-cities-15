@@ -2,83 +2,60 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TAppDispatch, TState, TAuthData, TUserData } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { TReview, TReviewData, TReviews } from '../types/review';
-import { TOffer, TOffers } from '../types/offer';
-import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const';
+import { TOffer } from '../types/offer';
+import { APIRoute } from '../const';
 import { saveToken, dropToken } from '../components/services/token';
-import { store } from '.';
+import { TOfferPreview } from '../types/offer-preview';
 
-import {
-  getOffers,
-  gethReviews,
-  setOffersDataLoadingStatus,
-  setError,
-  getNearPlaces,
-  addReview,
-  getOffer
-}
-  from './action';
-
-export const clearErrorAction = createAsyncThunk(
-  'app/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
-
-export const fetchOffersAction = createAsyncThunk<void, undefined, {
+export const fetchOffersAction = createAsyncThunk<TOfferPreview[], undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
   }
 >(
   'data/fetchOffers',
-  async (_arg, { dispatch, extra: api }) => {
-    dispatch(setOffersDataLoadingStatus(true));
-    const { data } = await api.get<TOffers>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
-    dispatch(getOffers(data));
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<TOfferPreview[]>(APIRoute.Offers);
+    return data;
   },
 );
 
-export const fetchAroundOffersAction = createAsyncThunk<void, string, {
+export const fetchAroundOffersAction = createAsyncThunk<TOfferPreview[], string, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
   }
 >(
   'data/fetchAroundOffers',
-  async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<TOffers>(`${APIRoute.Offers}/${id}/nearby`);
-    dispatch(getNearPlaces(data));
+  async (id, { extra: api }) => {
+    const { data } = await api.get<TOfferPreview[]>(`${APIRoute.Offers}/${id}/nearby`);
+    return data;
   },
 );
 
-export const fetchReviewsAction = createAsyncThunk<void, string, {
+export const fetchReviewsAction = createAsyncThunk<TReviews, string, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
   }
 >(
   'data/fetchReviews',
-  async (id, { dispatch, extra: api }) => {
+  async (id, { extra: api }) => {
     const { data } = await api.get<TReviews>(`${APIRoute.Comments}/${id}`);
-    dispatch(gethReviews(data));
+    return data;
   },
 );
 
-export const fetchOfferAction = createAsyncThunk<void, string, {
+export const fetchOfferAction = createAsyncThunk<TOffer, string, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
 }
 >(
   'data/fetchOffer',
-  async (id, { dispatch, extra: api }) => {
+  async (id, { extra: api }) => {
     const { data } = await api.get<TOffer>(`${APIRoute.Offers}/${id}`);
-    dispatch(getOffer(data));
+    return data;
   },
 );
 
@@ -86,7 +63,8 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-}>(
+}
+>(
   'user/checkAuth',
   async (_arg, { extra: api }) => {
     await api.get(APIRoute.Login);
@@ -106,19 +84,20 @@ export const loginAction = createAsyncThunk<void, TAuthData, {
   },
 );
 
-export const fetchAddReviewAction = createAsyncThunk<void, TReviewData, {
+export const fetchAddReviewAction = createAsyncThunk<TReview[], TReviewData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
 }
 >(
-  'offer/addReview',
-  async ({ comment, rating }, { dispatch, getState, extra: api }) => {
+  'data/addReview',
+  async ({ comment, rating }, { getState, extra: api }) => {
     const state = getState();
     if (state.offer) {
-      const { data } = await api.post<TReview>(`${APIRoute.Comments}/${state.offer.id}`, { comment, rating });
-      dispatch(addReview(data));
+      const { data } = await api.post<TReview[]>(`${APIRoute.Comments}/${state.offer.id}`, { comment, rating });
+      return data || [];
     }
+    return [];
   },
 );
 
