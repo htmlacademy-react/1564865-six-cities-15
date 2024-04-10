@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { AuthorizationStatus, CityMapDefault } from '../const';
+import { CityMapDefault } from '../const';
 
 import { TReview } from '../types/review';
 import { TCity } from '../types/city';
@@ -18,7 +18,6 @@ import {
   getNearPlaces,
   getOffer,
   setOffersDataLoadingStatus,
-  requireAuthorization,
   setActiveSortItem,
   setError
 }
@@ -32,7 +31,6 @@ const initialState: {
   favorites: TOfferPreview[];
   activeCity: TCity;
   loaded: boolean;
-  authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
   activeSortItem: TSortItem;
   error: CustomError | null;
@@ -45,7 +43,6 @@ const initialState: {
     loaded: false,
     activeCity: CityMapDefault,
     activeSortItem: 'Popular',
-    authorizationStatus: AuthorizationStatus.Unknown,
     isOffersDataLoading: false,
     error: null
   };
@@ -78,9 +75,6 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setActiveSortItem, (state, action) => {
       state.activeSortItem = action.payload;
-    })
-    .addCase(requireAuthorization, (state, action) => {
-      state.authorizationStatus = action.payload;
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;

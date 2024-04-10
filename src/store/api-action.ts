@@ -3,13 +3,12 @@ import { TAppDispatch, TState, TAuthData, TUserData } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { TReview, TReviewData, TReviews } from '../types/review';
 import { TOffer, TOffers } from '../types/offer';
-import { APIRoute, AuthorizationStatus, /*AuthorizationStatus,*/ TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const';
 import { saveToken, dropToken } from '../components/services/token';
 import { store } from '.';
 
 import {
   getOffers,
-  requireAuthorization,
   gethReviews,
   setOffersDataLoadingStatus,
   setError,
@@ -87,16 +86,10 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-}
->(
+}>(
   'user/checkAuth',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
+  async (_arg, { extra: api }) => {
+    await api.get(APIRoute.Login);
   },
 );
 
@@ -107,10 +100,9 @@ export const loginAction = createAsyncThunk<void, TAuthData, {
   }
 >(
   'user/login',
-  async ({ email: email, password }, { dispatch,extra: api }) => {
+  async ({ email: email, password }, { extra: api }) => {
     const { data: { token } } = await api.post<TUserData>(APIRoute.Login, { email, password });
     saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
   },
 );
 
@@ -137,9 +129,8 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   }
 >(
   'user/logout',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );

@@ -17,3 +17,7 @@ export type rootState = {
   isOffersDataLoading: boolean;
   error: Error;
 }
+
+export type UserProcess = {
+  authorizationStatus: AuthorizationStatus;
+};
