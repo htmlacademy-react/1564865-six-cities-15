@@ -47,6 +47,19 @@ export const fetchReviewsAction = createAsyncThunk<TReviews, string, {
   },
 );
 
+export const fetchFavoritesAction = createAsyncThunk<TOfferPreview[], undefined, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}
+>(
+  'data/fetchFavorites',
+  async (_, { extra: api }) => {
+    const { data } = await api.get<TOfferPreview[]>(APIRoute.Favorite);
+    return data;
+  },
+);
+
 export const fetchOfferAction = createAsyncThunk<TOffer, string, {
   dispatch: TAppDispatch;
   state: TState;

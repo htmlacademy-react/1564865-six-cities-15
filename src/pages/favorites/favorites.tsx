@@ -1,59 +1,37 @@
 import { Helmet } from 'react-helmet-async';
+import classNames from 'classnames';
 
-import { useAppSelector, useAppDispatch } from '../../hooks';
-// import { fetchFavoriteOffers } from '../../store/action';
+import { useAppSelector } from '../../hooks';
 
 import Footer from '../../components/footer/footer';
 import HeaderMemo from '../../components/header/header';
-import FavoritesCard from '../../components/favorites-card/favorites-card';
-import { useEffect } from 'react';
+import FavoritesList from '../../components/favorites-list/favorites-list';
+import FavoritesEmpty from '../favorites-empty/favorites-empty';
+import { getFavorites } from '../../store/data-process/selectors';
 
 function Favorites(): JSX.Element {
 
-  const dispatch = useAppDispatch();
-
-  const favoritesOffers = useAppSelector((state) => state.favorites);
-
-  useEffect(() => {
-    // dispatch(fetchFavoriteOffers());
-  }, [dispatch]);
-
-  const CitiesList = [...new Set(favoritesOffers.map((offer) => offer.city.name))].sort();
+  const favoritesOffers = useAppSelector(getFavorites);
 
   return (
     <div className="page">
       <HeaderMemo />
-      <main className="page__main page__main--favorites">
+      <main className={classNames(
+        'page__main page__main--favorites',
+        { 'page__main--favorites-empty': favoritesOffers.length === 0 }
+      )}
+      >
         <Helmet>
           <title>6 cities - Favorites Page</title>
         </Helmet>
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {CitiesList.map((city) => (
-                <li className="favorites__locations-items" key={city}>
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{city}</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="favorites__places">
-                    {favoritesOffers
-                      .filter((offer) => offer.city.name === city)
-                      .map((offer) => (
-                        <FavoritesCard
-                          offer={offer}
-                          key={offer.id}
-                        />
-                      ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {
+            favoritesOffers.length === 0 ? <FavoritesEmpty /> :
+              <section className="favorites">
+                <h1 className="favorites__title">Saved listing</h1>
+                <FavoritesList offers={favoritesOffers}></FavoritesList>
+              </section>
+          }
         </div>
       </main>
       <Footer />
