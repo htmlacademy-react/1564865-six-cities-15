@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-action';
 import { AppRoute } from '../../const';
 import { checkAuthorizationStatus } from '../../utils/utils';
-import { getAutorisationStatus } from '../../store/selectors';
+import { getAutorisationStatus } from '../../store/user-process/selectors';
 import { Navigate } from 'react-router-dom';
 
 function Login(): JSX.Element {

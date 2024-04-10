@@ -1,4 +1,5 @@
 import 'leaflet/dist/leaflet.css';
+import { memo } from 'react';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import { TOffer } from '../../types/offer';
 import { useEffect, useRef } from 'react';
@@ -93,4 +94,6 @@ function Map({ offers, location, offer, selectedPointId, block }: TMapProps) {
   );
 }
 
-export default Map;
+const MapMemo = memo(Map);
+
+export default MapMemo;

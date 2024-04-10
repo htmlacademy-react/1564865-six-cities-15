@@ -23,3 +23,5 @@ export const appProcess = createSlice({
   },
   extraReducers() {}
 });
+
+export const { setActiveSortItem, setActiveCity } = appProcess.actions;

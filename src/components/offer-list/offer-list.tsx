@@ -1,6 +1,7 @@
 import PlaceCard from '../../components/place-card/place-card';
 import { TOffer } from '../../types/offer';
 import { TOfferPreview } from '../../types/offer-preview';
+import { memo } from 'react';
 
 type TOfferListProps = {
   offers: TOfferPreview[];
@@ -24,4 +25,6 @@ function OfferList({ offers, isOtherPlaces, block, onListItemHover }: TOfferList
   );
 }
 
-export default OfferList;
+const OfferListMemo = memo(OfferList);
+
+export default OfferListMemo;

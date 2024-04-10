@@ -5,10 +5,11 @@ import { useAppSelector } from '../../hooks';
 import { checkAuthorizationStatus } from '../../utils/utils';
 import { logoutAction } from '../../store/api-action';
 import { useAppDispatch } from '../../hooks';
+import { getAutorisationStatus } from '../../store/user-process/selectors';
 
 function Header() {
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAutorisationStatus);
 
   const isLogged = checkAuthorizationStatus(authorizationStatus);
 
