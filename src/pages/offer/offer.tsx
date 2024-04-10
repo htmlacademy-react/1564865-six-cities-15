@@ -20,7 +20,7 @@ import { fetchOfferAction, fetchAroundOffersAction, fetchReviewsAction } from '.
 import { dropOffer } from '../../store/data-process/data-process';
 import { getRatingValue, checkAuthorizationStatus } from '../../utils/utils';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
-import { getOffer, getAroundOffers, getReviews, getIsOffersDataLoading, getErrorOfferStatus } from '../../store/data-process/selectors';
+import { getOffer, getAroundOffers, getReviews, getIsOffersDataLoading } from '../../store/data-process/selectors';
 
 
 function Offer(): JSX.Element {
@@ -31,7 +31,6 @@ function Offer(): JSX.Element {
   const offer = useAppSelector(getOffer);
 
   const authorizationStatus = useAppSelector(getAutorisationStatus);
-  const hasErrorOffer = useAppSelector(getErrorOfferStatus);
   const offersAround = useAppSelector(getAroundOffers);
   const reviews = useAppSelector(getReviews);
 
@@ -57,11 +56,7 @@ function Offer(): JSX.Element {
     };
   }, [dispatch, id]);
 
-  if (hasErrorOffer) {
-    return <LoadingScreen />;
-  }
-
-  if (!offer && !isOffersDataLoading) {
+  if (isOffersDataLoading && !offer) {
     return <LoadingScreen />;
   }
 
