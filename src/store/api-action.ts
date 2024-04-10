@@ -3,6 +3,7 @@ import { TAppDispatch, TState, TAuthData, TUserData } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { TReview, TReviewData, TReviews } from '../types/review';
 import { TOffer } from '../types/offer';
+import { AddToFavoritesData } from '../types/add-to-favorites';
 import { APIRoute } from '../const';
 import { saveToken, dropToken } from '../services/token';
 import { TOfferPreview } from '../types/offer-preview';
@@ -56,6 +57,19 @@ export const fetchFavoritesAction = createAsyncThunk<TOfferPreview[], undefined,
   'data/fetchFavorites',
   async (_, { extra: api }) => {
     const { data } = await api.get<TOfferPreview[]>(APIRoute.Favorite);
+    return data;
+  },
+);
+
+export const fetchAddToFavoriteAction = createAsyncThunk<TOfferPreview, AddToFavoritesData, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}
+>(
+  'data/fetchAddToFavoriteAction',
+  async ({ id, status }, { extra: api }) => {
+    const { data } = await api.post<TOfferPreview>(`${APIRoute.Favorite}/${id}/${status}`);
     return data;
   },
 );

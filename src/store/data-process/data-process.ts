@@ -7,7 +7,8 @@ import {
   fetchOfferAction,
   fetchOffersAction,
   fetchReviewsAction,
-  fetchFavoritesAction
+  fetchFavoritesAction,
+  fetchAddToFavoriteAction
 } from '../api-action';
 
 const initialState: DataProcess = {
@@ -56,6 +57,20 @@ export const dataProcess = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersDataLoading = false;
+        state.hasError = true;
+      })
+      .addCase(fetchAddToFavoriteAction.fulfilled, (state, action) => {
+        const isFavorite = action.payload.isFavorite;
+
+        if (isFavorite) {
+          state.favorites.push(action.payload);
+        }
+
+        if (!isFavorite) {
+          state.favorites = state.favorites.filter(
+            (offer) => offer.id !== action.payload.id
+          );
+        }
       });
   }
 });
