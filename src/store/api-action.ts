@@ -4,7 +4,7 @@ import { AxiosInstance } from 'axios';
 import { TReview, TReviewData, TReviews } from '../types/review';
 import { TOffer } from '../types/offer';
 import { APIRoute } from '../const';
-import { saveToken, dropToken } from '../components/services/token';
+import { saveToken, dropToken } from '../services/token';
 import { TOfferPreview } from '../types/offer-preview';
 import { NameSpace } from '../const';
 
@@ -12,7 +12,7 @@ export const fetchOffersAction = createAsyncThunk<TOfferPreview[], undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-  }
+}
 >(
   'data/fetchOffers',
   async (_arg, { extra: api }) => {
@@ -25,7 +25,7 @@ export const fetchAroundOffersAction = createAsyncThunk<TOfferPreview[], string,
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-  }
+}
 >(
   'data/fetchAroundOffers',
   async (id, { extra: api }) => {
@@ -38,7 +38,7 @@ export const fetchReviewsAction = createAsyncThunk<TReviews, string, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-  }
+}
 >(
   'data/fetchReviews',
   async (id, { extra: api }) => {
@@ -89,7 +89,7 @@ export const loginAction = createAsyncThunk<void, TAuthData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-  }
+}
 >(
   'user/login',
   async ({ email: email, password }, { extra: api }) => {
@@ -117,7 +117,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-  }
+}
 >(
   'user/logout',
   async (_arg, { extra: api }) => {
