@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
@@ -17,9 +17,9 @@ function Header() {
 
   const dispatch = useAppDispatch();
 
-  function handleLogoutClick() {
+  const handleLogoutClick = useCallback(() => {
     dispatch(logoutAction());
-  }
+  }, [dispatch]);
 
   return (
     <header className="header">
