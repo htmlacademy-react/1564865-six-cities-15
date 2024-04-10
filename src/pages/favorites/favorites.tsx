@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 // import { fetchFavoriteOffers } from '../../store/action';
 
 import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
+import HeaderMemo from '../../components/header/header';
 import FavoritesCard from '../../components/favorites-card/favorites-card';
 import { useEffect } from 'react';
 
@@ -22,7 +22,7 @@ function Favorites(): JSX.Element {
 
   return (
     <div className="page">
-      <Header />
+      <HeaderMemo />
       <main className="page__main page__main--favorites">
         <Helmet>
           <title>6 cities - Favorites Page</title>

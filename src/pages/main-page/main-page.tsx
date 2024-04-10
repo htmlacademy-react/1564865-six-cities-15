@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
 
-import Header from '../../components/header/header';
+import HeaderMemo from '../../components/header/header';
 import Location from '../../components/location/location';
 import OfferListMemo from '../../components/offer-list/offer-list';
 import SortListMemo from '../../components/sort-list/sort-list';
@@ -50,7 +50,7 @@ function MainPage(): JSX.Element {
       <Helmet>
         <title>6 cities - Main Page</title>
       </Helmet>
-      <Header />
+      <HeaderMemo />
 
       <main className={classNames(
         'page__main page__main--index',

@@ -1,14 +1,15 @@
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 
 import { useAppSelector } from '../../hooks';
 import { MAX_AROUND_OFFERS_COUNT, MAX_REVIEWS_COUNT } from '../../const';
 
-import Header from '../../components/header/header';
+import HeaderMemo from '../../components/header/header';
 import OfferListMemo from '../../components/offer-list/offer-list';
-import ReviewList from '../../components/review-list/review-list';
-import ReviewForm from '../../components/review-form/review-form';
+import ReviewListMemo from '../../components/review-list/review-list';
+import ReviewFormMemo from '../../components/review-form/review-form';
 import MapMemo from '../../components/map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
@@ -19,7 +20,6 @@ import { dropOffer } from '../../store/data-process/data-process';
 import { getRatingValue, checkAuthorizationStatus } from '../../utils/utils';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
 import { getOffer, getAroundOffers, getReviews, getIsOffersDataLoading } from '../../store/data-process/selectors';
-import { useEffect } from 'react';
 
 
 function Offer(): JSX.Element {
@@ -67,7 +67,7 @@ function Offer(): JSX.Element {
 
   return (
     <>
-      <Header />
+      <HeaderMemo />
       <main className="page__main page__main--offer">
         <Helmet>
           <title>6 cities - Offer Page</title>
@@ -159,9 +159,9 @@ function Offer(): JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ReviewList reviews={reviewsRender}/>
+                <ReviewListMemo reviews={reviewsRender}/>
                 {isLogged &&
-                <ReviewForm />}
+                <ReviewFormMemo />}
               </section>
             </div>
           </div>

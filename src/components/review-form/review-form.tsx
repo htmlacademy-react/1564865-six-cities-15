@@ -1,39 +1,13 @@
+import { memo } from 'react';
+
 import { ChangeEvent, Fragment, useState, FormEvent } from 'react';
 import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
 import { fetchAddReviewAction } from '../../store/api-action';
 import { useAppDispatch } from '../../hooks';
 
-// type TStarRating = {
-//   id: number;
-//   title: string;
-// };
-
-// const STARS_RATING: TStarRating[] = [
-//   { id: 5, title: 'perfect' },
-//   { id: 4, title: 'good' },
-//   { id: 3, title: 'not bad' },
-//   { id: 2, title: 'badly' },
-//   { id: 1, title: 'terribly' },
-// ];
-
 const STARS_RATING = ['terribly', 'badly', 'not bad', 'good', 'perfect'];
 
 function ReviewForm(): JSX.Element {
-
-  // const [comment, setComment] = useState<string>('');
-  // const [rating, setRating] = useState<string>('');
-  // const isValid: boolean =
-  //   comment.length >= MIN_COMMENT_LENGTH &&
-  //   comment.length <= MAX_COMMENT_LENGTH &&
-  //   rating !== '';
-
-  // function handleTextareaChange(evt: ChangeEvent<HTMLTextAreaElement>): void {
-  //   setComment(evt.target.value);
-  // }
-
-  // function handleInputChange(evt: ChangeEvent<HTMLInputElement>): void {
-  //   setRating(evt.target.value);
-  // }
 
   const initialState = {
     comment: '',
@@ -103,4 +77,6 @@ function ReviewForm(): JSX.Element {
   );
 }
 
-export default ReviewForm;
+const ReviewFormMemo = memo(ReviewForm);
+
+export default ReviewFormMemo;

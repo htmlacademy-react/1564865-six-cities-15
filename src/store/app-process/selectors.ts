@@ -2,7 +2,6 @@ import { createSelector } from '@reduxjs/toolkit';
 import { TState } from '../../types/state';
 import { NameSpace } from '../../const';
 import { sorting } from '../../utils/utils';
-// import { TOfferPreviews } from '../../types/offer-preview';
 import { TOffers } from '../../types/offer';
 
 export const getActiveCity = (state: TState) => state[NameSpace.App].activeCity;

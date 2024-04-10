@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { AppRoute } from '../../const';
@@ -64,4 +66,6 @@ function Header() {
   );
 }
 
-export default Header;
+const HeaderMemo = memo(Header);
+
+export default HeaderMemo;
