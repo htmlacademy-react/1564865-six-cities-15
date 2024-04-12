@@ -38,8 +38,10 @@ export const dataProcess = createSlice({
       state.reviews = [];
     },
     changeOfferFavoriteStatus: (state, action: PayloadAction<TOfferPreview['id']>) => {
-      const index = state.offers.findIndex((offer) => offer.id === action.payload);
-      state.offers[index].isFavorite = !state.offers[index].isFavorite;
+      const offerChangeFavorite = state.offers.find((offer) => offer.id === action.payload);
+      if (offerChangeFavorite) {
+        offerChangeFavorite.isFavorite = !offerChangeFavorite.isFavorite;
+      }
     },
   },
   extraReducers(builder) {
@@ -98,6 +100,10 @@ export const dataProcess = createSlice({
           state.favorites = state.favorites.filter(
             (offer) => offer.id !== action.payload.id
           );
+        }
+
+        if (state.offer !== null) {
+          state.offer.isFavorite = isFavorite;
         }
       });
   }

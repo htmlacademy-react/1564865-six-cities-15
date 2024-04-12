@@ -13,5 +13,3 @@ export type TOfferPreview = {
   title: string;
   type: string;
  }
-
-export type TOfferPreviews = TOfferPreview[];

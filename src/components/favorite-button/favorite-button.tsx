@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchAddToFavoriteAction } from '../../store/api-action';
 import { useNavigate } from 'react-router-dom';
@@ -28,9 +28,7 @@ function FavoriteButton({ id, isFavorite, nameBlock, size = 'default' }: Favorit
 
   const authorizationStatus = useAppSelector(getAutorisationStatus);
 
-  const isLogged = checkAuthorizationStatus(authorizationStatus);
-
-  const [isBookmarkActive, setBookmarkActive] = useState(isFavorite);
+  const isLogged = useMemo(() => checkAuthorizationStatus(authorizationStatus), [authorizationStatus]);
 
   function handleFavoriteButtonClick() {
     if (!isLogged) {
@@ -38,15 +36,14 @@ function FavoriteButton({ id, isFavorite, nameBlock, size = 'default' }: Favorit
     }
 
     dispatch(changeOfferFavoriteStatus(id));
-    dispatch(fetchAddToFavoriteAction({ id, status: Number(!isBookmarkActive) }));
-    setBookmarkActive((prev) => !prev);
+    dispatch(fetchAddToFavoriteAction({ id, status: Number(!isFavorite) }));
   }
 
   return (
     <button
       type="button"
       onClick={handleFavoriteButtonClick}
-      className={`${nameBlock}__bookmark-button button ${isBookmarkActive && `${nameBlock}__bookmark-button--active`}`}
+      className={`${nameBlock}__bookmark-button button ${isFavorite && `${nameBlock}__bookmark-button--active`}`}
     >
       <svg
         className={`${nameBlock}__bookmark-icon`}

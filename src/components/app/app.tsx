@@ -8,10 +8,10 @@ import Login from '../../pages/login/login';
 import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { useAppSelector } from '../../hooks';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import LoadingScreen from '../../pages/loading-screen/loading';
 import ErrorOffers from '../../pages/error-offers/error-offers';
 
-import { getErrorOffersStatus,getIsOffersDataLoading } from '../../store/data-process/selectors';
+import { getErrorOffersStatus, getIsOffersDataLoading } from '../../store/data-process/selectors';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
 
 import { AppRoute, AuthorizationStatus } from '../../const';

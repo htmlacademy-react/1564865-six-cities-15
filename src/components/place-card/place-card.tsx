@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AppRoute } from '../../const';
+import { capitalize } from '../../utils/utils';
 import { TOfferPreview } from '../../types/offer-preview';
 import { TOffer } from '../../types/offer';
+
 import FavoriteButton from '../favorite-button/favorite-button';
 
 type TCardProps = {
@@ -71,7 +73,7 @@ function PlaceCard({ offer, block, onListItemHover }: TCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={offerLink}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalize(type)}</p>
       </div>
     </article>
   );
