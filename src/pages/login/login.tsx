@@ -1,15 +1,26 @@
-import Logo from '../../components/logo/logo';
+import { useRef, FormEvent, useState, FocusEvent, ChangeEvent, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useRef, FormEvent } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
-import { loginAction } from '../../store/api-action';
+
+import Logo from '../../components/logo/logo';
+
 import { AppRoute } from '../../const';
-import { checkAuthorizationStatus } from '../../utils/utils';
+
+import { loginAction } from '../../store/api-action';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
-import { Navigate } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { checkAuthorizationStatus } from '../../utils/utils';
 
 function Login(): JSX.Element {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailDirty, setEmailDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+  const [emailError, setEmailError] = useState('Email не может быть пустым');
+  const [passwordError, setPasswordError] = useState('Пароль не может быть пустым');
+  const [formValid, setFormValid] = useState(false);
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -21,20 +32,58 @@ function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (emailError || passwordError) {
+      setFormValid(false);
+    } else {
+      setFormValid(true);
+    }
+  }, [emailError, passwordError]);
+
   if (isLogged) {
     return <Navigate to={AppRoute.Root}></Navigate>;
+  }
+
+  function handleBlur(evt: FocusEvent<HTMLInputElement>) {
+    switch (evt.target.name) {
+      case 'email':
+        setEmailDirty(true);
+        break;
+      case 'password':
+        setPasswordDirty(true);
+        break;
+    }
+  }
+
+  function handleEmailChange(evt: ChangeEvent<HTMLInputElement>) {
+    setEmail(evt.target.value);
+    const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!regexp.test(String(evt.target.value).toLocaleLowerCase())) {
+      setEmailError('Email не корректен');
+    } else {
+      setEmailError('');
+    }
+  }
+
+  function handlePasswordChange(evt: ChangeEvent<HTMLInputElement>) {
+    setPassword(evt.target.value);
+    const regexp = /(?=.*[0-9])(?=.*[a-z])[0-9a-z]{2,}/;
+    if (!regexp.test(String(evt.target.value).toLocaleLowerCase())) {
+      setPasswordError('Пароль не корректен');
+    } else {
+      setPasswordError('');
+    }
   }
 
   function handleFormSubmit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(loginAction({
-        email: loginRef.current.value,
-        password: passwordRef.current.value
-      }));
-      navigate(AppRoute.Root);
-    }
+    dispatch(loginAction({
+      email: email,
+      password: password
+    }));
+
+    navigate(AppRoute.Root);
   }
 
   return (
@@ -63,6 +112,7 @@ function Login(): JSX.Element {
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
+                {(emailDirty && emailError && <div style={{ color: 'red' }}>{emailError}</div>)}
                 <input
                   ref={loginRef}
                   className="login__input form__input"
@@ -70,10 +120,14 @@ function Login(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
+                  value={email}
+                  onBlur={handleBlur}
+                  onChange={handleEmailChange}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
+                {(passwordDirty && passwordError && <div style={{ color: 'red' }}>{passwordError}</div>)}
                 <input
                   ref={passwordRef}
                   className="login__input form__input"
@@ -81,11 +135,15 @@ function Login(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  value={password}
+                  onBlur={handleBlur}
+                  onChange={handlePasswordChange}
                 />
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
+                disabled={!formValid}
               >
                 Sign in
               </button>
