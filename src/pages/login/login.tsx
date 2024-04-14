@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 
 import Logo from '../../components/logo/logo';
 
-import { AppRoute, CitiesMap } from '../../const';
+import { AppRoute, CitiesMap, EMAIL_REGEX, PASSWORD_REGEX } from '../../const';
 
 import { loginAction } from '../../store/api-action';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
@@ -59,8 +59,8 @@ function Login(): JSX.Element {
 
   function handleEmailChange(evt: ChangeEvent<HTMLInputElement>) {
     setEmail(evt.target.value);
-    const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!regexp.test(String(evt.target.value).toLocaleLowerCase())) {
+
+    if (!EMAIL_REGEX.test(String(evt.target.value).toLocaleLowerCase())) {
       setEmailError('Email не корректен');
     } else {
       setEmailError('');
@@ -69,8 +69,8 @@ function Login(): JSX.Element {
 
   function handlePasswordChange(evt: ChangeEvent<HTMLInputElement>) {
     setPassword(evt.target.value);
-    const regexp = /(?=.*[0-9])(?=.*[a-z])[0-9a-z]{2,}/;
-    if (!regexp.test(String(evt.target.value).toLocaleLowerCase())) {
+
+    if (!PASSWORD_REGEX.test(String(evt.target.value).toLocaleLowerCase())) {
       setPasswordError('Пароль не корректен');
     } else {
       setPasswordError('');
