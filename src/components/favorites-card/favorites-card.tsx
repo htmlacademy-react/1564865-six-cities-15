@@ -1,10 +1,8 @@
-import { AppRoute } from '../../const';
+import { AppRoute, NameBlockForFavoriteButton } from '../../const';
 import { Link } from 'react-router-dom';
-import { capitalize } from '../../utils/utils';
+import { getRatingValue, capitalize } from '../../utils/utils';
 import { TOfferPreview } from '../../types/offer-preview';
 import FavoriteButton from '../favorite-button/favorite-button';
-
-import { getRatingValue } from '../../utils/utils';
 
 type FavoritesCardProps = {
   offer: TOfferPreview;
@@ -18,7 +16,7 @@ function FavoritesCard({ offer }: FavoritesCardProps): JSX.Element {
     <article className="favorites__card place-card">
       {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : ''}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Offer}${id}`}>
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
@@ -31,7 +29,7 @@ function FavoritesCard({ offer }: FavoritesCardProps): JSX.Element {
           <FavoriteButton
             id={id}
             isFavorite={isFavorite}
-            nameBlock={'place-card'}
+            nameBlock={NameBlockForFavoriteButton.PlaceCard}
           />
         </div>
         <div className="place-card__rating rating">

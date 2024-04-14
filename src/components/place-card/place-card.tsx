@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { AppRoute } from '../../const';
+import { AppRoute, NameBlockForFavoriteButton } from '../../const';
+import { capitalize, getRatingValue } from '../../utils/utils';
 import { TOfferPreview } from '../../types/offer-preview';
 import { TOffer } from '../../types/offer';
+
 import FavoriteButton from '../favorite-button/favorite-button';
 
 type TCardProps = {
@@ -56,13 +58,13 @@ function PlaceCard({ offer, block, onListItemHover }: TCardProps): JSX.Element {
           <FavoriteButton
             id={id}
             isFavorite={isFavorite}
-            nameBlock={'place-card'}
+            nameBlock={NameBlockForFavoriteButton.PlaceCard}
           />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span
-              style={{width: `${rating * 100 / 5}%`}}
+              style={{width: `${getRatingValue(rating)}%`}}
             >
             </span>
             <span className="visually-hidden">Rating</span>
@@ -71,7 +73,7 @@ function PlaceCard({ offer, block, onListItemHover }: TCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={offerLink}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalize(type)}</p>
       </div>
     </article>
   );

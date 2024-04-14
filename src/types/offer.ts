@@ -9,5 +9,3 @@ export type TOffer = TOfferPreview & {
   images: string[];
   maxAdults: number;
 };
-
-export type TOffers = TOffer[];

@@ -64,11 +64,19 @@ export const MAX_REVIEWS_COUNT = 10;
 export const RATING_MAX = 5;
 export const MAX_OFFER_IMAGE_COUNT = 6;
 
-export const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
-export const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
+export const URL_MARKER_DEFAULT = 'markup/img/pin.svg';
+export const URL_MARKER_CURRENT = 'markup/img/pin-active.svg';
 
 export const TILE_LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 export const COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
+export const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const PASSWORD_REGEX = /(?=.*[0-9])(?=.*[a-z])[0-9a-z]{2,}/;
+
+export enum NameBlockForFavoriteButton {
+  Offer = 'offer',
+  PlaceCard = 'place-card'
+}
 
 export const CitiesMap: TCity[] = [
   {

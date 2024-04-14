@@ -59,7 +59,7 @@ function Header() {
                 <Link
                   to={''}
                   className="header__nav-link"
-                  onClick={() => handleLogoutClick()}
+                  onClick={handleLogoutClick}
                 >
                   <span className="header__signout">Sign out</span>
                 </Link>

@@ -1,15 +1,28 @@
-import Logo from '../../components/logo/logo';
+import { useRef, FormEvent, useState, FocusEvent, ChangeEvent, useEffect, MouseEvent } from 'react';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useRef, FormEvent } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
+
+import Logo from '../../components/logo/logo';
+
+import { AppRoute, CitiesMap, EMAIL_REGEX, PASSWORD_REGEX } from '../../const';
+
 import { loginAction } from '../../store/api-action';
-import { AppRoute } from '../../const';
-import { checkAuthorizationStatus } from '../../utils/utils';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
-import { Navigate } from 'react-router-dom';
+import { setActiveCity } from '../../store/app-process/app-process';
+import { TCity } from '../../types/city';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { checkAuthorizationStatus } from '../../utils/utils';
 
 function Login(): JSX.Element {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailDirty, setEmailDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+  const [emailError, setEmailError] = useState('Email не может быть пустым');
+  const [passwordError, setPasswordError] = useState('Пароль не может быть пустым');
+  const [formValid, setFormValid] = useState(false);
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -21,20 +34,67 @@ function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (emailError || passwordError) {
+      setFormValid(false);
+    } else {
+      setFormValid(true);
+    }
+  }, [emailError, passwordError]);
+
   if (isLogged) {
     return <Navigate to={AppRoute.Root}></Navigate>;
+  }
+
+  function handleBlur(evt: FocusEvent<HTMLInputElement>) {
+    switch (evt.target.name) {
+      case 'email':
+        setEmailDirty(true);
+        break;
+      case 'password':
+        setPasswordDirty(true);
+        break;
+    }
+  }
+
+  function handleEmailChange(evt: ChangeEvent<HTMLInputElement>) {
+    setEmail(evt.target.value);
+
+    if (!EMAIL_REGEX.test(String(evt.target.value).toLocaleLowerCase())) {
+      setEmailError('Email не корректен');
+    } else {
+      setEmailError('');
+    }
+  }
+
+  function handlePasswordChange(evt: ChangeEvent<HTMLInputElement>) {
+    setPassword(evt.target.value);
+
+    if (!PASSWORD_REGEX.test(String(evt.target.value).toLocaleLowerCase())) {
+      setPasswordError('Пароль не корректен');
+    } else {
+      setPasswordError('');
+    }
   }
 
   function handleFormSubmit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(loginAction({
-        email: loginRef.current.value,
-        password: passwordRef.current.value
-      }));
-      navigate(AppRoute.Root);
-    }
+    dispatch(loginAction({
+      email: email,
+      password: password
+    }));
+
+    navigate(AppRoute.Root);
+  }
+
+  const randomCity = CitiesMap[Math.floor(Math.random() * CitiesMap.length)];
+
+  function handleRandomCityClick(evt: MouseEvent<HTMLAnchorElement>, city: TCity) {
+    evt.preventDefault();
+
+    dispatch(setActiveCity(city));
+    navigate(AppRoute.Root);
   }
 
   return (
@@ -63,6 +123,7 @@ function Login(): JSX.Element {
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
+                {(emailDirty && emailError && <div style={{ color: 'red' }}>{emailError}</div>)}
                 <input
                   ref={loginRef}
                   className="login__input form__input"
@@ -70,10 +131,14 @@ function Login(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
+                  value={email}
+                  onBlur={handleBlur}
+                  onChange={handleEmailChange}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
+                {(passwordDirty && passwordError && <div style={{ color: 'red' }}>{passwordError}</div>)}
                 <input
                   ref={passwordRef}
                   className="login__input form__input"
@@ -81,11 +146,15 @@ function Login(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  value={password}
+                  onBlur={handleBlur}
+                  onChange={handlePasswordChange}
                 />
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
+                disabled={!formValid}
               >
                 Sign in
               </button>
@@ -93,9 +162,13 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={'/'}
+                onClick={(evt) => handleRandomCityClick(evt, randomCity)}
+              >
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>

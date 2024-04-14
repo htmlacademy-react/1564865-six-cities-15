@@ -2,7 +2,7 @@ import { AuthorizationStatus, RATING_MAX } from '../const';
 import { TOfferPreview } from '../types/offer-preview';
 
 export function getRatingValue(rating: number): number {
-  return (Math.round(rating) * 100) / RATING_MAX;
+  return (Math.ceil(rating) * 100) / RATING_MAX;
 }
 
 export function addPluralEnding(count: number) {

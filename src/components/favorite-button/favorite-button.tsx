@@ -1,18 +1,19 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchAddToFavoriteAction } from '../../store/api-action';
 import { useNavigate } from 'react-router-dom';
 import { checkAuthorizationStatus } from '../../utils/utils';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
-import { AppRoute } from '../../const';
+import { AppRoute, NameBlockForFavoriteButton } from '../../const';
 import { changeOfferFavoriteStatus } from '../../store/data-process/data-process';
+import { TOfferPreview } from '../../types/offer-preview';
 
 type FavoriteButtonBlock = 'default' | 'offer';
 
 type FavoriteButtonProps = {
- id: string;
+ id: TOfferPreview['id'];
  isFavorite: boolean;
- nameBlock: string;
+ nameBlock: NameBlockForFavoriteButton;
  size?: FavoriteButtonBlock;
 }
 
@@ -28,25 +29,24 @@ function FavoriteButton({ id, isFavorite, nameBlock, size = 'default' }: Favorit
 
   const authorizationStatus = useAppSelector(getAutorisationStatus);
 
-  const isLogged = checkAuthorizationStatus(authorizationStatus);
-
-  const [isBookmarkActive, setBookmarkActive] = useState(isFavorite);
+  const isLogged = useMemo(() => checkAuthorizationStatus(authorizationStatus), [authorizationStatus]);
 
   function handleFavoriteButtonClick() {
     if (!isLogged) {
       navigate(AppRoute.Login);
     }
 
-    dispatch(changeOfferFavoriteStatus(id));
-    dispatch(fetchAddToFavoriteAction({ id, status: Number(!isBookmarkActive) }));
-    setBookmarkActive((prev) => !prev);
+    dispatch(changeOfferFavoriteStatus({ id, nameBlock }));
+    dispatch(fetchAddToFavoriteAction({ id, status: Number(!isFavorite) }));
   }
 
   return (
     <button
       type="button"
+      role="button"
+      aria-label="Favorites button"
       onClick={handleFavoriteButtonClick}
-      className={`${nameBlock}__bookmark-button button ${isBookmarkActive && `${nameBlock}__bookmark-button--active`}`}
+      className={`${nameBlock}__bookmark-button button ${isFavorite && `${nameBlock}__bookmark-button--active`}`}
     >
       <svg
         className={`${nameBlock}__bookmark-icon`}

@@ -2,23 +2,24 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import { Helmet } from 'react-helmet-async';
+import classNames from 'classnames';
 
 import { useAppSelector } from '../../hooks';
-import { MAX_AROUND_OFFERS_COUNT, MAX_OFFER_IMAGE_COUNT, MAX_REVIEWS_COUNT } from '../../const';
+import { MAX_AROUND_OFFERS_COUNT, MAX_OFFER_IMAGE_COUNT, MAX_REVIEWS_COUNT, NameBlockForFavoriteButton } from '../../const';
 
 import HeaderMemo from '../../components/header/header';
 import OfferListMemo from '../../components/offer-list/offer-list';
 import ReviewListMemo from '../../components/review-list/review-list';
 import ReviewFormMemo from '../../components/review-form/review-form';
 import MapMemo from '../../components/map/map';
-import LoadingScreen from '../loading-screen/loading-screen';
+import Loading from '../loading-screen/loading';
 import NotFoundPage from '../not-found-page/not-found-page';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
 
 import { useAppDispatch } from '../../hooks';
 import { fetchOfferAction, fetchAroundOffersAction, fetchReviewsAction } from '../../store/api-action';
 import { dropOffer } from '../../store/data-process/data-process';
-import { getRatingValue, checkAuthorizationStatus } from '../../utils/utils';
+import { getRatingValue, checkAuthorizationStatus, capitalize } from '../../utils/utils';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
 import { getOffer, getAroundOffers, getReviews, getIsOffersDataLoading } from '../../store/data-process/selectors';
 
@@ -56,8 +57,8 @@ function Offer(): JSX.Element {
     };
   }, [dispatch, id]);
 
-  if (isOffersDataLoading && !offer) {
-    return <LoadingScreen />;
+  if (!isOffersDataLoading && !offer) {
+    return <Loading />;
   }
 
   if (!offer) {
@@ -100,7 +101,7 @@ function Offer(): JSX.Element {
                 <FavoriteButton
                   id={offer?.id}
                   isFavorite={offer?.isFavorite}
-                  nameBlock={'offer'}
+                  nameBlock={NameBlockForFavoriteButton.Offer}
                   size={'offer'}
                 />
               </div>
@@ -113,7 +114,7 @@ function Offer(): JSX.Element {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {type}
+                  {capitalize(type)}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   {bedrooms} Bedrooms
@@ -139,7 +140,11 @@ function Offer(): JSX.Element {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={classNames(
+                    'offer__avatar-wrapper user__avatar-wrapper',
+                    { 'offer__avatar-wrapper--pro': isPro }
+                  )}
+                  >
                     <img
                       className="offer__avatar user__avatar"
                       src={avatarUrl}
@@ -164,9 +169,9 @@ function Offer(): JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewListMemo reviews={reviewsRender}/>
+                <ReviewListMemo reviews={reviewsRender} />
                 {isLogged &&
-                <ReviewFormMemo />}
+                  <ReviewFormMemo />}
               </section>
             </div>
           </div>

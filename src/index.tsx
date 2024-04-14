@@ -4,10 +4,19 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { store } from './store';
 import { fetchOffersAction, checkAuthAction } from './store/api-action';
+import { changeAuthorizationStatus } from './store/user-process/user-process';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getToken } from './services/token';
 
-store.dispatch(checkAuthAction());
+const token = getToken();
+
+if (token !== '') {
+  store.dispatch(checkAuthAction());
+} else {
+  store.dispatch(changeAuthorizationStatus());
+}
+
 store.dispatch(fetchOffersAction());
 
 const root = ReactDOM.createRoot(
