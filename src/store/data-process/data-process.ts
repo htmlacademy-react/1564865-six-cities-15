@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { NameBlockForFavoriteButton, NameSpace } from '../../const';
 import { DataProcess } from '../../types/data-process';
+import { TOfferPreview } from '../../types/offer-preview';
 import {
   fetchAddReviewAction,
   fetchAroundOffersAction,
@@ -10,7 +11,11 @@ import {
   fetchFavoritesAction,
   fetchAddToFavoriteAction
 } from '../api-action';
-import { TOfferPreview } from '../../types/offer-preview';
+
+type OfferFavoriteStatus = {
+  id: TOfferPreview['id'];
+  nameBlock: NameBlockForFavoriteButton;
+}
 
 const initialState: DataProcess = {
   offers: [],
@@ -37,10 +42,23 @@ export const dataProcess = createSlice({
       state.aroundOffers = [];
       state.reviews = [];
     },
-    changeOfferFavoriteStatus: (state, action: PayloadAction<TOfferPreview['id']>) => {
-      const offerChangeFavorite = state.offers.find((offer) => offer.id === action.payload);
+    changeOfferFavoriteStatus: (state, action: PayloadAction<OfferFavoriteStatus>) => {
+      const offerChangeFavorite = state.offers.find((offer) => offer.id === action.payload.id);
+
       if (offerChangeFavorite) {
         offerChangeFavorite.isFavorite = !offerChangeFavorite.isFavorite;
+      }
+
+      if (state.aroundOffers.length !== 0) {
+        const offerAroundChangeFavorite = state.aroundOffers.find((offer) => offer.id === action.payload.id);
+
+        if (offerAroundChangeFavorite) {
+          offerAroundChangeFavorite.isFavorite = !offerAroundChangeFavorite.isFavorite;
+        }
+      }
+
+      if (action.payload.nameBlock === NameBlockForFavoriteButton.Offer && state.offer !== null) {
+        state.offer.isFavorite = !state.offer.isFavorite;
       }
     },
   },

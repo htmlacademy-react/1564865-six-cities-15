@@ -4,15 +4,16 @@ import { fetchAddToFavoriteAction } from '../../store/api-action';
 import { useNavigate } from 'react-router-dom';
 import { checkAuthorizationStatus } from '../../utils/utils';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
-import { AppRoute } from '../../const';
+import { AppRoute, NameBlockForFavoriteButton } from '../../const';
 import { changeOfferFavoriteStatus } from '../../store/data-process/data-process';
+import { TOfferPreview } from '../../types/offer-preview';
 
 type FavoriteButtonBlock = 'default' | 'offer';
 
 type FavoriteButtonProps = {
- id: string;
+ id: TOfferPreview['id'];
  isFavorite: boolean;
- nameBlock: string;
+ nameBlock: NameBlockForFavoriteButton;
  size?: FavoriteButtonBlock;
 }
 
@@ -35,13 +36,15 @@ function FavoriteButton({ id, isFavorite, nameBlock, size = 'default' }: Favorit
       navigate(AppRoute.Login);
     }
 
-    dispatch(changeOfferFavoriteStatus(id));
+    dispatch(changeOfferFavoriteStatus({ id, nameBlock }));
     dispatch(fetchAddToFavoriteAction({ id, status: Number(!isFavorite) }));
   }
 
   return (
     <button
       type="button"
+      role="button"
+      aria-label="Favorites button"
       onClick={handleFavoriteButtonClick}
       className={`${nameBlock}__bookmark-button button ${isFavorite && `${nameBlock}__bookmark-button--active`}`}
     >

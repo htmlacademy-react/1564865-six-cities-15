@@ -7,8 +7,8 @@ import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
 import Offer from '../../pages/offer/offer';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import { useAppSelector } from '../../hooks';
-import LoadingScreen from '../../pages/loading-screen/loading';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import Loading from '../../pages/loading-screen/loading';
 import ErrorOffers from '../../pages/error-offers/error-offers';
 
 import { getErrorOffersStatus, getIsOffersDataLoading } from '../../store/data-process/selectors';
@@ -16,17 +16,27 @@ import { getAutorisationStatus } from '../../store/user-process/selectors';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
+import { useEffect } from 'react';
+import { fetchFavoritesAction } from '../../store/api-action';
 
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
 
   const authorizationStatus = useAppSelector(getAutorisationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoritesAction());
+    }
+
+  }, [dispatch, authorizationStatus]);
 
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
   const hasErrorOffers = useAppSelector(getErrorOffersStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
-      <LoadingScreen />
+      <Loading />
     );
   }
 

@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
 
 import { useAppSelector } from '../../hooks';
-import { MAX_AROUND_OFFERS_COUNT, MAX_OFFER_IMAGE_COUNT, MAX_REVIEWS_COUNT } from '../../const';
+import { MAX_AROUND_OFFERS_COUNT, MAX_OFFER_IMAGE_COUNT, MAX_REVIEWS_COUNT, NameBlockForFavoriteButton } from '../../const';
 
 import HeaderMemo from '../../components/header/header';
 import OfferListMemo from '../../components/offer-list/offer-list';
@@ -101,7 +101,7 @@ function Offer(): JSX.Element {
                 <FavoriteButton
                   id={offer?.id}
                   isFavorite={offer?.isFavorite}
-                  nameBlock={'offer'}
+                  nameBlock={NameBlockForFavoriteButton.Offer}
                   size={'offer'}
                 />
               </div>
