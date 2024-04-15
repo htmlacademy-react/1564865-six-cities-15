@@ -1,4 +1,4 @@
-import { useRef, FormEvent, useState, FocusEvent, ChangeEvent, useEffect, MouseEvent } from 'react';
+import { useRef, FormEvent, useState, FocusEvent, ChangeEvent, useEffect, MouseEvent, useCallback, useMemo } from 'react';
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
@@ -9,7 +9,6 @@ import { AppRoute, CitiesMap, EMAIL_REGEX, PASSWORD_REGEX } from '../../const';
 import { loginAction } from '../../store/api-action';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
 import { setActiveCity } from '../../store/app-process/app-process';
-import { TCity } from '../../types/city';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { checkAuthorizationStatus } from '../../utils/utils';
@@ -41,6 +40,15 @@ function Login(): JSX.Element {
       setFormValid(true);
     }
   }, [emailError, passwordError]);
+
+  const randomCity = useMemo(() => CitiesMap[Math.floor(Math.random() * CitiesMap.length)], []);
+
+  const handleRandomCityClick = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+
+    dispatch(setActiveCity(randomCity));
+    navigate(AppRoute.Root);
+  }, [dispatch, navigate, randomCity]);
 
   if (isLogged) {
     return <Navigate to={AppRoute.Root}></Navigate>;
@@ -84,17 +92,6 @@ function Login(): JSX.Element {
       email: email,
       password: password
     }));
-
-    navigate(AppRoute.Root);
-  }
-
-  const randomCity = CitiesMap[Math.floor(Math.random() * CitiesMap.length)];
-
-  function handleRandomCityClick(evt: MouseEvent<HTMLAnchorElement>, city: TCity) {
-    evt.preventDefault();
-
-    dispatch(setActiveCity(city));
-    navigate(AppRoute.Root);
   }
 
   return (
@@ -165,7 +162,7 @@ function Login(): JSX.Element {
               <Link
                 className="locations__item-link"
                 to={'/'}
-                onClick={(evt) => handleRandomCityClick(evt, randomCity)}
+                onClick={handleRandomCityClick}
               >
                 <span>{randomCity.name}</span>
               </Link>

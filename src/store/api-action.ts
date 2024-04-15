@@ -61,7 +61,7 @@ export const fetchFavoritesAction = createAsyncThunk<TOfferPreview[], undefined,
   },
 );
 
-export const fetchAddToFavoriteAction = createAsyncThunk<TOffer, AddToFavoritesData, {
+export const fetchAddToFavoriteAction = createAsyncThunk<TOfferPreview, AddToFavoritesData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
