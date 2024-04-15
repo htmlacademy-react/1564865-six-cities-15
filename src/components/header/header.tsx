@@ -5,7 +5,7 @@ import Logo from '../logo/logo';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { checkAuthorizationStatus } from '../../utils/utils';
-import { logoutAction } from '../../store/api-action';
+import { fetchOffersAction, logoutAction } from '../../store/api-action';
 import { useAppDispatch } from '../../hooks';
 import { getAutorisationStatus, getUserInfo } from '../../store/user-process/selectors';
 import { getFavorites } from '../../store/data-process/selectors';
@@ -24,7 +24,12 @@ function Header() {
   const dispatch = useAppDispatch();
 
   const handleLogoutClick = useCallback(() => {
-    dispatch(logoutAction());
+    dispatch(logoutAction())
+      .then((response) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+          dispatch(fetchOffersAction());
+        }
+      });
   }, [dispatch]);
 
   return (

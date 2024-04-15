@@ -69,7 +69,7 @@ export const fetchAddToFavoriteAction = createAsyncThunk<TOfferPreview, AddToFav
 >(
   'data/fetchAddToFavoriteAction',
   async ({ id, status }, { extra: api }) => {
-    const { data } = await api.post<TOfferPreview>(`${APIRoute.Favorite}/${id}/${status}`);
+    const { data } = await api.post<TOffer>(`${APIRoute.Favorite}/${id}/${status}`);
     return data;
   },
 );
