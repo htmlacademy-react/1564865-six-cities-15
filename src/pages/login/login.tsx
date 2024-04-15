@@ -6,7 +6,7 @@ import Logo from '../../components/logo/logo';
 
 import { AppRoute, CitiesMap, EMAIL_REGEX, PASSWORD_REGEX } from '../../const';
 
-import { loginAction } from '../../store/api-action';
+import { fetchOffersAction, loginAction } from '../../store/api-action';
 import { getAutorisationStatus } from '../../store/user-process/selectors';
 import { setActiveCity } from '../../store/app-process/app-process';
 
@@ -91,7 +91,11 @@ function Login(): JSX.Element {
     dispatch(loginAction({
       email: email,
       password: password
-    }));
+    })).then((response) => {
+      if (response.meta.requestStatus === 'fulfilled') {
+        dispatch(fetchOffersAction());
+      }
+    });
   }
 
   return (
