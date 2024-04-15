@@ -1,6 +1,6 @@
 import { memo, ChangeEvent, Fragment, useState, FormEvent, useEffect } from 'react';
 
-import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../const';
+import { COMMENT_LENGTH } from '../../const';
 import { fetchAddReviewAction } from '../../store/api-action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAddReviewStatus, getErrorAddReviewStatus, getAddSuccessStatus } from '../../store/data-process/selectors';
@@ -25,8 +25,8 @@ function ReviewForm(): JSX.Element {
   const isSuccessAddReview = useAppSelector(getAddSuccessStatus);
 
   const isValid =
-    formData.comment.length >= MIN_COMMENT_LENGTH &&
-    formData.comment.length <= MAX_COMMENT_LENGTH &&
+    formData.comment.length >= COMMENT_LENGTH.MIN &&
+    formData.comment.length <= COMMENT_LENGTH.MAX &&
     formData.rating !== 0;
 
   function handleRatingChange(evt: ChangeEvent<HTMLInputElement>) {
@@ -77,7 +77,7 @@ function ReviewForm(): JSX.Element {
       <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleTextChange} value={formData.comment}disabled={isAddingReview}></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{COMMENT_LENGTH.MIN} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"

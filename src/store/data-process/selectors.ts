@@ -15,8 +15,6 @@ export const getFavorites = (state: TState) => state[NameSpace.Data].favorites;
 
 export const getErrorOffersStatus = (state: TState): boolean => state[NameSpace.Data].hasErrorOffers;
 
-export const getErrorOfferStatus = (state: TState): boolean => state[NameSpace.Data].hasErrorOffer;
-
 export const getAddReviewStatus = (state: TState): boolean => state[NameSpace.Data].addReviewStatus.pending;
 
 export const getErrorAddReviewStatus = (state: TState): boolean => state[NameSpace.Data].addReviewStatus.rejected;

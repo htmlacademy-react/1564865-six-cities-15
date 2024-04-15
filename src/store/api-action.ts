@@ -61,7 +61,7 @@ export const fetchFavoritesAction = createAsyncThunk<TOfferPreview[], undefined,
   },
 );
 
-export const fetchAddToFavoriteAction = createAsyncThunk<TOfferPreview, AddToFavoritesData, {
+export const fetchAddToFavoriteAction = createAsyncThunk<TOffer, AddToFavoritesData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -69,7 +69,7 @@ export const fetchAddToFavoriteAction = createAsyncThunk<TOfferPreview, AddToFav
 >(
   'data/fetchAddToFavoriteAction',
   async ({ id, status }, { extra: api }) => {
-    const { data } = await api.post<TOfferPreview>(`${APIRoute.Favorite}/${id}/${status}`);
+    const { data } = await api.post<TOffer>(`${APIRoute.Favorite}/${id}/${status}`);
     return data;
   },
 );

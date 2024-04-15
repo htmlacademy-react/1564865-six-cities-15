@@ -56,8 +56,10 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
-export const MIN_COMMENT_LENGTH = 50;
-export const MAX_COMMENT_LENGTH = 300;
+export const COMMENT_LENGTH = {
+  MIN: 50,
+  MAX: 300
+};
 
 export const MAX_AROUND_OFFERS_COUNT = 3;
 export const MAX_REVIEWS_COUNT = 10;
